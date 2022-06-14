@@ -3,7 +3,6 @@ import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import { MenuItem } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -13,6 +12,12 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography, { TypographyClasses } from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import isWeekend from 'date-fns/isWeekend';
+import TextField from '@mui/material/TextField';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
+
 import {
 	createTheme,
 	SxProps,
@@ -31,9 +36,51 @@ const theme = createTheme();
 
 //useState([{name:'', description:'', frequencyUnit:'', frequencyNumber:''}]);	
 
+function HabitActionButtons(){
+	console.log('showing')
+	return (
+		<Box component="div" sx={{ display: 'inline' }}>
+							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>Y</Button>
+							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>N</Button>
+							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>S</Button> </Box>
+	)
+}
+
+
+function StaticDatePickerLandscape() {
+  const [value, setValue] = React.useState<Date | null>(new Date());
+	const [showAction, setShowAction] = React.useState<boolean>(false)
+	
+
+  return (
+		<Box>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <StaticDatePicker<Date>
+        orientation="landscape"
+        openTo="day"
+        value={value}
+        // shouldDisableDate={isWeekend}
+        // onChange={(newValue) => {
+        //   setValue(newValue);
+        // }}
+				onChange={()=>{
+					console.log(value)
+					setShowAction(true)
+					console.log(showAction)
+				}}
+        renderInput={(params) => <TextField {...params} />}/>
+
+			</LocalizationProvider>
+		
+		{showAction ? <HabitActionButtons></HabitActionButtons> : null}
+		</Box>
+  )
+}
+
 export default function ViewHabit() {
 
 	let navigate = useNavigate();
+	
 	
 
 	const habitDetails =  {'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': '0'}
@@ -81,17 +128,8 @@ export default function ViewHabit() {
 						<Box component="div" sx={{ display: 'inline' }}>{habitDetails.frequencyNumber === '0' ? null :habitDetails.frequencyNumber } </Box>
 						<Box component="div" sx={{ display: 'inline' }}>{habitDetails.frequencyUnit}</Box>
 						<Box component="div" sx={{ display: 'block' }}>{habitDetails.description}</Box>
-						<Box component="div" sx={{ display: 'inline' }}>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>M</Button>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>T</Button>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>W</Button>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>T</Button>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>F</Button>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>S</Button>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>S</Button>
-						</Box>
-
-
+						<StaticDatePickerLandscape></StaticDatePickerLandscape>
+						
 						
 					</Box>
 				</Box>

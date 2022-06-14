@@ -42,11 +42,11 @@ export default function CreateHabit() {
 		// const data = new FormData(event.currentTarget);
 		let habitDetails = { name, description, frequencyUnit, frequencyNumber};
 		axios
-			.post('http://localhost:3004/createhabit', habitDetails)
+			.post('http://localhost:3004/createhabit',  { name, description, frequencyUnit, frequencyNumber})
 			.then((res) => {
 				let path = '/dashboard';
 				console.log('succesful habitcreation');
-				// console.log('data', res.data);
+				console.log('data', res);
 				// const { id, email } = res.data;
 				navigate(path);
 			})
@@ -105,17 +105,6 @@ export default function CreateHabit() {
 								setDescription(event.target.value);
 							}}
 						/>
-						{/* <TextField
-							margin='normal'
-							required
-							fullWidth
-							name='frequencyUnit'
-							label='Frequency'
-							id='frequencyUnit'
-							onChange={(event) => {
-								setFrequencyUnit(event.target.value);
-							}}
-						/> */}
 						<TextField
 							margin='normal'
 							required
