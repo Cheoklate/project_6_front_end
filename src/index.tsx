@@ -6,11 +6,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // Components
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-
+// import FriendList from "./components/FriendList";
 
 const SignUpPage = lazy(() => import('./components/SignUp'));
 const SignInPage = lazy(() => import('./components/SignIn'));
-
+const FriendList = lazy(() => import("./components/FriendList"));
 
 const rootElement = document.createElement('div');
 
@@ -30,6 +30,7 @@ root.render(
 			<Routes>
 				<Route path='signup' element={<SignUpPage />} />
 				<Route path='signin' element={<SignInPage />} />
+				<Route path='friends' element={<FriendList />} />
 			</Routes>
 		</Suspense>
 	</BrowserRouter>
