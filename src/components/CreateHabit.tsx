@@ -13,6 +13,9 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography, { TypographyClasses } from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { ToggleButton } from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check';
+
 import {
 	createTheme,
 	SxProps,
@@ -34,13 +37,18 @@ export default function CreateHabit() {
 	const [description, setDescription] = useState('');
 	const [frequencyUnit, setFrequencyUnit] = useState('');
 	const [frequencyNumber, setFrequencyNumber] = useState('');
+	const [privateHabit, setPrivateHabit] = React.useState(false);
+	const [reminderFrequencyUnit, setReminderFrequencyUnit] = useState('');
+	const [reminderFrequencyNumber, setReminderFrequencyNumber] = useState('');
+	const [reminderTime, setReminderTime] = useState('');
+
 	const handleSubmit = (event: {
 		preventDefault: () => void;
 		currentTarget: HTMLFormElement | undefined;
 	}) => {
 		event.preventDefault();
 		// const data = new FormData(event.currentTarget);
-		let habitDetails = { name, description, frequencyUnit, frequencyNumber};
+		let habitDetails = { name, description, frequencyUnit, frequencyNumber, privateHabit, reminderFrequencyUnit, reminderFrequencyNumber, reminderTime};
 		axios
 			.post('http://localhost:3004/createhabit',  { name, description, frequencyUnit, frequencyNumber})
 			.then((res) => {
@@ -110,8 +118,9 @@ export default function CreateHabit() {
 							required
 							fullWidth
 						 	name="frequencyUnit"
-							label="Frequency"
+							label="Habit Frequency"	
 							id="frequencyUnit"  
+							defaultValue=""
 							  
 							onChange={(event) => {
 								setFrequencyUnit(event.target.value);
@@ -120,18 +129,78 @@ export default function CreateHabit() {
 							<MenuItem value="weekly">Weekly</MenuItem>
 							<MenuItem value="monthly">Monthly</MenuItem>
 						</TextField>
+						{frequencyUnit !== "daily" && frequencyUnit !== "" ?
 						<TextField
 							margin='normal'
 							required
 							fullWidth
 							name='frequencyNumber'
-							label='Number'
+							label='# of times'
 							id='frequencyNumber'
 							type='number'
+							InputProps={{ inputProps: { min: 1} }}
 							onChange={(event) => {
 								setFrequencyNumber(event.target.value);
 							}}
+						/>	: null}	
+						<FormControlLabel 
+							control={<Checkbox />} 
+							label="Set Private"
+							value="private"
+							onChange={() => {
+								setPrivateHabit(!privateHabit);
+								console.log(privateHabit)
+							}}
+						 />
+						 
+						 <TextField
+							margin='normal'
+							required
+							fullWidth
+						 	name="reminderFrequencyUnit"
+							label="Reminder Frequency"	
+							id="reminderFrequencyUnit"  
+							defaultValue=""
+							  
+							onChange={(event) => {
+								setReminderFrequencyUnit(event.target.value);
+							}} select>
+							<MenuItem value="daily">Daily</MenuItem>
+							<MenuItem value="weekly">Weekly</MenuItem>
+							<MenuItem value="monthly">Monthly</MenuItem>
+						</TextField>
+						{reminderFrequencyUnit !== "daily" && reminderFrequencyUnit !== ""  ?
+						<TextField
+							margin='normal'
+							required
+							name='reminderFrequencyNumber'
+							label='Number'
+							id='reminderFrequencyNumber'
+							type='number'
+							InputProps={{ inputProps: { min: 1} }}
+							onChange={(event) => {
+								setReminderFrequencyNumber(event.target.value);
+							}}
+						/> : null }
+						<TextField
+							id="reminderTime"
+							name='reminderTime'
+							label="Reminder Time"
+							type="time"
+							defaultValue="09:00"
+							InputLabelProps={{
+								shrink: true,
+							}}
+							inputProps={{
+								step: 900, // 5 min
+							}}
+							sx={{ width: 150 }}
+							onChange={(event) => {
+								setReminderTime(event.target.value);
+							}}
 						/>
+
+					
 						<Button
 							type='submit'
 							fullWidth
