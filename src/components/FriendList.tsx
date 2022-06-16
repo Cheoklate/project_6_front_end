@@ -29,6 +29,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
 
 import InviteFriend from "./InviteFriend";
+import AllFriends from "./AllFriends";
 
 function Copyright(
   props: JSX.IntrinsicAttributes & {
@@ -271,7 +272,7 @@ export default function FriendList() {
                   </AccordionDetails>
                 </Accordion>
               </Grid>
-              
+
               <Grid item xs={12}>
                 <Accordion>
                   <AccordionSummary
@@ -282,7 +283,7 @@ export default function FriendList() {
                     <Typography>All Friends</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography>Placeholder</Typography>
+                    <AllFriends />
                   </AccordionDetails>
                 </Accordion>
               </Grid>
