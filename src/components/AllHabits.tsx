@@ -13,10 +13,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography, { TypographyClasses } from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import isWeekend from 'date-fns/isWeekend';
-import TextField from '@mui/material/TextField';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
+
+import RedoIcon from '@mui/icons-material/Redo';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import { visuallyHidden } from '@mui/utils';
 
 import {
 	createTheme,
@@ -31,60 +32,51 @@ import { SystemProps } from '@mui/system';
 
 axios.defaults.withCredentials = true;
 
-const theme = createTheme();
+const theme = createTheme({
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8,
+        },
+      }, 
+    }, 
+  },
+});
 // const [habitDetails, setHabitDetails] =  useState([{'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': '0'}])
 
 //useState([{name:'', description:'', frequencyUnit:'', frequencyNumber:''}]);	
 
+
+
+
 function HabitActionButtons(){
+  
 	console.log('showing')
+  const submitAction = (event: any) =>{
+    console.log(event.currentTarget.value)
+  }
 	return (
 		<Box component="div" sx={{ display: 'flex' }}>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>Y</Button>
+							{/* <Button type="submit" color="primary" sx={ { borderRadius: 50 } }>Y</Button>
 							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>N</Button>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>S</Button> </Box>
+							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>S</Button>  */}
+              <Button type='submit' color="primary" value="done" onClick={submitAction} startIcon={<CheckIcon />}></Button>
+              <Button color="primary" value="undone" onClick={submitAction} startIcon={<CloseIcon />}></Button>
+              <Button color="primary" value="skip" onClick={submitAction} startIcon={<RedoIcon />}></Button>
+              
+    </Box>
 	)
 }
 
 
-function StaticDatePickerLandscape() {
-  const [value, setValue] = React.useState<Date | null>(new Date());
-	const [showAction, setShowAction] = React.useState<boolean>(false)
-	
 
-  return (
-		<Box>
-		{showAction ? <HabitActionButtons></HabitActionButtons> : null}
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <StaticDatePicker<Date>
-        orientation="landscape"
-        openTo="day"
-        value={value}
-				
-				ToolbarComponent={()=>
-					<Box display="flex"></Box>}
-				onChange={()=>{
-					console.log(value)
-					setShowAction(true)
-					setValue(value)
-					console.log(showAction)
-				}}
-				
-        renderInput={(params) => <TextField {...params} />}/>
-
-			</LocalizationProvider>
-		</Box>
-  )
-}
-
-export default function ViewHabit() {
+export default function AllHabits() {
 
 	let navigate = useNavigate();
-	
-	
 
-	const habitDetails =  {'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': '0'}
-	console.log(habitDetails)
+	const allHabitDetails =  [{'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': 0, 'streak': 2, 'completionRate': 0.02}, {'name': 'water up', 'description': 'increase water intake', 'frequencyUnit': 'weekly' ,'frequencyNumber': 3, 'streak': 2, 'completionRate': 0.10}]
+	console.log(allHabitDetails)
 
 	// React.useEffect(()=>{
 		
@@ -119,18 +111,21 @@ export default function ViewHabit() {
 						<LockOutlinedIcon />
 					</Avatar>
 					<Typography component='h1' variant='h5'>
-						View Habit
+						All My Habits
 					</Typography>
 					<Box
 						sx={{ mt: 1 }}
-					>
-						<Box component="div" sx={{ display: 'inline' }} >{habitDetails.name} </Box>
-						<Box component="div" sx={{ display: 'inline' }}>{habitDetails.frequencyNumber === '0' ? null :habitDetails.frequencyNumber } </Box>
-						<Box component="div" sx={{ display: 'inline' }}>{habitDetails.frequencyUnit}</Box>
-						<Box component="div" sx={{ display: 'block' }}>{habitDetails.description}</Box>
-						<StaticDatePickerLandscape></StaticDatePickerLandscape>
-						
-						
+					> 
+            {allHabitDetails.map((details)=>{
+              return <>
+              
+              <Box component="div" sx={{ display: 'inline' }}>{details.name} </Box>
+              <Box component="div" sx={{ display: 'inline' }}>{details.frequencyNumber === 0 ? null : details.frequencyNumber} times {details.frequencyUnit}</Box>
+              <Box component="div" sx={{ display: 'block' }}>streak: {details.streak}, completion: {details.completionRate*100}%</Box>
+              <HabitActionButtons></HabitActionButtons>
+              <hr></hr>
+              </>
+            })}
 					</Box>
 				</Box>
 			</Container>
