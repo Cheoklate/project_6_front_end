@@ -1,5 +1,4 @@
 import * as React from "react";
-import "./styles.css";
 
 import Avatar from "@mui/material/Avatar";
 
@@ -31,6 +30,7 @@ import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
 import InviteFriend from "./InviteFriend";
 import AllFriends from "./AllFriends";
 import AddFriend from "./AddFriend";
+import FriendRequest from "./FriendRequest";
 
 function Copyright(
   props: JSX.IntrinsicAttributes & {
@@ -238,7 +238,7 @@ export default function FriendList() {
                     <Typography>Friend Request</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography>Placeholder</Typography>
+                    <FriendRequest />
                   </AccordionDetails>
                 </Accordion>
               </Grid>
