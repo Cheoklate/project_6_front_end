@@ -10,6 +10,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 const SignUpPage = lazy(() => import('./components/SignUp'));
 const SignInPage = lazy(() => import('./components/SignIn'));
+const CreateHabit = lazy(() => import('./components/CreateHabit'));
+const ViewHabit = lazy(() => import('./components/ViewHabit'));
+const AllHabits = lazy(() => import('./components/AllHabits'));
 
 
 const rootElement = document.createElement('div');
@@ -30,6 +33,9 @@ root.render(
 			<Routes>
 				<Route path='signup' element={<SignUpPage />} />
 				<Route path='signin' element={<SignInPage />} />
+				<Route path='createhabit' element={<CreateHabit />} />
+				<Route path='viewhabit' element={<ViewHabit />} />
+				<Route path='allhabits' element={<AllHabits />} />
 			</Routes>
 		</Suspense>
 	</BrowserRouter>
