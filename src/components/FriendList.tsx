@@ -25,6 +25,13 @@ import { SystemProps } from "@mui/system";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
+
 function Copyright(
   props: JSX.IntrinsicAttributes & {
     component: React.ElementType<any>;
@@ -261,19 +268,64 @@ export default function FriendList() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                Add Friend
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<PeopleAltIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>Friend Request</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>Placeholder</Typography>
+                  </AccordionDetails>
+                </Accordion>
               </Grid>
-                
+
               <Grid item xs={12}>
-                Invite Friend
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<PersonAddIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>Add A Friend</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>Placeholder</Typography>
+                  </AccordionDetails>
+                </Accordion>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<MarkEmailReadIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>Invite A Friend</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>Placeholder</Typography>
+                  </AccordionDetails>
+                </Accordion>
               </Grid>
               <Grid item xs={12}>
-                All Friends
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>All Friends</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>Placeholder</Typography>
+                  </AccordionDetails>
+                </Accordion>
               </Grid>
-              
             </Grid>
-            
-            
           </Box>
         </Box>
         <Typography variant="body2" color="text.secondary" align="center">
