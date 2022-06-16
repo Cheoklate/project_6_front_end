@@ -6,7 +6,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // Components
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import CircularStatic from './components/LoadingProgress';
+// import FriendList from "./components/FriendList";
 
 const SignUpPage = lazy(() => import('./components/SignUp'));
 const SignInPage = lazy(() => import('./components/SignIn'));
@@ -14,6 +15,7 @@ const CreateHabit = lazy(() => import('./components/CreateHabit'));
 const ViewHabit = lazy(() => import('./components/ViewHabit'));
 const AllHabits = lazy(() => import('./components/AllHabits'));
 
+const FriendList = lazy(() => import("./components/FriendList"));
 
 const rootElement = document.createElement('div');
 
@@ -26,7 +28,7 @@ root.render(
 		<Suspense
 			fallback={
 				<div>
-					Loading Page...
+					<CircularStatic />
 				</div>
 			}
 		>
@@ -36,6 +38,7 @@ root.render(
 				<Route path='createhabit' element={<CreateHabit />} />
 				<Route path='viewhabit' element={<ViewHabit />} />
 				<Route path='allhabits' element={<AllHabits />} />
+				<Route path='friends' element={<FriendList />} />
 			</Routes>
 		</Suspense>
 	</BrowserRouter>
