@@ -1,12 +1,10 @@
 import * as React from "react";
 import "../styles.css";
-import { useState } from "react";
+
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -22,8 +20,6 @@ import {
 } from "@mui/material/styles";
 import { CommonProps } from "@mui/material/OverridableComponent";
 import { SystemProps } from "@mui/system";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -244,7 +240,7 @@ export default function FriendList() {
                   </AccordionDetails>
                 </Accordion>
               </Grid>
-
+              
               <Grid item xs={12}>
                 <Accordion>
                   <AccordionSummary
@@ -275,6 +271,7 @@ export default function FriendList() {
                   </AccordionDetails>
                 </Accordion>
               </Grid>
+              
               <Grid item xs={12}>
                 <Accordion>
                   <AccordionSummary
