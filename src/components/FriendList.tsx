@@ -32,6 +32,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
 
+import InviteFriend from "./InviteFriend";
+
 function Copyright(
   props: JSX.IntrinsicAttributes & {
     component: React.ElementType<any>;
@@ -308,6 +310,7 @@ export default function FriendList() {
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>Placeholder</Typography>
+                    <InviteFriend />
                   </AccordionDetails>
                 </Accordion>
               </Grid>
