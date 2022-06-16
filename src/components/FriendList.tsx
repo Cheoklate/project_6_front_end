@@ -199,41 +199,41 @@ function Copyright(
 
 const theme = createTheme();
 
-export default function SignUp() {
-  let navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [userName, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const handleSubmit = (event: {
-    preventDefault: () => void;
-    currentTarget: HTMLFormElement | undefined;
-  }) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    let signupDetails = {
-      userName: userName,
-      email: email,
-      password: password,
-    };
-    axios
-      .post("http://localhost:3004/signup", signupDetails)
-      .then((res) => {
-        let path = "/signin";
-        console.log("succesful signup");
-        console.log("data", res.data);
-        const { id, email } = res.data;
-        navigate(path);
-      })
-      .catch((error) => {
-        console.log("signup failed");
-        console.log("error", error);
-      });
-    console.log({
-      userName: data.get("userName"),
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+export default function FriendList() {
+  // let navigate = useNavigate();
+  // const [email, setEmail] = useState("");
+  // const [userName, setUsername] = useState("");
+  // const [password, setPassword] = useState("");
+  // const handleSubmit = (event: {
+  //   preventDefault: () => void;
+  //   currentTarget: HTMLFormElement | undefined;
+  // }) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   let signupDetails = {
+  //     userName: userName,
+  //     email: email,
+  //     password: password,
+  //   };
+  //   axios
+  //     .post("http://localhost:3004/signup", signupDetails)
+  //     .then((res) => {
+  //       let path = "/signin";
+  //       console.log("succesful signup");
+  //       console.log("data", res.data);
+  //       const { id, email } = res.data;
+  //       navigate(path);
+  //     })
+  //     .catch((error) => {
+  //       console.log("signup failed");
+  //       console.log("error", error);
+  //     });
+  //   console.log({
+  //     userName: data.get("userName"),
+  //     email: data.get("email"),
+  //     password: data.get("password"),
+  //   });
+  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -254,88 +254,26 @@ export default function SignUp() {
             Friends
           </Typography>
           <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+            // component="form"
+            // noValidate
+            // onSubmit={handleSubmit}
+            sx={{ mt: 3, mb: 4 }}
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
-                  className="inputRounded"
-                  
-                  name="userName"
-                  required
-                  fullWidth
-                  id="userName"
-                  label="Username"
-                 
-                  onChange={(event) => {
-                    setUsername(event.target.value);
-                  }}
-                />
+                Add Friend
               </Grid>
-              {/* <Grid item xs={12} sm={6}>
-								<TextField
-									required
-									fullWidth
-									id='lastName'
-									label='Last Name'
-									name='lastName'
-									autoComplete='family-name'
-								/>
-							</Grid> */}
+                
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  onChange={(event) => {
-                    setEmail(event.target.value);
-                  }}
-                />
+                Invite Friend
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  onChange={(event) => {
-                    setPassword(event.target.value);
-                  }}
-                />
+                All Friends
               </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
+              
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="signin" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
+            
+            
           </Box>
         </Box>
         <Typography variant="body2" color="text.secondary" align="center">
