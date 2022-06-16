@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // Components
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import CircularStatic from './components/LoadingProgress';
 // import FriendList from "./components/FriendList";
 
 const SignUpPage = lazy(() => import('./components/SignUp'));
@@ -23,7 +24,7 @@ root.render(
 		<Suspense
 			fallback={
 				<div>
-					Loading Page...
+					<CircularStatic />
 				</div>
 			}
 		>
