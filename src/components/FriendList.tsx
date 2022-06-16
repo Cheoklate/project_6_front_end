@@ -209,40 +209,6 @@ function Copyright(
 const theme = createTheme();
 
 export default function FriendList() {
-  // let navigate = useNavigate();
-  // const [email, setEmail] = useState("");
-  // const [userName, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-  // const handleSubmit = (event: {
-  //   preventDefault: () => void;
-  //   currentTarget: HTMLFormElement | undefined;
-  // }) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   let signupDetails = {
-  //     userName: userName,
-  //     email: email,
-  //     password: password,
-  //   };
-  //   axios
-  //     .post("http://localhost:3004/signup", signupDetails)
-  //     .then((res) => {
-  //       let path = "/signin";
-  //       console.log("succesful signup");
-  //       console.log("data", res.data);
-  //       const { id, email } = res.data;
-  //       navigate(path);
-  //     })
-  //     .catch((error) => {
-  //       console.log("signup failed");
-  //       console.log("error", error);
-  //     });
-  //   console.log({
-  //     userName: data.get("userName"),
-  //     email: data.get("email"),
-  //     password: data.get("password"),
-  //   });
-  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -262,12 +228,7 @@ export default function FriendList() {
           <Typography component="h1" variant="h5">
             Friends
           </Typography>
-          <Box
-            // component="form"
-            // noValidate
-            // onSubmit={handleSubmit}
-            sx={{ mt: 3, mb: 4 }}
-          >
+          <Box sx={{ mt: 3, mb: 4 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Accordion>
