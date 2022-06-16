@@ -199,9 +199,12 @@ const theme = createTheme();
 
 export default function SignUp() {
 	let navigate = useNavigate();
+	const [firstName, setfirstName] = useState('');
+	const [lastName, setlastName] = useState('');
 	const [email, setEmail] = useState('');
 	const [userName, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const userFriends: any = [];
 	const handleSubmit = (event: {
 		preventDefault: () => void;
 		currentTarget: HTMLFormElement | undefined;
@@ -209,9 +212,12 @@ export default function SignUp() {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
 		let signupDetails = {
+			firstName: firstName,
+			lastName: lastName,
 			userName: userName,
 			email: email,
 			password: password,
+			userFriends: userFriends,
 		};
 		axios
 			.post('http://localhost:3004/signup', signupDetails)
@@ -227,6 +233,8 @@ export default function SignUp() {
 				console.log('error', error);
 			});
 		console.log({
+			firstName: data.get('firstName'),
+			lastName: data.get('lastName'),
 			userName: data.get('userName'),
 			email: data.get('email'),
 			password: data.get('password'),
@@ -266,6 +274,9 @@ export default function SignUp() {
 									label='First Name'
 									name='firstName'
 									autoComplete='family-name'
+									onChange={(event) => {
+										setfirstName(event.target.value);
+									}}
 								/>
 							</Grid>
 							<Grid item xs={12} sm={6}>
@@ -276,6 +287,9 @@ export default function SignUp() {
 									label='Last Name'
 									name='lastName'
 									autoComplete='family-name'
+									onChange={(event) => {
+										setlastName(event.target.value);
+									}}
 								/>
 							</Grid>
 							<Grid item xs={12}>
