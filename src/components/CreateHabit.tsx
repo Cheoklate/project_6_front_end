@@ -33,24 +33,25 @@ const theme = createTheme();
 
 export default function CreateHabit() {
 	let navigate = useNavigate();
-	const [name, setName] = useState('');
-	const [description, setDescription] = useState('');
+	const [habitName, setHabitName] = useState('');
+	const [habitDesc, setHabitDesc] = useState('');
 	const [frequencyUnit, setFrequencyUnit] = useState('');
-	const [frequencyNumber, setFrequencyNumber] = useState('');
-	const [privateHabit, setPrivateHabit] = React.useState(false);
+	const [frequencyNumber, setFrequencyNumber] = useState('0');
+	const [isPublic, setIsPublic] = React.useState(true);
 	const [reminderFrequencyUnit, setReminderFrequencyUnit] = useState('');
 	const [reminderFrequencyNumber, setReminderFrequencyNumber] = useState('');
 	const [reminderTime, setReminderTime] = useState('');
+	const [userId, setUserId] = useState("62aae3416434f773dcfa9bd4")
 
 	const handleSubmit = (event: {
 		preventDefault: () => void;
 		currentTarget: HTMLFormElement | undefined;
 	}) => {
 		event.preventDefault();
-		// const data = new FormData(event.currentTarget);
-		let habitDetails = { name, description, frequencyUnit, frequencyNumber, privateHabit, reminderFrequencyUnit, reminderFrequencyNumber, reminderTime};
+		
+		let habitDetails = {userId, habitName, habitDesc, frequencyUnit, frequencyNumber, isPublic, reminderFrequencyUnit, reminderFrequencyNumber, reminderTime};
 		axios
-			.post('http://localhost:3004/createhabit',  { name, description, frequencyUnit, frequencyNumber})
+			.post('http://localhost:3004/createhabit',  { userId, habitName, habitDesc, isPublic, frequencyUnit, frequencyNumber})
 			.then((res) => {
 				let path = '/dashboard';
 				console.log('succesful habitcreation');
@@ -93,12 +94,12 @@ export default function CreateHabit() {
 							margin='normal'
 							required
 							fullWidth
-							id='name'
+							id='habitName'
 							label='Name'
-							name='name'
+							name='habitName'
 							autoComplete='name'
 							onChange={(event) => {
-								setName(event.target.value);
+								setHabitName(event.target.value);
 							}}
 							autoFocus
 						/>
@@ -106,11 +107,11 @@ export default function CreateHabit() {
 							margin='normal'
 							required
 							fullWidth
-							name='description'
+							name='habitDesc'
 							label='Description'
-							id='description'
+							id='habitDesc'
 							onChange={(event) => {
-								setDescription(event.target.value);
+								setHabitDesc(event.target.value);
 							}}
 						/>
 						<TextField
@@ -138,7 +139,8 @@ export default function CreateHabit() {
 							label='# of times'
 							id='frequencyNumber'
 							type='number'
-							InputProps={{ inputProps: { min: 1} }}
+							InputProps=
+							{{ inputProps: { min: 1} }}
 							onChange={(event) => {
 								setFrequencyNumber(event.target.value);
 							}}
@@ -146,10 +148,10 @@ export default function CreateHabit() {
 						<FormControlLabel 
 							control={<Checkbox />} 
 							label="Set Private"
-							value="private"
+							value={isPublic}
 							onChange={() => {
-								setPrivateHabit(!privateHabit);
-								console.log(privateHabit)
+								setIsPublic(!isPublic);
+								console.log(isPublic)
 							}}
 						 />
 						 
