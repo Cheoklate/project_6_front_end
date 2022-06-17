@@ -268,7 +268,6 @@ export default function FriendList() {
                     <Typography>Invite A Friend</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography>Placeholder</Typography>
                     <InviteFriend />
                   </AccordionDetails>
                 </Accordion>

@@ -8,7 +8,7 @@ import "./styles.css";
 export default function AddFriend() {
   return (
     <Box>
-      <Stack spacing={1}>
+      <Stack spacing={3}>
         <TextField
           className="inputRounded"
           placeholder="Username"
