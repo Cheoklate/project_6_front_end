@@ -39,9 +39,11 @@ export default function CreateHabit() {
 	const [frequencyNumber, setFrequencyNumber] = useState('0');
 	const [isPublic, setIsPublic] = React.useState(true);
 	const [reminderFrequencyUnit, setReminderFrequencyUnit] = useState('');
-	const [reminderFrequencyNumber, setReminderFrequencyNumber] = useState('');
-	const [reminderTime, setReminderTime] = useState('');
-	const [userId, setUserId] = useState("62aae3416434f773dcfa9bd4")
+	const [reminderFrequencyNumber, setReminderFrequencyNumber] = useState('0');
+	const [reminderTime, setReminderTime] = useState("09:00");
+	const [userId, setUserId] = useState("62aae7c2fd55155e96803269")
+	const [reminderMethod, setReminderMethod] = useState('email')
+	const [reminderMethodContact, setReminderMethodContact] = useState('')
 
 	const handleSubmit = (event: {
 		preventDefault: () => void;
@@ -49,9 +51,9 @@ export default function CreateHabit() {
 	}) => {
 		event.preventDefault();
 		
-		let habitDetails = {userId, habitName, habitDesc, frequencyUnit, frequencyNumber, isPublic, reminderFrequencyUnit, reminderFrequencyNumber, reminderTime};
+		let habitDetails = {userId, habitName, habitDesc, frequencyUnit, frequencyNumber, isPublic, reminderFrequencyUnit, reminderFrequencyNumber, reminderTime, reminderMethod, reminderMethodContact};
 		axios
-			.post('http://localhost:3004/createhabit',  { userId, habitName, habitDesc, isPublic, frequencyUnit, frequencyNumber})
+			.post('http://localhost:3004/createhabit', habitDetails)
 			.then((res) => {
 				let path = '/dashboard';
 				console.log('succesful habitcreation');
@@ -154,7 +156,35 @@ export default function CreateHabit() {
 								console.log(isPublic)
 							}}
 						 />
-						 
+						 <TextField
+							margin='normal'
+							required
+							fullWidth
+						 	name="reminderMethod"
+							label="Reminder Method"	
+							id="reminderMethod"  
+							defaultValue={reminderMethod}		  
+							onChange={(event) => {
+								setReminderMethod(event.target.value);
+							}} select>
+							<MenuItem value="email">Email</MenuItem>
+							<MenuItem value="telegram">Telegram</MenuItem>
+						</TextField>
+
+						<TextField
+							margin='normal'
+							required
+							fullWidth
+							id='reminderMethodContact'
+							name='reminderMethodContact'
+							label = 'email / tele handle'
+							autoComplete='name'
+							onChange={(event) => {
+								setReminderMethodContact(event.target.value);
+							}}
+							autoFocus
+						/>
+
 						 <TextField
 							margin='normal'
 							required
