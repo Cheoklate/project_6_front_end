@@ -50,7 +50,7 @@ function HabitActionButtons(habitId: any){
   
   const [clicked, setClicked] = useState('')
 	console.log('showing')
-  const submitAction = (event: any) =>{
+  const submitAction = (event: React.MouseEvent<HTMLButtonElement>) =>{
     setClicked(event.currentTarget.value)
     const userId = "62aae7c2fd55155e96803269"
     const habitUpdateData = {userId, habitId: habitId.habitId, action: event.currentTarget.value}
