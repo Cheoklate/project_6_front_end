@@ -45,7 +45,6 @@ const theme = createTheme({
 	},
 });
 
-<<<<<<< HEAD
 
 function HabitActionButtons(habitId: any){
   
@@ -66,47 +65,11 @@ function HabitActionButtons(habitId: any){
               <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'skip'? 'gray':'none', m:1}} value="skip" onClick={submitAction} startIcon={<RedoIcon/>}></Button>           
     </Box>
 	)
-=======
-//useState([{name:'', description:'', frequencyUnit:'', frequencyNumber:''}]);
-
-function HabitActionButtons() {
-	console.log('showing');
-	const submitAction = (event: any) => {
-		console.log(event.currentTarget.value);
-	};
-	return (
-		<Box component='div' sx={{ display: 'flex' }}>
-			{/* <Button type="submit" color="primary" sx={ { borderRadius: 50 } }>Y</Button>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>N</Button>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>S</Button>  */}
-			<Button
-				type='submit'
-				color='primary'
-				value='done'
-				onClick={submitAction}
-				startIcon={<CheckIcon />}
-			></Button>
-			<Button
-				color='primary'
-				value='undone'
-				onClick={submitAction}
-				startIcon={<CloseIcon />}
-			></Button>
-			<Button
-				color='primary'
-				value='skip'
-				onClick={submitAction}
-				startIcon={<RedoIcon />}
-			></Button>
-		</Box>
-	);
->>>>>>> eacb1adbf3cd9bc87ece156239661137a11bfa28
 }
 
 export default function AllHabits() {
 	let navigate = useNavigate();
 
-<<<<<<< HEAD
   const [allHabitDetails, setAllHabitDetails] = useState([])
 
 	// const allHabitDetails =  [{'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': 0, 'streak': 2, 'completionRate': 0.02}, {'name': 'water up', 'description': 'increase water intake', 'frequencyUnit': 'weekly' ,'frequencyNumber': 3, 'streak': 2, 'completionRate': 0.10}]
@@ -129,45 +92,6 @@ export default function AllHabits() {
       
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-=======
-	const allHabitDetails = [
-		{
-			name: 'veggie up',
-			description: 'increase daily veg intake',
-			frequencyUnit: 'daily',
-			frequencyNumber: 0,
-			streak: 2,
-			completionRate: 0.02,
-		},
-		{
-			name: 'water up',
-			description: 'increase water intake',
-			frequencyUnit: 'weekly',
-			frequencyNumber: 3,
-			streak: 2,
-			completionRate: 0.1,
-		},
-	];
-	console.log(allHabitDetails);
-
-	// React.useEffect(()=>{
-
-	// 	axios
-	// 		.get('http://localhost:3000/gethabit') //{habitId})
-	// 		.then(res => {
-	// 			// const details = res.data
-	// 			const details =  {'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': '0'}
-	// 			setHabitDetails([details])
-	// 			console.log(habitDetails);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log('get habit failed');
-	// 			console.log('error', error);
-	// 		});
-	// 		console.log(habitDetails);
-	// }, [habitDetails])
-
->>>>>>> eacb1adbf3cd9bc87ece156239661137a11bfa28
 	return (
 		<ThemeProvider theme={theme}>
 			<Container component='main' maxWidth='xs'>
@@ -186,7 +110,6 @@ export default function AllHabits() {
 					<Typography component='h1' variant='h5'>
 						All My Habits
 					</Typography>
-<<<<<<< HEAD
 					<Box
 						sx={{ mt: 1 }}
 					> 
@@ -203,30 +126,6 @@ export default function AllHabits() {
               </React.Fragment>
               )
             })}
-=======
-					<Box sx={{ mt: 1 }}>
-						{allHabitDetails.map((details) => {
-							return (
-								<>
-									<Box component='div' sx={{ display: 'inline' }}>
-										{details.name}{' '}
-									</Box>
-									<Box component='div' sx={{ display: 'inline' }}>
-										{details.frequencyNumber === 0
-											? null
-											: details.frequencyNumber}{' '}
-										times {details.frequencyUnit}
-									</Box>
-									<Box component='div' sx={{ display: 'block' }}>
-										streak: {details.streak}, completion:{' '}
-										{details.completionRate * 100}%
-									</Box>
-									<HabitActionButtons></HabitActionButtons>
-									<hr></hr>
-								</>
-							);
-						})}
->>>>>>> eacb1adbf3cd9bc87ece156239661137a11bfa28
 					</Box>
 				</Box>
 				<SimpleBottomNavigation />
