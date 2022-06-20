@@ -29,72 +29,69 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
+import SimpleBottomNavigation from './global_components/BottomNavigation';
 
 axios.defaults.withCredentials = true;
 
 const theme = createTheme({
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: 8,
-        },
-      }, 
-    }, 
-  },
+	components: {
+		MuiButton: {
+			styleOverrides: {
+				root: {
+					borderRadius: 8,
+				},
+			},
+		},
+	},
 });
-// const [habitDetails, setHabitDetails] =  useState([{'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': '0'}])
-
-//useState([{name:'', description:'', frequencyUnit:'', frequencyNumber:''}]);	
 
 
-
-
-function HabitActionButtons(){
+function HabitActionButtons(habitId: any){
   
+  const [clicked, setClicked] = useState('')
 	console.log('showing')
   const submitAction = (event: any) =>{
-    console.log(event.currentTarget.value)
+    setClicked(event.currentTarget.value)
+    const userId = "62aae7c2fd55155e96803269"
+    const habitUpdateData = {userId, habitId: habitId.habitId, action: event.currentTarget.value}
+    axios
+      .post("http://localhost:3004/updatehabit", habitUpdateData)
+      .then(res=> console.log(res))
   }
 	return (
 		<Box component="div" sx={{ display: 'flex' }}>
-							{/* <Button type="submit" color="primary" sx={ { borderRadius: 50 } }>Y</Button>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>N</Button>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>S</Button>  */}
-              <Button type='submit' color="primary" value="done" onClick={submitAction} startIcon={<CheckIcon />}></Button>
-              <Button color="primary" value="undone" onClick={submitAction} startIcon={<CloseIcon />}></Button>
-              <Button color="primary" value="skip" onClick={submitAction} startIcon={<RedoIcon />}></Button>
-              
+              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'done'? 'green':'none', m:1}}value="done" onClick={submitAction} startIcon={<CheckIcon/>} ></Button>
+              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'undone'? 'red':'none',m:1}} value="undone" onClick={submitAction} startIcon={<CloseIcon/>}></Button>
+              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'skip'? 'gray':'none', m:1}} value="skip" onClick={submitAction} startIcon={<RedoIcon/>}></Button>           
     </Box>
 	)
 }
 
-
-
 export default function AllHabits() {
-
 	let navigate = useNavigate();
 
-	const allHabitDetails =  [{'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': 0, 'streak': 2, 'completionRate': 0.02}, {'name': 'water up', 'description': 'increase water intake', 'frequencyUnit': 'weekly' ,'frequencyNumber': 3, 'streak': 2, 'completionRate': 0.10}]
-	console.log(allHabitDetails)
+  const [allHabitDetails, setAllHabitDetails] = useState([])
 
-	// React.useEffect(()=>{
-		
-	// 	axios
-	// 		.get('http://localhost:3000/gethabit') //{habitId})
-	// 		.then(res => {
-	// 			// const details = res.data
-	// 			const details =  {'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': '0'}
-	// 			setHabitDetails([details])
-	// 			console.log(habitDetails);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log('get habit failed');
-	// 			console.log('error', error);
-	// 		});
-	// 		console.log(habitDetails);
-	// }, [habitDetails])
+	// const allHabitDetails =  [{'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': 0, 'streak': 2, 'completionRate': 0.02}, {'name': 'water up', 'description': 'increase water intake', 'frequencyUnit': 'weekly' ,'frequencyNumber': 3, 'streak': 2, 'completionRate': 0.10}]
+	// console.log(allHabitDetails)
 
+	React.useEffect(()=>{
+		// const userId = "62aae7c2fd55155e96803269"
+    
+		axios
+			.get('http://localhost:3004/allhabits',{params: {userId: "62aae7c2fd55155e96803269"}} )
+			.then(res => {
+        setAllHabitDetails(res.data)
+        console.log(allHabitDetails, allHabitDetails.length)
+
+			})
+			.catch((error) => {
+				console.log('get habit failed');
+				console.log('error', error);
+			});
+      
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 	return (
 		<ThemeProvider theme={theme}>
 			<Container component='main' maxWidth='xs'>
@@ -116,18 +113,22 @@ export default function AllHabits() {
 					<Box
 						sx={{ mt: 1 }}
 					> 
-            {allHabitDetails.map((details)=>{
-              return <>
-              
-              <Box component="div" sx={{ display: 'inline' }}>{details.name} </Box>
-              <Box component="div" sx={{ display: 'inline' }}>{details.frequencyNumber === 0 ? null : details.frequencyNumber} times {details.frequencyUnit}</Box>
-              <Box component="div" sx={{ display: 'block' }}>streak: {details.streak}, completion: {details.completionRate*100}%</Box>
-              <HabitActionButtons></HabitActionButtons>
+            {allHabitDetails.length >= 1 &&  allHabitDetails.map((details, index)=>{
+              return (
+                <React.Fragment key={index}>
+            
+              {/* <Box component="div" sx={{ display: 'inline' }}>{details.frequencyNumber === 0 ? null : details.frequencyNumber} times {details.frequencyUnit}</Box> */}
+              <Box  component="div" sx={{ display: 'block' }}>
+                {details['habitName']} <br/>
+                streak: {details['habitStreak']['streakCount']}, completed: {details['habitStreak']['totalCompleted']}</Box>
+              <HabitActionButtons habitId={details['userHabits_id']}></HabitActionButtons>
               <hr></hr>
-              </>
+              </React.Fragment>
+              )
             })}
 					</Box>
 				</Box>
+				<SimpleBottomNavigation />
 			</Container>
 		</ThemeProvider>
 	);

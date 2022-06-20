@@ -33,7 +33,7 @@ root.render(
 			}
 		>
 			<Routes>
-				<Route path='signup' element={<SignUpPage />} />
+				<Route path='' element={<SignUpPage />} />
 				<Route path='signin' element={<SignInPage />} />
 				<Route path='createhabit' element={<CreateHabit />} />
 				<Route path='viewhabit' element={<ViewHabit />} />
