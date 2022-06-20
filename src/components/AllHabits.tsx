@@ -29,57 +29,83 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
+import SimpleBottomNavigation from './global_components/BottomNavigation';
 
 axios.defaults.withCredentials = true;
 
 const theme = createTheme({
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: 8,
-        },
-      }, 
-    }, 
-  },
+	components: {
+		MuiButton: {
+			styleOverrides: {
+				root: {
+					borderRadius: 8,
+				},
+			},
+		},
+	},
 });
 // const [habitDetails, setHabitDetails] =  useState([{'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': '0'}])
 
-//useState([{name:'', description:'', frequencyUnit:'', frequencyNumber:''}]);	
+//useState([{name:'', description:'', frequencyUnit:'', frequencyNumber:''}]);
 
-
-
-
-function HabitActionButtons(){
-  
-	console.log('showing')
-  const submitAction = (event: any) =>{
-    console.log(event.currentTarget.value)
-  }
+function HabitActionButtons() {
+	console.log('showing');
+	const submitAction = (event: any) => {
+		console.log(event.currentTarget.value);
+	};
 	return (
-		<Box component="div" sx={{ display: 'flex' }}>
-							{/* <Button type="submit" color="primary" sx={ { borderRadius: 50 } }>Y</Button>
+		<Box component='div' sx={{ display: 'flex' }}>
+			{/* <Button type="submit" color="primary" sx={ { borderRadius: 50 } }>Y</Button>
 							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>N</Button>
 							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>S</Button>  */}
-              <Button type='submit' color="primary" value="done" onClick={submitAction} startIcon={<CheckIcon />}></Button>
-              <Button color="primary" value="undone" onClick={submitAction} startIcon={<CloseIcon />}></Button>
-              <Button color="primary" value="skip" onClick={submitAction} startIcon={<RedoIcon />}></Button>
-              
-    </Box>
-	)
+			<Button
+				type='submit'
+				color='primary'
+				value='done'
+				onClick={submitAction}
+				startIcon={<CheckIcon />}
+			></Button>
+			<Button
+				color='primary'
+				value='undone'
+				onClick={submitAction}
+				startIcon={<CloseIcon />}
+			></Button>
+			<Button
+				color='primary'
+				value='skip'
+				onClick={submitAction}
+				startIcon={<RedoIcon />}
+			></Button>
+		</Box>
+	);
 }
 
-
-
 export default function AllHabits() {
-
 	let navigate = useNavigate();
 
-	const allHabitDetails =  [{'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': 0, 'streak': 2, 'completionRate': 0.02}, {'name': 'water up', 'description': 'increase water intake', 'frequencyUnit': 'weekly' ,'frequencyNumber': 3, 'streak': 2, 'completionRate': 0.10}]
-	console.log(allHabitDetails)
+	const allHabitDetails = [
+		{
+			name: 'veggie up',
+			description: 'increase daily veg intake',
+			frequencyUnit: 'daily',
+			frequencyNumber: 0,
+			streak: 2,
+			completionRate: 0.02,
+		},
+		{
+			name: 'water up',
+			description: 'increase water intake',
+			frequencyUnit: 'weekly',
+			frequencyNumber: 3,
+			streak: 2,
+			completionRate: 0.1,
+		},
+	];
+	console.log(allHabitDetails);
 
 	// React.useEffect(()=>{
-		
+
 	// 	axios
 	// 		.get('http://localhost:3000/gethabit') //{habitId})
 	// 		.then(res => {
@@ -113,21 +139,31 @@ export default function AllHabits() {
 					<Typography component='h1' variant='h5'>
 						All My Habits
 					</Typography>
-					<Box
-						sx={{ mt: 1 }}
-					> 
-            {allHabitDetails.map((details)=>{
-              return <>
-              
-              <Box component="div" sx={{ display: 'inline' }}>{details.name} </Box>
-              <Box component="div" sx={{ display: 'inline' }}>{details.frequencyNumber === 0 ? null : details.frequencyNumber} times {details.frequencyUnit}</Box>
-              <Box component="div" sx={{ display: 'block' }}>streak: {details.streak}, completion: {details.completionRate*100}%</Box>
-              <HabitActionButtons></HabitActionButtons>
-              <hr></hr>
-              </>
-            })}
+					<Box sx={{ mt: 1 }}>
+						{allHabitDetails.map((details) => {
+							return (
+								<>
+									<Box component='div' sx={{ display: 'inline' }}>
+										{details.name}{' '}
+									</Box>
+									<Box component='div' sx={{ display: 'inline' }}>
+										{details.frequencyNumber === 0
+											? null
+											: details.frequencyNumber}{' '}
+										times {details.frequencyUnit}
+									</Box>
+									<Box component='div' sx={{ display: 'block' }}>
+										streak: {details.streak}, completion:{' '}
+										{details.completionRate * 100}%
+									</Box>
+									<HabitActionButtons></HabitActionButtons>
+									<hr></hr>
+								</>
+							);
+						})}
 					</Box>
 				</Box>
+				<SimpleBottomNavigation />
 			</Container>
 		</ThemeProvider>
 	);
