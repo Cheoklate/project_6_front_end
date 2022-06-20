@@ -1,15 +1,14 @@
 import * as React from 'react';
-import { useState } from 'react';
+
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import Typography, { TypographyClasses } from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {
@@ -20,10 +19,19 @@ import {
 } from '@mui/material/styles';
 import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import SimpleBottomNavigation from './global_components/BottomNavigation';
 
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
+
+import InviteFriend from './InviteFriend';
+import AllFriends from './AllFriends';
+import AddFriend from './AddFriend';
+import FriendRequest from './FriendRequest';
+import SimpleBottomNavigation from './global_components/BottomNavigation';
 
 function Copyright(
 	props: JSX.IntrinsicAttributes & {
@@ -199,50 +207,7 @@ function Copyright(
 
 const theme = createTheme();
 
-export default function SignUp() {
-	let navigate = useNavigate();
-	const [firstName, setfirstName] = useState('');
-	const [lastName, setlastName] = useState('');
-	const [email, setEmail] = useState('');
-	const [userName, setUsername] = useState('');
-	const [password, setPassword] = useState('');
-	const userFriends: any = [];
-	const handleSubmit = (event: {
-		preventDefault: () => void;
-		currentTarget: HTMLFormElement | undefined;
-	}) => {
-		event.preventDefault();
-		const data = new FormData(event.currentTarget);
-		let signupDetails = {
-			firstName: firstName,
-			lastName: lastName,
-			userName: userName,
-			email: email,
-			password: password,
-			userFriends: userFriends,
-		};
-		axios
-			.post('http://localhost:3004/signup', signupDetails)
-			.then((res) => {
-				let path = '/signin';
-				console.log('succesful signup');
-				console.log('data', res.data);
-				const { id, email } = res.data;
-				navigate(path);
-			})
-			.catch((error) => {
-				console.log('signup failed');
-				console.log('error', error);
-			});
-		console.log({
-			firstName: data.get('firstName'),
-			lastName: data.get('lastName'),
-			userName: data.get('userName'),
-			email: data.get('email'),
-			password: data.get('password'),
-		});
-	};
-
+export default function FriendList() {
 	return (
 		<ThemeProvider theme={theme}>
 			<Container component='main' maxWidth='xs'>
@@ -256,107 +221,72 @@ export default function SignUp() {
 					}}
 				>
 					<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-						<LockOutlinedIcon />
+						<PeopleAltIcon />
 					</Avatar>
 					<Typography component='h1' variant='h5'>
-						Sign up
+						Friends
 					</Typography>
-					<Box
-						component='form'
-						noValidate
-						onSubmit={handleSubmit}
-						sx={{ mt: 3 }}
-					>
+					<Box sx={{ mt: 3, mb: 4 }}>
 						<Grid container spacing={2}>
-							<Grid item xs={12} sm={6}>
-								<TextField
-									required
-									fullWidth
-									id='firstName'
-									label='First Name'
-									name='firstName'
-									autoComplete='family-name'
-									onChange={(event) => {
-										setfirstName(event.target.value);
-									}}
-								/>
-							</Grid>
-							<Grid item xs={12} sm={6}>
-								<TextField
-									required
-									fullWidth
-									id='lastName'
-									label='Last Name'
-									name='lastName'
-									autoComplete='family-name'
-									onChange={(event) => {
-										setlastName(event.target.value);
-									}}
-								/>
-							</Grid>
 							<Grid item xs={12}>
-								<TextField
-									autoComplete='username'
-									name='userName'
-									required
-									fullWidth
-									id='userName'
-									label='Username'
-									autoFocus
-									onChange={(event) => {
-										setUsername(event.target.value);
-									}}
-								/>
+								<Accordion>
+									<AccordionSummary
+										expandIcon={<PeopleAltIcon />}
+										aria-controls='panel1a-content'
+										id='panel1a-header'
+									>
+										<Typography>Friend Request</Typography>
+									</AccordionSummary>
+									<AccordionDetails>
+										<FriendRequest />
+									</AccordionDetails>
+								</Accordion>
 							</Grid>
+
 							<Grid item xs={12}>
-								<TextField
-									required
-									fullWidth
-									id='email'
-									label='Email Address'
-									name='email'
-									autoComplete='email'
-									onChange={(event) => {
-										setEmail(event.target.value);
-									}}
-								/>
+								<Accordion>
+									<AccordionSummary
+										expandIcon={<PersonAddIcon />}
+										aria-controls='panel1a-content'
+										id='panel1a-header'
+									>
+										<Typography>Add A Friend</Typography>
+									</AccordionSummary>
+									<AccordionDetails>
+										<AddFriend />
+									</AccordionDetails>
+								</Accordion>
 							</Grid>
+
 							<Grid item xs={12}>
-								<TextField
-									required
-									fullWidth
-									name='password'
-									label='Password'
-									type='password'
-									id='password'
-									autoComplete='new-password'
-									onChange={(event) => {
-										setPassword(event.target.value);
-									}}
-								/>
+								<Accordion>
+									<AccordionSummary
+										expandIcon={<MarkEmailReadIcon />}
+										aria-controls='panel1a-content'
+										id='panel1a-header'
+									>
+										<Typography>Invite A Friend</Typography>
+									</AccordionSummary>
+									<AccordionDetails>
+										<Typography>Placeholder</Typography>
+										<InviteFriend />
+									</AccordionDetails>
+								</Accordion>
 							</Grid>
+
 							<Grid item xs={12}>
-								<FormControlLabel
-									control={
-										<Checkbox value='allowExtraEmails' color='primary' />
-									}
-									label='I want to receive inspiration, marketing promotions and updates via email.'
-								/>
-							</Grid>
-						</Grid>
-						<Button
-							type='submit'
-							fullWidth
-							variant='contained'
-							sx={{ mt: 3, mb: 2 }}
-						>
-							Sign Up
-						</Button>
-						<Grid container justifyContent='flex-end'>
-							<Grid item>
-								<Link href='signin' variant='body2'>
-									Already have an account? Sign in
-								</Link>
+								<Accordion>
+									<AccordionSummary
+										expandIcon={<ExpandMoreIcon />}
+										aria-controls='panel1a-content'
+										id='panel1a-header'
+									>
+										<Typography>All Friends</Typography>
+									</AccordionSummary>
+									<AccordionDetails>
+										<AllFriends />
+									</AccordionDetails>
+								</Accordion>
 							</Grid>
 						</Grid>
 					</Box>
@@ -364,7 +294,7 @@ export default function SignUp() {
 				<Typography variant='body2' color='text.secondary' align='center'>
 					<Copyright sx={{ mt: 8, mb: 4 }} component={'symbol'} />
 				</Typography>
-				<SimpleBottomNavigation/>
+				<SimpleBottomNavigation />
 			</Container>
 		</ThemeProvider>
 	);

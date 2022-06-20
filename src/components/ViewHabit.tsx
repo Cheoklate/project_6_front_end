@@ -28,66 +28,71 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
+import SimpleBottomNavigation from './global_components/BottomNavigation';
 
 axios.defaults.withCredentials = true;
 
 const theme = createTheme();
 // const [habitDetails, setHabitDetails] =  useState([{'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': '0'}])
 
-//useState([{name:'', description:'', frequencyUnit:'', frequencyNumber:''}]);	
+//useState([{name:'', description:'', frequencyUnit:'', frequencyNumber:''}]);
 
-function HabitActionButtons(){
-	console.log('showing')
+function HabitActionButtons() {
+	console.log('showing');
 	return (
-		<Box component="div" sx={{ display: 'flex' }}>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>Y</Button>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>N</Button>
-							<Button type="submit" color="primary" sx={ { borderRadius: 50 } }>S</Button> </Box>
-	)
+		<Box component='div' sx={{ display: 'flex' }}>
+			<Button type='submit' color='primary' sx={{ borderRadius: 50 }}>
+				Y
+			</Button>
+			<Button type='submit' color='primary' sx={{ borderRadius: 50 }}>
+				N
+			</Button>
+			<Button type='submit' color='primary' sx={{ borderRadius: 50 }}>
+				S
+			</Button>{' '}
+		</Box>
+	);
 }
 
-
 function StaticDatePickerLandscape() {
-  const [value, setValue] = React.useState<Date | null>(new Date());
-	const [showAction, setShowAction] = React.useState<boolean>(false)
-	
+	const [value, setValue] = React.useState<Date | null>(new Date());
+	const [showAction, setShowAction] = React.useState<boolean>(false);
 
-  return (
+	return (
 		<Box>
-		{showAction ? <HabitActionButtons></HabitActionButtons> : null}
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <StaticDatePicker<Date>
-        orientation="landscape"
-        openTo="day"
-        value={value}
-				
-				ToolbarComponent={()=>
-					<Box display="flex"></Box>}
-				onChange={()=>{
-					console.log(value)
-					setShowAction(true)
-					setValue(value)
-					console.log(showAction)
-				}}
-				
-        renderInput={(params) => <TextField {...params} />}/>
-
+			{showAction ? <HabitActionButtons></HabitActionButtons> : null}
+			<LocalizationProvider dateAdapter={AdapterDateFns}>
+				<StaticDatePicker<Date>
+					orientation='landscape'
+					openTo='day'
+					value={value}
+					ToolbarComponent={() => <Box display='flex'></Box>}
+					onChange={() => {
+						console.log(value);
+						setShowAction(true);
+						setValue(value);
+						console.log(showAction);
+					}}
+					renderInput={(params) => <TextField {...params} />}
+				/>
 			</LocalizationProvider>
 		</Box>
-  )
+	);
 }
 
 export default function ViewHabit() {
-
 	let navigate = useNavigate();
-	
-	
 
-	const habitDetails =  {'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': '0'}
-	console.log(habitDetails)
+	const habitDetails = {
+		name: 'veggie up',
+		description: 'increase daily veg intake',
+		frequencyUnit: 'daily',
+		frequencyNumber: '0',
+	};
+	console.log(habitDetails);
 
 	// React.useEffect(()=>{
-		
+
 	// 	axios
 	// 		.get('http://localhost:3004/gethabit') //{habitId})
 	// 		.then(res => {
@@ -121,18 +126,25 @@ export default function ViewHabit() {
 					<Typography component='h1' variant='h5'>
 						View Habit
 					</Typography>
-					<Box
-						sx={{ mt: 1 }}
-					>
-						<Box component="div" sx={{ display: 'inline' }} >{habitDetails.name} </Box>
-						<Box component="div" sx={{ display: 'inline' }}>{habitDetails.frequencyNumber === '0' ? null :habitDetails.frequencyNumber } </Box>
-						<Box component="div" sx={{ display: 'inline' }}>{habitDetails.frequencyUnit}</Box>
-						<Box component="div" sx={{ display: 'block' }}>{habitDetails.description}</Box>
+					<Box sx={{ mt: 1 }}>
+						<Box component='div' sx={{ display: 'inline' }}>
+							{habitDetails.name}{' '}
+						</Box>
+						<Box component='div' sx={{ display: 'inline' }}>
+							{habitDetails.frequencyNumber === '0'
+								? null
+								: habitDetails.frequencyNumber}{' '}
+						</Box>
+						<Box component='div' sx={{ display: 'inline' }}>
+							{habitDetails.frequencyUnit}
+						</Box>
+						<Box component='div' sx={{ display: 'block' }}>
+							{habitDetails.description}
+						</Box>
 						<StaticDatePickerLandscape></StaticDatePickerLandscape>
-						
-						
 					</Box>
 				</Box>
+				<SimpleBottomNavigation />
 			</Container>
 		</ThemeProvider>
 	);

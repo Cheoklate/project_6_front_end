@@ -26,6 +26,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
+import SimpleBottomNavigation from './global_components/BottomNavigation';
 
 axios.defaults.withCredentials = true;
 
@@ -39,21 +40,51 @@ export default function CreateHabit() {
 	const [frequencyNumber, setFrequencyNumber] = useState('0');
 	const [isPublic, setIsPublic] = React.useState(true);
 	const [reminderFrequencyUnit, setReminderFrequencyUnit] = useState('');
+<<<<<<< HEAD
 	const [reminderFrequencyNumber, setReminderFrequencyNumber] = useState('0');
 	const [reminderTime, setReminderTime] = useState("09:00");
 	const [userId, setUserId] = useState("62aae7c2fd55155e96803269")
 	const [reminderMethod, setReminderMethod] = useState('email')
 	const [reminderMethodContact, setReminderMethodContact] = useState('')
+=======
+	const [reminderFrequencyNumber, setReminderFrequencyNumber] = useState('');
+	const [reminderTime, setReminderTime] = useState('');
+	const [userId, setUserId] = useState('62aae3416434f773dcfa9bd4');
+>>>>>>> eacb1adbf3cd9bc87ece156239661137a11bfa28
 
 	const handleSubmit = (event: {
 		preventDefault: () => void;
 		currentTarget: HTMLFormElement | undefined;
 	}) => {
 		event.preventDefault();
+<<<<<<< HEAD
 		
 		let habitDetails = {userId, habitName, habitDesc, frequencyUnit, frequencyNumber, isPublic, reminderFrequencyUnit, reminderFrequencyNumber, reminderTime, reminderMethod, reminderMethodContact};
 		axios
 			.post('http://localhost:3004/createhabit', habitDetails)
+=======
+
+		let habitDetails = {
+			userId,
+			habitName,
+			habitDesc,
+			frequencyUnit,
+			frequencyNumber,
+			isPublic,
+			reminderFrequencyUnit,
+			reminderFrequencyNumber,
+			reminderTime,
+		};
+		axios
+			.post('http://localhost:3004/createhabit', {
+				userId,
+				habitName,
+				habitDesc,
+				isPublic,
+				frequencyUnit,
+				frequencyNumber,
+			})
+>>>>>>> eacb1adbf3cd9bc87ece156239661137a11bfa28
 			.then((res) => {
 				let path = '/dashboard';
 				console.log('succesful habitcreation');
@@ -120,41 +151,43 @@ export default function CreateHabit() {
 							margin='normal'
 							required
 							fullWidth
-						 	name="frequencyUnit"
-							label="Habit Frequency"	
-							id="frequencyUnit"  
-							defaultValue=""
-							  
+							name='frequencyUnit'
+							label='Habit Frequency'
+							id='frequencyUnit'
+							defaultValue=''
 							onChange={(event) => {
 								setFrequencyUnit(event.target.value);
-							}} select>
-							<MenuItem value="daily">Daily</MenuItem>
-							<MenuItem value="weekly">Weekly</MenuItem>
-							<MenuItem value="monthly">Monthly</MenuItem>
-						</TextField>
-						{frequencyUnit !== "daily" && frequencyUnit !== "" ?
-						<TextField
-							margin='normal'
-							required
-							fullWidth
-							name='frequencyNumber'
-							label='# of times'
-							id='frequencyNumber'
-							type='number'
-							InputProps=
-							{{ inputProps: { min: 1} }}
-							onChange={(event) => {
-								setFrequencyNumber(event.target.value);
 							}}
-						/>	: null}	
-						<FormControlLabel 
-							control={<Checkbox />} 
-							label="Set Private"
+							select
+						>
+							<MenuItem value='daily'>Daily</MenuItem>
+							<MenuItem value='weekly'>Weekly</MenuItem>
+							<MenuItem value='monthly'>Monthly</MenuItem>
+						</TextField>
+						{frequencyUnit !== 'daily' && frequencyUnit !== '' ? (
+							<TextField
+								margin='normal'
+								required
+								fullWidth
+								name='frequencyNumber'
+								label='# of times'
+								id='frequencyNumber'
+								type='number'
+								InputProps={{ inputProps: { min: 1 } }}
+								onChange={(event) => {
+									setFrequencyNumber(event.target.value);
+								}}
+							/>
+						) : null}
+						<FormControlLabel
+							control={<Checkbox />}
+							label='Set Private'
 							value={isPublic}
 							onChange={() => {
 								setIsPublic(!isPublic);
-								console.log(isPublic)
+								console.log(isPublic);
 							}}
+<<<<<<< HEAD
 						 />
 						 <TextField
 							margin='normal'
@@ -186,40 +219,48 @@ export default function CreateHabit() {
 						/>
 
 						 <TextField
+=======
+						/>
+
+						<TextField
+>>>>>>> eacb1adbf3cd9bc87ece156239661137a11bfa28
 							margin='normal'
 							required
 							fullWidth
-						 	name="reminderFrequencyUnit"
-							label="Reminder Frequency"	
-							id="reminderFrequencyUnit"  
-							defaultValue=""
-							  
+							name='reminderFrequencyUnit'
+							label='Reminder Frequency'
+							id='reminderFrequencyUnit'
+							defaultValue=''
 							onChange={(event) => {
 								setReminderFrequencyUnit(event.target.value);
-							}} select>
-							<MenuItem value="daily">Daily</MenuItem>
-							<MenuItem value="weekly">Weekly</MenuItem>
-							<MenuItem value="monthly">Monthly</MenuItem>
-						</TextField>
-						{reminderFrequencyUnit !== "daily" && reminderFrequencyUnit !== ""  ?
-						<TextField
-							margin='normal'
-							required
-							name='reminderFrequencyNumber'
-							label='Number'
-							id='reminderFrequencyNumber'
-							type='number'
-							InputProps={{ inputProps: { min: 1} }}
-							onChange={(event) => {
-								setReminderFrequencyNumber(event.target.value);
 							}}
-						/> : null }
+							select
+						>
+							<MenuItem value='daily'>Daily</MenuItem>
+							<MenuItem value='weekly'>Weekly</MenuItem>
+							<MenuItem value='monthly'>Monthly</MenuItem>
+						</TextField>
+						{reminderFrequencyUnit !== 'daily' &&
+						reminderFrequencyUnit !== '' ? (
+							<TextField
+								margin='normal'
+								required
+								name='reminderFrequencyNumber'
+								label='Number'
+								id='reminderFrequencyNumber'
+								type='number'
+								InputProps={{ inputProps: { min: 1 } }}
+								onChange={(event) => {
+									setReminderFrequencyNumber(event.target.value);
+								}}
+							/>
+						) : null}
 						<TextField
-							id="reminderTime"
+							id='reminderTime'
 							name='reminderTime'
-							label="Reminder Time"
-							type="time"
-							defaultValue="09:00"
+							label='Reminder Time'
+							type='time'
+							defaultValue='09:00'
 							InputLabelProps={{
 								shrink: true,
 							}}
@@ -232,7 +273,6 @@ export default function CreateHabit() {
 							}}
 						/>
 
-					
 						<Button
 							type='submit'
 							fullWidth
@@ -243,6 +283,7 @@ export default function CreateHabit() {
 						</Button>
 					</Box>
 				</Box>
+				<SimpleBottomNavigation />
 			</Container>
 		</ThemeProvider>
 	);

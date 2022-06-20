@@ -22,6 +22,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
+import SimpleBottomNavigation from './global_components/BottomNavigation';
 
 axios.defaults.withCredentials = true;
 
@@ -308,6 +309,7 @@ export default function SignIn() {
 				<Typography variant='body2' color='text.secondary' align='center'>
 					<Copyright sx={{ mt: 8, mb: 4 }} component={'symbol'} />
 				</Typography>
+				<SimpleBottomNavigation />
 			</Container>
 		</ThemeProvider>
 	);
