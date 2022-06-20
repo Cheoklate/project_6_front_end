@@ -94,7 +94,7 @@ export default function ViewHabit() {
 	// React.useEffect(()=>{
 
 	// 	axios
-	// 		.get('http://localhost:3000/gethabit') //{habitId})
+	// 		.get('http://localhost:3004/gethabit') //{habitId})
 	// 		.then(res => {
 	// 			// const details = res.data
 	// 			const details =  {'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': '0'}
