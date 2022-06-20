@@ -258,21 +258,20 @@ export default function FriendList() {
 								</Accordion>
 							</Grid>
 
-							<Grid item xs={12}>
-								<Accordion>
-									<AccordionSummary
-										expandIcon={<MarkEmailReadIcon />}
-										aria-controls='panel1a-content'
-										id='panel1a-header'
-									>
-										<Typography>Invite A Friend</Typography>
-									</AccordionSummary>
-									<AccordionDetails>
-										<Typography>Placeholder</Typography>
-										<InviteFriend />
-									</AccordionDetails>
-								</Accordion>
-							</Grid>
+              <Grid item xs={12}>
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<MarkEmailReadIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>Invite A Friend</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <InviteFriend />
+                  </AccordionDetails>
+                </Accordion>
+              </Grid>
 
 							<Grid item xs={12}>
 								<Accordion>
