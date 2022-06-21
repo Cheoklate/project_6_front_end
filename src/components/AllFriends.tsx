@@ -23,6 +23,7 @@ React.useEffect(()=>{
       {allFriends.map(friend=>{
         return (
           <Chip 
+          key={friend['_id']}
            variant="outlined"
            avatar={<Avatar>{friend['userName'][0]}</Avatar>} label={friend['userName']} />
         )
