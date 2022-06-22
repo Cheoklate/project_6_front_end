@@ -1,4 +1,5 @@
 import * as React from 'react';
+import "./styles.css"; 
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -70,185 +71,196 @@ export default function CreateHabit() {
 	};
 
 	return (
-		<ThemeProvider theme={theme}>
-			<Container component='main' maxWidth='xs'>
-				<CssBaseline />
-				<Box
-					sx={{
-						marginTop: 8,
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-					}}
-				>
-					<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-						<LockOutlinedIcon />
-					</Avatar>
-					<Typography component='h1' variant='h5'>
-						Create Habit
-					</Typography>
-					<Box
-						component='form'
-						onSubmit={handleSubmit}
-						noValidate
-						sx={{ mt: 1 }}
-					>
-						<TextField
-							margin='normal'
-							required
-							fullWidth
-							id='habitName'
-							label='Name'
-							name='habitName'
-							autoComplete='name'
-							onChange={(event) => {
-								setHabitName(event.target.value);
-							}}
-							autoFocus
-						/>
-						<TextField
-							margin='normal'
-							required
-							fullWidth
-							name='habitDesc'
-							label='Description'
-							id='habitDesc'
-							onChange={(event) => {
-								setHabitDesc(event.target.value);
-							}}
-						/>
-						<TextField
-							margin='normal'
-							required
-							fullWidth
-							name='frequencyUnit'
-							label='Habit Frequency'
-							id='frequencyUnit'
-							defaultValue=''
-							onChange={(event) => {
-								setFrequencyUnit(event.target.value);
-							}}
-							select
-						>
-							<MenuItem value='daily'>Daily</MenuItem>
-							<MenuItem value='weekly'>Weekly</MenuItem>
-							<MenuItem value='monthly'>Monthly</MenuItem>
-						</TextField>
-						{frequencyUnit !== 'daily' && frequencyUnit !== '' ? (
-							<TextField
-								margin='normal'
-								required
-								fullWidth
-								name='frequencyNumber'
-								label='# of times'
-								id='frequencyNumber'
-								type='number'
-								InputProps={{ inputProps: { min: 1 } }}
-								onChange={(event) => {
-									setFrequencyNumber(event.target.value);
-								}}
-							/>
-						) : null}
-						<FormControlLabel
-							control={<Checkbox />}
-							label='Set Private'
-							value={isPublic}
-							onChange={() => {
-								setIsPublic(!isPublic);
-								console.log(isPublic);
-							}}
-						 />
-						 <TextField
-							margin='normal'
-							required
-							fullWidth
-						 	name="reminderMethod"
-							label="Reminder Method"	
-							id="reminderMethod"  
-							defaultValue={reminderMethod}		  
-							onChange={(event) => {
-								setReminderMethod(event.target.value);
-							}} select>
-							<MenuItem value="email">Email</MenuItem>
-							<MenuItem value="telegram">Telegram</MenuItem>
-						</TextField>
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Create Habit
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              className="inputRounded"
+              margin="normal"
+              required
+              fullWidth
+              id="habitName"
+              label="Name"
+              name="habitName"
+              autoComplete="name"
+              onChange={(event) => {
+                setHabitName(event.target.value);
+              }}
+              autoFocus
+            />
+            <TextField
+              className="inputRounded"
+              margin="normal"
+              required
+              fullWidth
+              name="habitDesc"
+              label="Description"
+              id="habitDesc"
+              onChange={(event) => {
+                setHabitDesc(event.target.value);
+              }}
+            />
+            <TextField
+              margin="normal"
+              className="inputRounded"
+              required
+              fullWidth
+              name="frequencyUnit"
+              label="Habit Frequency"
+              id="frequencyUnit"
+              defaultValue=""
+              onChange={(event) => {
+                setFrequencyUnit(event.target.value);
+              }}
+              select
+            >
+              <MenuItem value="daily">Daily</MenuItem>
+              <MenuItem value="weekly">Weekly</MenuItem>
+              <MenuItem value="monthly">Monthly</MenuItem>
+            </TextField>
+            {frequencyUnit !== "daily" && frequencyUnit !== "" ? (
+              <TextField
+                className="inputRounded"
+                margin="normal"
+                required
+                fullWidth
+                name="frequencyNumber"
+                label="# of times"
+                id="frequencyNumber"
+                type="number"
+                InputProps={{ inputProps: { min: 1 } }}
+                onChange={(event) => {
+                  setFrequencyNumber(event.target.value);
+                }}
+              />
+            ) : null}
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Set Private"
+              value={isPublic}
+              onChange={() => {
+                setIsPublic(!isPublic);
+                console.log(isPublic);
+              }}
+            />
+            <TextField
+              className="inputRounded"
+              margin="normal"
+              required
+              fullWidth
+              name="reminderMethod"
+              label="Reminder Method"
+              id="reminderMethod"
+              defaultValue={reminderMethod}
+              onChange={(event) => {
+                setReminderMethod(event.target.value);
+              }}
+              select
+            >
+              <MenuItem value="email">Email</MenuItem>
+              <MenuItem value="telegram">Telegram</MenuItem>
+            </TextField>
 
-						<TextField
-							margin='normal'
-							required
-							fullWidth
-							id='reminderMethodContact'
-							name='reminderMethodContact'
-							label = 'email / tele handle'
-							autoComplete='name'
-							onChange={(event) => {
-								setReminderMethodContact(event.target.value);
-							}}
-							autoFocus
-						/>
+            <TextField
+              className="inputRounded"
+              margin="normal"
+              required
+              fullWidth
+              id="reminderMethodContact"
+              name="reminderMethodContact"
+              label="email / tele handle"
+              autoComplete="name"
+              onChange={(event) => {
+                setReminderMethodContact(event.target.value);
+              }}
+              autoFocus
+            />
 
-						 <TextField
-							margin='normal'
-							required
-							fullWidth
-							name='reminderFrequencyUnit'
-							label='Reminder Frequency'
-							id='reminderFrequencyUnit'
-							defaultValue=''
-							onChange={(event) => {
-								setReminderFrequencyUnit(event.target.value);
-							}}
-							select
-						>
-							<MenuItem value='daily'>Daily</MenuItem>
-							<MenuItem value='weekly'>Weekly</MenuItem>
-							<MenuItem value='monthly'>Monthly</MenuItem>
-						</TextField>
-						{reminderFrequencyUnit !== 'daily' &&
-						reminderFrequencyUnit !== '' ? (
-							<TextField
-								margin='normal'
-								required
-								name='reminderFrequencyNumber'
-								label='Number'
-								id='reminderFrequencyNumber'
-								type='number'
-								InputProps={{ inputProps: { min: 1 } }}
-								onChange={(event) => {
-									setReminderFrequencyNumber(event.target.value);
-								}}
-							/>
-						) : null}
-						<TextField
-							id='reminderTime'
-							name='reminderTime'
-							label='Reminder Time'
-							type='time'
-							defaultValue='09:00'
-							InputLabelProps={{
-								shrink: true,
-							}}
-							inputProps={{
-								step: 900, // 5 min
-							}}
-							sx={{ width: 150 }}
-							onChange={(event) => {
-								setReminderTime(event.target.value);
-							}}
-						/>
+            <TextField
+              className="inputRounded"
+              margin="normal"
+              required
+              fullWidth
+              name="reminderFrequencyUnit"
+              label="Reminder Frequency"
+              id="reminderFrequencyUnit"
+              defaultValue=""
+              onChange={(event) => {
+                setReminderFrequencyUnit(event.target.value);
+              }}
+              select
+            >
+              <MenuItem value="daily">Daily</MenuItem>
+              <MenuItem value="weekly">Weekly</MenuItem>
+              <MenuItem value="monthly">Monthly</MenuItem>
+            </TextField>
+            {reminderFrequencyUnit !== "daily" &&
+            reminderFrequencyUnit !== "" ? (
+              <TextField
+                className="inputRounded"
+                margin="normal"
+                required
+                name="reminderFrequencyNumber"
+                label="Number"
+                id="reminderFrequencyNumber"
+                type="number"
+                InputProps={{ inputProps: { min: 1 } }}
+                onChange={(event) => {
+                  setReminderFrequencyNumber(event.target.value);
+                }}
+              />
+            ) : null}
+            <TextField
+              className="inputRounded"
+              id="reminderTime"
+              name="reminderTime"
+              label="Reminder Time"
+              type="time"
+              defaultValue="09:00"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              inputProps={{
+                step: 900, // 5 min
+              }}
+              sx={{ width: 150 }}
+              onChange={(event) => {
+                setReminderTime(event.target.value);
+              }}
+            />
 
-						<Button
-							type='submit'
-							fullWidth
-							variant='contained'
-							sx={{ mt: 3, mb: 2 }}
-						>
-							Create
-						</Button>
-					</Box>
-				</Box>
-				<SimpleBottomNavigation />
-			</Container>
-		</ThemeProvider>
-	);
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2, bgcolor: "secondary.main", borderRadius: 25 }}
+            >
+              Create
+            </Button>
+          </Box>
+        </Box>
+        <SimpleBottomNavigation />
+      </Container>
+    </ThemeProvider>
+  );
 }
