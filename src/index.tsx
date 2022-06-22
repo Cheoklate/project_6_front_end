@@ -39,6 +39,7 @@ root.render(
 				<Route path='viewhabit' element={<ViewHabit />} />
 				<Route path='allhabits' element={<AllHabits />} />
 				<Route path='friends' element={<FriendList />} />
+
 			</Routes>
 		</Suspense>
 	</BrowserRouter>
