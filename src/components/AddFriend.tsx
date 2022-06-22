@@ -13,6 +13,7 @@ export default function AddFriend() {
   const [findFriend, setFindFriend] = React.useState('')
   
   const [found, setFound] = React.useState<boolean | null>(null)
+  const [ message, setMessage] = React.useState('')
 
   React.useEffect(()=>{
     setFound(null)
@@ -25,15 +26,25 @@ export default function AddFriend() {
     .post('http://localhost:3004/friends', {userId, userName: findFriend})
     .then(res =>
       {console.log(res.data)
-        res.data === null ? setFound(false) : setFound(true)
+        if(res.data.message === 'no such user'){
+          setMessage('No user found, please try again')
+        }
+        if (res.data.message === 'alr friends') {
+          setMessage('You are already friends!')
+        }
+        if(res.data.message === 'request alr sent') {
+          setMessage('Your request was previously sent')
+        }
+        if(res.data.userName){
+          setMessage(`Your request has been sent to ${res.data.userName}`)
+        }
       })
   }
   return (
     <Box>
       <Stack spacing={3}>   
-        {found === true && <h6>friend request sent to {findFriend}</h6>}
-        {found === false && <h6>user does not exist, try again</h6>
-        } 
+        {message !== '' && <h6>{message}</h6>}
+        
         <TextField
           className="inputRounded"
           placeholder="Username"
