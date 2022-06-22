@@ -10,7 +10,6 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Chip from "@mui/material/Chip";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography, { TypographyClasses } from '@mui/material/Typography';
 import Container from '@mui/material/Container';
