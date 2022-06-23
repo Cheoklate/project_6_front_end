@@ -215,7 +215,7 @@ export default function SignIn() {
 		axios
 			.post('http://localhost:3004/login', loginDetails)
 			.then((res) => {
-				let path = '/dashboard';
+				let path = '/allhabits';
 				console.log('succesful login');
 				console.log('data', res.data);
 				const { id, email } = res.data;
