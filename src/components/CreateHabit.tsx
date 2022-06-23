@@ -57,7 +57,7 @@ export default function CreateHabit() {
 		axios
 			.post('http://localhost:3004/createhabit', habitDetails)
 			.then((res) => {
-				let path = '/dashboard';
+				let path = '/allhabits';
 				console.log('succesful habitcreation');
 				console.log('data', res);
 				// const { id, email } = res.data;
