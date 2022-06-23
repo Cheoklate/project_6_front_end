@@ -47,6 +47,7 @@ function acceptRequest(friendUserName:any, friendUserId:any) :any {
             <Typography>{request['userName']}</Typography>
 
             <Chip label="Accept" color="success"  defaultValue={[request['userName'],request['userId']]} onClick={()=>acceptRequest(request['userName'],request['userId'])}/>
+            
             <Chip label="Reject" sx={{ bgcolor: red[500] }} />
             </Stack>
             <Divider />
