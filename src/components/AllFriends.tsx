@@ -3,6 +3,9 @@ import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import axios from 'axios';
+import { purple } from "@mui/material/colors";
+import Typography from "@mui/material/Typography";
+
 axios.defaults.withCredentials = true;
 
 export default function AllFriends() {
@@ -28,7 +31,9 @@ React.useEffect(()=>{
             variant="outlined"
             avatar={
               <Avatar sx={{ bgcolor: "secondary.main" }}>
-                {friend["userName"][0]}
+                <Typography sx={{ color: purple[50] }}>
+                  {friend["userName"][0]}
+                </Typography>
               </Avatar>
             }
             label={friend["userName"]}

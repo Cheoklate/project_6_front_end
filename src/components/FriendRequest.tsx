@@ -9,13 +9,15 @@ import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 
 import { red } from "@mui/material/colors";
+
+
 import axios from "axios";
 
 
 export default function FriendRequest() {
   const [friendRequest, setFriendRequest] = React.useState([])
     React.useEffect(()=>{
-      const userId = "62aae68f0fc6103849280b25"
+      const userId = "62aae7c2fd55155e96803269";
       axios
       .get('http://localhost:3004/friendrequest', {params: {userId}})
       .then(res =>{
@@ -35,25 +37,50 @@ function acceptRequest(friendUserName:any, friendUserId:any) :any {
   })
 }
   
+function rejectRequest(friendUserName: any, friendUserId: any): any {
+  console.log(friendUserName, friendUserId);
+  axios
+    .post("http://localhost:3004/friendrequest", {
+      friendUserName,
+      friendUserId,
+    })
+    .then((res) => {
+      console.log(res.data);
+    });
+}
 
   return (
     <Box>
      
         {friendRequest?.map((request)=>{
           return (
-            <>
-            <Stack direction="row" spacing={2}>
-            <Avatar sx={{ bgcolor: deepOrange[500] }}>{request['userName'][0]}</Avatar>
-            <Typography>{request['userName']}</Typography>
+            <Box>
+              <Stack direction="row" spacing={2}>
+                <Avatar sx={{ bgcolor: deepOrange[500] }}>
+                  {request["userName"][0]}
+                </Avatar>
+                <Typography>{request["userName"]}</Typography>
 
-            <Chip label="Accept" color="success"  defaultValue={[request['userName'],request['userId']]} onClick={()=>acceptRequest(request['userName'],request['userId'])}/>
-            
-            <Chip label="Reject" sx={{ bgcolor: red[500] }} />
-            </Stack>
-            <Divider />
-            
-            </>
-          )
+                <Chip
+                  label="Accept"
+                  color="success"
+                  defaultValue={[request["userName"], request["userId"]]}
+                  onClick={() =>
+                    acceptRequest(request["userName"], request["userId"])
+                  }
+                />
+
+                <Chip
+                  label="Reject"
+                  sx={{ bgcolor: red[500] }}
+                  onClick={() =>
+                    rejectRequest(request["userName"], request["userId"])
+                  }
+                />
+              </Stack>
+              <Divider />
+            </Box>
+          );
         })}
         
         
