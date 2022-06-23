@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction  } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,7 +18,6 @@ import RedoIcon from '@mui/icons-material/Redo';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { visuallyHidden } from '@mui/utils';
-
 import {
 	createTheme,
 	SxProps,
@@ -30,6 +29,9 @@ import { useNavigate } from 'react-router-dom';
 import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
+
+
+
 
 axios.defaults.withCredentials = true;
 
@@ -46,13 +48,21 @@ const theme = createTheme({
 });
 
 
-function HabitActionButtons(habitId: any){
-  
+export default function AllHabits() {
+	let navigate = useNavigate();
+	
+	const userId = "62aae7c2fd55155e96803269"
+  const [allHabitDetails, setAllHabitDetails] = useState([])
+	const [refresh, setRefresh] = useState(false)
+	
+	function HabitActionButtons(habitId: any){
+	
   const [clicked, setClicked] = useState('')
-	console.log('showing')
+	console.log('showing', habitId)
   const submitAction = (event: React.MouseEvent<HTMLButtonElement>) =>{
     setClicked(event.currentTarget.value)
-    const userId = "62aae7c2fd55155e96803269"
+		setRefresh(!refresh)
+    
     const habitUpdateData = {userId, habitId: habitId.habitId, action: event.currentTarget.value}
     axios
       .post("http://localhost:3004/updatehabit", habitUpdateData)
@@ -67,23 +77,12 @@ function HabitActionButtons(habitId: any){
 	)
 }
 
-export default function AllHabits() {
-	let navigate = useNavigate();
-
-  const [allHabitDetails, setAllHabitDetails] = useState([])
-
-	// const allHabitDetails =  [{'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': 0, 'streak': 2, 'completionRate': 0.02}, {'name': 'water up', 'description': 'increase water intake', 'frequencyUnit': 'weekly' ,'frequencyNumber': 3, 'streak': 2, 'completionRate': 0.10}]
-	// console.log(allHabitDetails)
-
-	React.useEffect(()=>{
-		// const userId = "62aae7c2fd55155e96803269"
-    
+	React.useEffect(()=>{ 
 		axios
-			.get('http://localhost:3004/allhabits',{params: {userId: "62aae7c2fd55155e96803269"}} )
+			.get('http://localhost:3004/allhabits',{params: {userId}} )
 			.then(res => {
         setAllHabitDetails(res.data)
         console.log(allHabitDetails, allHabitDetails.length)
-
 			})
 			.catch((error) => {
 				console.log('get habit failed');
@@ -91,7 +90,7 @@ export default function AllHabits() {
 			});
       
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    },[refresh])
 	return (
 		<ThemeProvider theme={theme}>
 			<Container component='main' maxWidth='xs'>
@@ -118,10 +117,11 @@ export default function AllHabits() {
                 <React.Fragment key={index}>
             
               {/* <Box component="div" sx={{ display: 'inline' }}>{details.frequencyNumber === 0 ? null : details.frequencyNumber} times {details.frequencyUnit}</Box> */}
-              <Box  component="div" sx={{ display: 'block' }}>
+              <Box onClick={()=>{navigate("/viewhabit", {state:{userId:userId,habitId:details['userHabits_id']}})}}
+							component="div" sx={{ display: 'block' }}>
                 {details['habitName']} <br/>
-                streak: {details['habitStreak']['streakCount']}, completed: {details['habitStreak']['totalCompleted']}</Box>
-              <HabitActionButtons habitId={details['userHabits_id']}></HabitActionButtons>
+                streak: {details['habitStreak']['streakCount']}, completion rate: {details['habitStreak']['achievementRate']['$numberDecimal']*100}%</Box>
+              <HabitActionButtons habitId={details['userHabits_id']} ></HabitActionButtons>
               <hr></hr>
               </React.Fragment>
               )

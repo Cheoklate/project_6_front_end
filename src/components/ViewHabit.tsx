@@ -17,7 +17,7 @@ import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
-
+import moment from 'moment'
 import {
 	createTheme,
 	SxProps,
@@ -25,7 +25,7 @@ import {
 	ThemeProvider,
 } from '@mui/material/styles';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
@@ -33,9 +33,7 @@ import SimpleBottomNavigation from './global_components/BottomNavigation';
 axios.defaults.withCredentials = true;
 
 const theme = createTheme();
-// const [habitDetails, setHabitDetails] =  useState([{'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': '0'}])
 
-//useState([{name:'', description:'', frequencyUnit:'', frequencyNumber:''}]);
 
 function HabitActionButtons() {
 	console.log('showing');
@@ -81,32 +79,50 @@ function StaticDatePickerLandscape() {
 }
 
 export default function ViewHabit() {
+
 	let navigate = useNavigate();
+	interface CustomizedState {
+  	userId: string,
+		habitId: string,
+	}
 
-	const habitDetails = {
-		name: 'veggie up',
-		description: 'increase daily veg intake',
-		frequencyUnit: 'daily',
-		frequencyNumber: '0',
-	};
-	console.log(habitDetails);
 
-	// React.useEffect(()=>{
+const location = useLocation();
+const state = location.state as CustomizedState; 
+const { userId, habitId } = state;
+	
+console.log(userId, habitId, 'location')
 
-	// 	axios
-	// 		.get('http://localhost:3004/gethabit') //{habitId})
-	// 		.then(res => {
-	// 			// const details = res.data
-	// 			const details =  {'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': '0'}
-	// 			setHabitDetails([details])
-	// 			console.log(habitDetails);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log('get habit failed');
-	// 			console.log('error', error);
-	// 		});
-	// 		console.log(habitDetails);
-	// }, [habitDetails])
+const [habitDetails, setHabitDetails] = useState([])
+
+
+	// const habitDetails = {
+	// 	name: 'veggie up',
+	// 	description: 'increase daily veg intake',
+	// 	frequencyUnit: 'daily',
+	// 	frequencyNumber: '0',
+	// };
+	// console.log(habitDetails);
+
+	React.useEffect(()=>{
+
+		axios
+			.get('http://localhost:3004/viewhabit', {params: {userId, habitId}}) 
+			.then(res => {
+				// // const details = res.data
+				// const details =  {'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber':r'0'}
+				console.log(res.data);
+				
+				setHabitDetails(res.data.userHabits)
+				
+			})
+			.catch((error) => {
+				console.log('get habit failed');
+				console.log('error', error);
+			});
+			console.log(habitDetails)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])//[habitDetails])
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -127,10 +143,20 @@ export default function ViewHabit() {
 						View Habit
 					</Typography>
 					<Box sx={{ mt: 1 }}>
-						<Box component='div' sx={{ display: 'inline' }}>
-							{habitDetails.name}{' '}
-						</Box>
-						<Box component='div' sx={{ display: 'inline' }}>
+						{habitDetails.map((details)=>{
+							return(
+								<><Box key={details['userHabits_id']} component='div' sx={{ display: 'inline' }}>
+									{details['habitName']}
+								</Box><br/>
+								<Box key={details['userHabits_id']} component='div' sx={{ display: 'inline' }}>Started on:{' '}
+										{moment(details['habitStartDate']).format("LL")}
+									</Box></>
+							)
+						})}
+						{/* <Box component='div' sx={{ display: 'inline' }}>
+							{habitDetails[0].habitName}{' '}
+						</Box> */}
+						{/* <Box component='div' sx={{ display: 'inline' }}>
 							{habitDetails.frequencyNumber === '0'
 								? null
 								: habitDetails.frequencyNumber}{' '}
@@ -140,7 +166,7 @@ export default function ViewHabit() {
 						</Box>
 						<Box component='div' sx={{ display: 'block' }}>
 							{habitDetails.description}
-						</Box>
+						</Box> */}
 						<StaticDatePickerLandscape></StaticDatePickerLandscape>
 					</Box>
 				</Box>
