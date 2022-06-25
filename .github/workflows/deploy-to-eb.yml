@@ -3,6 +3,8 @@ name: deploy-to-eb
 on:
   push:
     branches: [ master ]
+  pull_request:
+    branches: [main]
 
 jobs:
   deploy:
