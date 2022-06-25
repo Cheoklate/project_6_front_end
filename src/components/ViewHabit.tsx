@@ -33,21 +33,21 @@ import RedoIcon from '@mui/icons-material/Redo';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import getCookieValue from  './global_components/Cookies'
+import { setDate } from 'date-fns';
 
 axios.defaults.withCredentials = true;
 
 const theme = createTheme();
 
-function HabitActionButtons(habitId: any){
+function HabitActionButtons(props:{habitId: any, actionHistory:any, value:any}){
+	console.log(props.habitId, props.actionHistory ,props.value)
 	const {userId, userName} = getCookieValue()
-	
   const [clicked, setClicked] = useState('')
-	console.log('showing', habitId)
+	
   const submitAction = (event: React.MouseEvent<HTMLButtonElement>) =>{
     setClicked(event.currentTarget.value)
 		
-    
-    const habitUpdateData = {userId, habitId: habitId.habitId, action: event.currentTarget.value}
+    const habitUpdateData = {userId, habitId: props.habitId, action: event.currentTarget.value}
     axios
       .post("http://localhost:3004/updatehabit", habitUpdateData)
       .then(res=> console.log(res))
@@ -61,30 +61,14 @@ function HabitActionButtons(habitId: any){
 	)
 }
 
-// function HabitActionButtons() {
-// 	console.log('showing');
-// 	return (
-// 		<Box component='div' sx={{ display: 'flex' }}>
-// 			<Button type='submit' color='primary' sx={{ borderRadius: 50 }}>
-// 				Y
-// 			</Button>
-// 			<Button type='submit' color='primary' sx={{ borderRadius: 50 }}>
-// 				N
-// 			</Button>
-// 			<Button type='submit' color='primary' sx={{ borderRadius: 50 }}>
-// 				S
-// 			</Button>{' '}
-// 		</Box>
-// 	);
-// }
 
-function StaticDatePickerLandscape (props:{startDate: Date}) {
+function StaticDatePickerLandscape (props:{startDate: Date, habitId: any, actionHistory:any}) {
 	const [value, setValue] = React.useState<Date | null>(new Date());
 	const [showAction, setShowAction] = React.useState<boolean>(false);
-
+	
 	return (
 		<Box>
-			{showAction ? <HabitActionButtons></HabitActionButtons> : null}
+			{showAction!== null ? <HabitActionButtons habitId={props.habitId} actionHistory={props.actionHistory} value={value}></HabitActionButtons> : null}
 			<LocalizationProvider dateAdapter={AdapterDateFns}>
 				<StaticDatePicker<Date>
 					orientation='landscape'
@@ -93,11 +77,10 @@ function StaticDatePickerLandscape (props:{startDate: Date}) {
 					maxDate={new Date()}
 					value={value}
 					ToolbarComponent={() => <Box display='flex'></Box>}
-					onChange={() => {
+					onChange={(e) => {
 						console.log(value);
+						setValue(e);
 						setShowAction(true);
-						setValue(value);
-						console.log(showAction);
 					}}
 					renderInput={(params) => <TextField {...params} />}
 				/>
@@ -123,6 +106,7 @@ console.log(userId, habitId, 'location')
 
 const [habitDetails, setHabitDetails] = useState([])
 const [startDate, setStartDate]=useState(new Date())
+const [actionHistory, setActionHistory] = useState([])
 // const minDate = new Date()
  
 
@@ -134,19 +118,15 @@ const [startDate, setStartDate]=useState(new Date())
 				console.log(res.data);				
 				setHabitDetails(res.data.userHabits)				
 				setStartDate(new Date(res.data.userHabits[0].habitStartDate))
-				
+				setActionHistory(res.data.userHabits[0].habitAction)				
 			})
 			.catch((error) => {
 				console.log('get habit failed');
 				console.log('error', error);
 			});
-			
-			
-			
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])//[habitDetails])
-	console.log(startDate, habitDetails)
-	
+	console.log(startDate, habitDetails, actionHistory)
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -171,7 +151,10 @@ const [startDate, setStartDate]=useState(new Date())
 							
 							return(
 								<><Box key={`${details['userHabits_id']}name`} component='div' sx={{ display: 'inline' }}>
-									{details['habitName']} <br/>
+									{details['habitName']} {details['frequencyUnit'] === "daily"? details['frequencyUnit']: `${details['frequencyNumber']}x ${details['frequencyUnit']}`} <br/>
+                completed in this period: {details['habitStreak']['completedCount']}<br/>
+								rate: {details['habitStreak']['achievementRate']['$numberDecimal']*100}% <br/>
+								streak: {details['habitStreak']['streakCount']} <br/>
 									Started on:{' '}
 										{moment(details['habitStartDate']).format("LL")}
 								</Box>
@@ -192,7 +175,7 @@ const [startDate, setStartDate]=useState(new Date())
 						<Box component='div' sx={{ display: 'block' }}>
 							{habitDetails.description}
 						</Box> */}
-						<StaticDatePickerLandscape startDate={startDate}></StaticDatePickerLandscape>
+						<StaticDatePickerLandscape startDate={startDate} habitId={habitId} actionHistory={actionHistory}></StaticDatePickerLandscape>
 					</Box>
 				</Box>
 				<SimpleBottomNavigation />
