@@ -29,30 +29,56 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
+import RedoIcon from '@mui/icons-material/Redo';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import getCookieValue from  './global_components/Cookies'
 
 axios.defaults.withCredentials = true;
 
 const theme = createTheme();
 
-
-function HabitActionButtons() {
-	console.log('showing');
+function HabitActionButtons(habitId: any){
+	const {userId, userName} = getCookieValue()
+	
+  const [clicked, setClicked] = useState('')
+	console.log('showing', habitId)
+  const submitAction = (event: React.MouseEvent<HTMLButtonElement>) =>{
+    setClicked(event.currentTarget.value)
+		
+    
+    const habitUpdateData = {userId, habitId: habitId.habitId, action: event.currentTarget.value}
+    axios
+      .post("http://localhost:3004/updatehabit", habitUpdateData)
+      .then(res=> console.log(res))
+  }
 	return (
-		<Box component='div' sx={{ display: 'flex' }}>
-			<Button type='submit' color='primary' sx={{ borderRadius: 50 }}>
-				Y
-			</Button>
-			<Button type='submit' color='primary' sx={{ borderRadius: 50 }}>
-				N
-			</Button>
-			<Button type='submit' color='primary' sx={{ borderRadius: 50 }}>
-				S
-			</Button>{' '}
-		</Box>
-	);
+		<Box component="div" sx={{ display: 'flex' }}>
+              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'done'? 'green':'none', m:1}}value="done" onClick={submitAction} startIcon={<CheckIcon/>} ></Button>
+              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'undone'? 'red':'none',m:1}} value="undone" onClick={submitAction} startIcon={<CloseIcon/>}></Button>
+              {/* <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'skip'? 'gray':'none', m:1}} value="skip" onClick={submitAction} startIcon={<RedoIcon/>}></Button>            */}
+    </Box>
+	)
 }
 
-function StaticDatePickerLandscape() {
+// function HabitActionButtons() {
+// 	console.log('showing');
+// 	return (
+// 		<Box component='div' sx={{ display: 'flex' }}>
+// 			<Button type='submit' color='primary' sx={{ borderRadius: 50 }}>
+// 				Y
+// 			</Button>
+// 			<Button type='submit' color='primary' sx={{ borderRadius: 50 }}>
+// 				N
+// 			</Button>
+// 			<Button type='submit' color='primary' sx={{ borderRadius: 50 }}>
+// 				S
+// 			</Button>{' '}
+// 		</Box>
+// 	);
+// }
+
+function StaticDatePickerLandscape (props:{startDate: Date}) {
 	const [value, setValue] = React.useState<Date | null>(new Date());
 	const [showAction, setShowAction] = React.useState<boolean>(false);
 
@@ -63,6 +89,8 @@ function StaticDatePickerLandscape() {
 				<StaticDatePicker<Date>
 					orientation='landscape'
 					openTo='day'
+					minDate={props.startDate}
+					maxDate={new Date()}
 					value={value}
 					ToolbarComponent={() => <Box display='flex'></Box>}
 					onChange={() => {
@@ -79,50 +107,46 @@ function StaticDatePickerLandscape() {
 }
 
 export default function ViewHabit() {
-
+	const {userId, userName} = getCookieValue()
 	let navigate = useNavigate();
 	interface CustomizedState {
-  	userId: string,
+  	// userId: string,
 		habitId: string,
 	}
 
 
 const location = useLocation();
 const state = location.state as CustomizedState; 
-const { userId, habitId } = state;
+const { habitId } = state;
 	
 console.log(userId, habitId, 'location')
 
 const [habitDetails, setHabitDetails] = useState([])
-
-
-	// const habitDetails = {
-	// 	name: 'veggie up',
-	// 	description: 'increase daily veg intake',
-	// 	frequencyUnit: 'daily',
-	// 	frequencyNumber: '0',
-	// };
-	// console.log(habitDetails);
+const [startDate, setStartDate]=useState(new Date())
+// const minDate = new Date()
+ 
 
 	React.useEffect(()=>{
 
 		axios
 			.get('http://localhost:3004/viewhabit', {params: {userId, habitId}}) 
 			.then(res => {
-				// // const details = res.data
-				// const details =  {'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber':r'0'}
-				console.log(res.data);
-				
-				setHabitDetails(res.data.userHabits)
+				console.log(res.data);				
+				setHabitDetails(res.data.userHabits)				
+				setStartDate(new Date(res.data.userHabits[0].habitStartDate))
 				
 			})
 			.catch((error) => {
 				console.log('get habit failed');
 				console.log('error', error);
 			});
-			console.log(habitDetails)
+			
+			
+			
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])//[habitDetails])
+	console.log(startDate, habitDetails)
+	
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -144,13 +168,14 @@ const [habitDetails, setHabitDetails] = useState([])
 					</Typography>
 					<Box sx={{ mt: 1 }}>
 						{habitDetails.map((details)=>{
+							
 							return(
-								<><Box key={details['userHabits_id']} component='div' sx={{ display: 'inline' }}>
-									{details['habitName']}
-								</Box><br/>
-								<Box key={details['userHabits_id']} component='div' sx={{ display: 'inline' }}>Started on:{' '}
+								<><Box key={`${details['userHabits_id']}name`} component='div' sx={{ display: 'inline' }}>
+									{details['habitName']} <br/>
+									Started on:{' '}
 										{moment(details['habitStartDate']).format("LL")}
-									</Box></>
+								</Box>
+							</>
 							)
 						})}
 						{/* <Box component='div' sx={{ display: 'inline' }}>
@@ -167,7 +192,7 @@ const [habitDetails, setHabitDetails] = useState([])
 						<Box component='div' sx={{ display: 'block' }}>
 							{habitDetails.description}
 						</Box> */}
-						<StaticDatePickerLandscape></StaticDatePickerLandscape>
+						<StaticDatePickerLandscape startDate={startDate}></StaticDatePickerLandscape>
 					</Box>
 				</Box>
 				<SimpleBottomNavigation />

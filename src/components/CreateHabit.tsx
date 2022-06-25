@@ -16,6 +16,7 @@ import Typography, { TypographyClasses } from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { ToggleButton } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
+import getCookieValue from './global_components/Cookies';
 
 import {
 	createTheme,
@@ -35,6 +36,7 @@ const theme = createTheme();
 
 export default function CreateHabit() {
 	let navigate = useNavigate();
+  const {userId, userName} = getCookieValue()
 	const [habitName, setHabitName] = useState('');
 	const [habitDesc, setHabitDesc] = useState('');
 	const [frequencyUnit, setFrequencyUnit] = useState('');
@@ -43,7 +45,7 @@ export default function CreateHabit() {
 	const [reminderFrequencyUnit, setReminderFrequencyUnit] = useState('');
 	const [reminderFrequencyNumber, setReminderFrequencyNumber] = useState('1');
 	const [reminderTime, setReminderTime] = useState("09:00");
-	const [userId, setUserId] = useState("62aaf10473badbb263ba660b")
+	// const [userId, setUserId] = useState("62aaf10473badbb263ba660b")
 	const [reminderMethod, setReminderMethod] = useState('email')
 	const [reminderMethodContact, setReminderMethodContact] = useState('')
 

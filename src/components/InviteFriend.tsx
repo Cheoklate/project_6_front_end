@@ -8,6 +8,7 @@ import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 
 import "./styles.css";
+import getCookieValue from './global_components/Cookies';
 
 export default function InviteFriend() {
   

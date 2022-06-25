@@ -29,6 +29,7 @@ import { useNavigate } from 'react-router-dom';
 import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
+import getCookieValue from './global_components/Cookies'
 
 
 
@@ -50,8 +51,8 @@ const theme = createTheme({
 
 export default function AllHabits() {
 	let navigate = useNavigate();
+	const {userId, userName} = getCookieValue()
 	
-	const userId = "62aaf10473badbb263ba660b"
   const [allHabitDetails, setAllHabitDetails] = useState([])
 	const [refresh, setRefresh] = useState(false)
 	
