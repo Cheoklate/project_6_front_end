@@ -51,7 +51,7 @@ const theme = createTheme({
 export default function AllHabits() {
 	let navigate = useNavigate();
 	
-	const userId = "62aae7c2fd55155e96803269"
+	const userId = "62aaf10473badbb263ba660b"
   const [allHabitDetails, setAllHabitDetails] = useState([])
 	const [refresh, setRefresh] = useState(false)
 	
@@ -72,7 +72,7 @@ export default function AllHabits() {
 		<Box component="div" sx={{ display: 'flex' }}>
               <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'done'? 'green':'none', m:1}}value="done" onClick={submitAction} startIcon={<CheckIcon/>} ></Button>
               <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'undone'? 'red':'none',m:1}} value="undone" onClick={submitAction} startIcon={<CloseIcon/>}></Button>
-              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'skip'? 'gray':'none', m:1}} value="skip" onClick={submitAction} startIcon={<RedoIcon/>}></Button>           
+              {/* <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'skip'? 'gray':'none', m:1}} value="skip" onClick={submitAction} startIcon={<RedoIcon/>}></Button>            */}
     </Box>
 	)
 }
@@ -119,8 +119,8 @@ export default function AllHabits() {
               {/* <Box component="div" sx={{ display: 'inline' }}>{details.frequencyNumber === 0 ? null : details.frequencyNumber} times {details.frequencyUnit}</Box> */}
               <Box onClick={()=>{navigate("/viewhabit", {state:{userId:userId,habitId:details['userHabits_id']}})}}
 							component="div" sx={{ display: 'block' }}>
-                {details['habitName']} <br/>
-                streak: {details['habitStreak']['streakCount']}, completion rate: {details['habitStreak']['achievementRate']['$numberDecimal']*100}%</Box>
+                {details['habitName']} {details['frequencyUnit'] === "daily"? details['frequencyUnit']: `${details['frequencyNumber']}x ${details['frequencyUnit']}`} <br/>
+                completed in this period: {details['habitStreak']['completedCount']}, rate: {details['habitStreak']['achievementRate']['$numberDecimal']*100}%, streak: {details['habitStreak']['streakCount']}</Box>
               <HabitActionButtons habitId={details['userHabits_id']} ></HabitActionButtons>
               <hr></hr>
               </React.Fragment>
