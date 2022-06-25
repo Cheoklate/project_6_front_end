@@ -20,7 +20,7 @@ export default function SimpleBottomNavigation() {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction href= 'viewhabit' label="Home" icon={<HomeIcon />} />
+        <BottomNavigationAction href= 'allhabits' label="Home" icon={<HomeIcon />} />
         <BottomNavigationAction href = 'friends' label="Friends" icon={<GroupIcon />} />
         <BottomNavigationAction href = 'friends' label="Messages" icon={<ChatBubbleIcon />} />
         <BottomNavigationAction href = 'friends' label="Settings" icon={<SettingsIcon />} />
