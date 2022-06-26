@@ -17,7 +17,7 @@ import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
-
+import moment from 'moment'
 import {
 	createTheme,
 	SxProps,
@@ -25,53 +25,62 @@ import {
 	ThemeProvider,
 } from '@mui/material/styles';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
+import RedoIcon from '@mui/icons-material/Redo';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import getCookieValue from  './global_components/Cookies'
+import { setDate } from 'date-fns';
 
 axios.defaults.withCredentials = true;
 
 const theme = createTheme();
-// const [habitDetails, setHabitDetails] =  useState([{'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': '0'}])
 
-//useState([{name:'', description:'', frequencyUnit:'', frequencyNumber:''}]);
-
-function HabitActionButtons() {
-	console.log('showing');
+function HabitActionButtons(props:{habitId: any, actionHistory:any, value:any}){
+	console.log(props.habitId, props.actionHistory ,props.value)
+	const {userId, userName} = getCookieValue()
+  const [clicked, setClicked] = useState('')
+	
+  const submitAction = (event: React.MouseEvent<HTMLButtonElement>) =>{
+    setClicked(event.currentTarget.value)
+		
+    const habitUpdateData = {userId, habitId: props.habitId, action: event.currentTarget.value}
+    axios
+      .post("http://localhost:3004/updatehabit", habitUpdateData)
+      .then(res=> console.log(res))
+  }
 	return (
-		<Box component='div' sx={{ display: 'flex' }}>
-			<Button type='submit' color='primary' sx={{ borderRadius: 50 }}>
-				Y
-			</Button>
-			<Button type='submit' color='primary' sx={{ borderRadius: 50 }}>
-				N
-			</Button>
-			<Button type='submit' color='primary' sx={{ borderRadius: 50 }}>
-				S
-			</Button>{' '}
-		</Box>
-	);
+		<Box component="div" sx={{ display: 'flex' }}>
+              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'done'? 'green':'none', m:1}}value="done" onClick={submitAction} startIcon={<CheckIcon/>} ></Button>
+              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'undone'? 'red':'none',m:1}} value="undone" onClick={submitAction} startIcon={<CloseIcon/>}></Button>
+              {/* <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'skip'? 'gray':'none', m:1}} value="skip" onClick={submitAction} startIcon={<RedoIcon/>}></Button>            */}
+    </Box>
+	)
 }
 
-function StaticDatePickerLandscape() {
+
+function StaticDatePickerLandscape (props:{startDate: Date, habitId: any, actionHistory:any}) {
 	const [value, setValue] = React.useState<Date | null>(new Date());
 	const [showAction, setShowAction] = React.useState<boolean>(false);
-
+	
 	return (
 		<Box>
-			{showAction ? <HabitActionButtons></HabitActionButtons> : null}
+			{showAction!== null ? <HabitActionButtons habitId={props.habitId} actionHistory={props.actionHistory} value={value}></HabitActionButtons> : null}
 			<LocalizationProvider dateAdapter={AdapterDateFns}>
 				<StaticDatePicker<Date>
 					orientation='landscape'
 					openTo='day'
+					minDate={props.startDate}
+					maxDate={new Date()}
 					value={value}
 					ToolbarComponent={() => <Box display='flex'></Box>}
-					onChange={() => {
+					onChange={(e) => {
 						console.log(value);
+						setValue(e);
 						setShowAction(true);
-						setValue(value);
-						console.log(showAction);
 					}}
 					renderInput={(params) => <TextField {...params} />}
 				/>
@@ -81,32 +90,43 @@ function StaticDatePickerLandscape() {
 }
 
 export default function ViewHabit() {
+	const {userId, userName} = getCookieValue()
 	let navigate = useNavigate();
+	interface CustomizedState {
+  	// userId: string,
+		habitId: string,
+	}
 
-	const habitDetails = {
-		name: 'veggie up',
-		description: 'increase daily veg intake',
-		frequencyUnit: 'daily',
-		frequencyNumber: '0',
-	};
-	console.log(habitDetails);
 
-	// React.useEffect(()=>{
+const location = useLocation();
+const state = location.state as CustomizedState; 
+const { habitId } = state;
+	
+console.log(userId, habitId, 'location')
 
-	// 	axios
-	// 		.get('http://localhost:3004/gethabit') //{habitId})
-	// 		.then(res => {
-	// 			// const details = res.data
-	// 			const details =  {'name': 'veggie up', 'description': 'increase daily veg intake', 'frequencyUnit': 'daily' ,'frequencyNumber': '0'}
-	// 			setHabitDetails([details])
-	// 			console.log(habitDetails);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log('get habit failed');
-	// 			console.log('error', error);
-	// 		});
-	// 		console.log(habitDetails);
-	// }, [habitDetails])
+const [habitDetails, setHabitDetails] = useState([])
+const [startDate, setStartDate]=useState(new Date())
+const [actionHistory, setActionHistory] = useState([])
+// const minDate = new Date()
+ 
+
+	React.useEffect(()=>{
+
+		axios
+			.get('http://localhost:3004/viewhabit', {params: {userId, habitId}}) 
+			.then(res => {
+				console.log(res.data);				
+				setHabitDetails(res.data.userHabits)				
+				setStartDate(new Date(res.data.userHabits[0].habitStartDate))
+				setActionHistory(res.data.userHabits[0].habitAction)				
+			})
+			.catch((error) => {
+				console.log('get habit failed');
+				console.log('error', error);
+			});
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])//[habitDetails])
+	console.log(startDate, habitDetails, actionHistory)
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -127,10 +147,24 @@ export default function ViewHabit() {
 						View Habit
 					</Typography>
 					<Box sx={{ mt: 1 }}>
-						<Box component='div' sx={{ display: 'inline' }}>
-							{habitDetails.name}{' '}
-						</Box>
-						<Box component='div' sx={{ display: 'inline' }}>
+						{habitDetails.map((details)=>{
+							
+							return(
+								<><Box key={`${details['userHabits_id']}name`} component='div' sx={{ display: 'inline' }}>
+									{details['habitName']} {details['frequencyUnit'] === "daily"? details['frequencyUnit']: `${details['frequencyNumber']}x ${details['frequencyUnit']}`} <br/>
+                completed in this period: {details['habitStreak']['completedCount']}<br/>
+								rate: {details['habitStreak']['achievementRate']['$numberDecimal']*100}% <br/>
+								streak: {details['habitStreak']['streakCount']} <br/>
+									Started on:{' '}
+										{moment(details['habitStartDate']).format("LL")}
+								</Box>
+							</>
+							)
+						})}
+						{/* <Box component='div' sx={{ display: 'inline' }}>
+							{habitDetails[0].habitName}{' '}
+						</Box> */}
+						{/* <Box component='div' sx={{ display: 'inline' }}>
 							{habitDetails.frequencyNumber === '0'
 								? null
 								: habitDetails.frequencyNumber}{' '}
@@ -140,8 +174,8 @@ export default function ViewHabit() {
 						</Box>
 						<Box component='div' sx={{ display: 'block' }}>
 							{habitDetails.description}
-						</Box>
-						<StaticDatePickerLandscape></StaticDatePickerLandscape>
+						</Box> */}
+						<StaticDatePickerLandscape startDate={startDate} habitId={habitId} actionHistory={actionHistory}></StaticDatePickerLandscape>
 					</Box>
 				</Box>
 				<SimpleBottomNavigation />

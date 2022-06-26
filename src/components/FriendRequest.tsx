@@ -10,12 +10,14 @@ import Divider from "@mui/material/Divider";
 
 import { red } from "@mui/material/colors";
 import axios from "axios";
+import getCookieValue from "./global_components/Cookies";
 
 
 export default function FriendRequest() {
   const [friendRequest, setFriendRequest] = React.useState([])
     React.useEffect(()=>{
-      const userId = "62aae68f0fc6103849280b25"
+      const {userId, userName} = getCookieValue()
+      
       axios
       .get('http://localhost:3004/friendrequest', {params: {userId}})
       .then(res =>{

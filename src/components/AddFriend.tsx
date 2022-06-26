@@ -7,6 +7,7 @@ import Stack from "@mui/material/Stack";
 
 import "./styles.css"; 
 import axios from "axios";
+import getCookieValue from './global_components/Cookies'
 axios.defaults.withCredentials = true;
 
 export default function AddFriend() {
@@ -19,6 +20,7 @@ export default function AddFriend() {
   }, [])
 
   function addFriendClick(){
+    
     const userId = "62aae7c2fd55155e96803269"
     const userName = 'GracetheDragon'
     
