@@ -35,6 +35,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import getCookieValue from  './global_components/Cookies'
 import { setDate } from 'date-fns';
 
+
 axios.defaults.withCredentials = true;
 
 const theme = createTheme();
@@ -58,6 +59,23 @@ const [habitDetails, setHabitDetails] = useState([])
 const [startDate, setStartDate]=useState(new Date())
 const [actionHistory, setActionHistory] = useState([])
 const [updatedAction, setUpdatedAction] = useState(false)
+ const [clicked, setClicked] = useState('')
+ const [actionDate, setActionDate] = React.useState<Date | null>(new Date());
+
+ function checkColor(selectedDate: Date | null){
+		if (!actionHistory.some(action => moment(action['date']).format("YYYY-MM-DD") === moment(selectedDate).format("YYYY-MM-DD"))){
+			console.log('no such date')
+			setClicked('')
+		} else {
+		actionHistory.forEach((action)=>{
+			if(moment(action['date']).format("YYYY-MM-DD") === moment(selectedDate).format("YYYY-MM-DD")){
+				setClicked(action['action'])
+			} 
+		})
+		console.log('date found')
+		}
+	}
+	
 
 // const minDate = new Date()
  
@@ -70,28 +88,42 @@ const [updatedAction, setUpdatedAction] = useState(false)
 				console.log(res.data);				
 				setHabitDetails(res.data.userHabits)				
 				setStartDate(new Date(res.data.userHabits[0].habitStartDate))
-				setActionHistory(res.data.userHabits[0].habitAction)	
+				setActionHistory(res.data.userHabits[0].habitAction)		
 			})
 			.catch((error) => {
 				console.log('get habit failed');
 				console.log('error', error);
 			});
+
+			
+			
+			
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [updatedAction])//[habitDetails])
 	console.log(startDate, habitDetails, actionHistory)
-//props:{startDate: Date, actionHistory:any, updatedAction:boolean, setUpdatedAction: Dispatch<SetStateAction<boolean>>}
+	
+	
+	
 function StaticDatePickerLandscape () {
-	const [actionDate, setActionDate] = React.useState<Date | null>(new Date());
+	
 	const [showAction, setShowAction] = React.useState<boolean>(false);
 
-	//(props:{actionHistory:any, actionDate:any, updatedAction:boolean, setUpdatedAction: Dispatch<SetStateAction<boolean>>}
-	function HabitActionButtons(){
+	React.useEffect(()=>{
+	if(moment(actionDate).format("YYYY-MM-DD") === moment(new Date()).format("YYYY-MM-DD")){
+		 checkColor(actionDate)
+	 }
+	}, [])
 	
-	// const {userId, userName} = getCookieValue()
-  const [clicked, setClicked] = useState('')
 	
+	
+function HabitActionButtons(){
+
+	
+ 	
   const submitAction = (event: React.MouseEvent<HTMLButtonElement>) =>{
-    setClicked(event.currentTarget.value)
+    
+		
+		setClicked(event.currentTarget.value)
 		
     const habitUpdateData = {userId, habitId, action: event.currentTarget.value, actionDate}
 		console.log(habitUpdateData, 'habit update')
@@ -102,6 +134,7 @@ function StaticDatePickerLandscape () {
 				setUpdatedAction(!updatedAction)
 				console.log(updatedAction, 'action')
 			})
+
   }
 	return (
 		<Box component="div" sx={{ display: 'flex' }}>
@@ -124,6 +157,7 @@ function StaticDatePickerLandscape () {
 					ToolbarComponent={() => <Box display='flex'></Box>}
 					onChange={(e) => {
 						setActionDate(e);
+						checkColor(e)
 						setShowAction(true);
 					}}
 					renderInput={(params) => <TextField {...params} />}
@@ -165,7 +199,7 @@ function StaticDatePickerLandscape () {
 							</>
 							)
 						})}
-						{/* //startDate={startDate} actionHistory={actionHistory} setUpdatedAction={setUpdatedAction} updatedAction ={updatedAction} */}
+						
 						<StaticDatePickerLandscape  ></StaticDatePickerLandscape>
 					</Box>
 				</Box>

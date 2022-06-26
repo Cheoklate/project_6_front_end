@@ -64,7 +64,7 @@ export default function AllHabits() {
     setClicked(event.currentTarget.value)
 		setRefresh(!refresh)
     
-    const habitUpdateData = {userId, habitId: habitId.habitId, action: event.currentTarget.value}
+    const habitUpdateData = {userId, habitId: habitId.habitId, action: event.currentTarget.value, actionDate: new Date()}
     axios
       .post("http://localhost:3004/updatehabit", habitUpdateData)
       .then(res=> console.log(res))
