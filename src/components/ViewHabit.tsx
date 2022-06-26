@@ -39,15 +39,15 @@ axios.defaults.withCredentials = true;
 
 const theme = createTheme();
 
-function HabitActionButtons(props:{habitId: any, actionHistory:any, value:any}){
-	console.log(props.habitId, props.actionHistory ,props.value)
+function HabitActionButtons(props:{habitId: any, actionHistory:any, actionDate:any}){
+	console.log(props.habitId, props.actionHistory ,props.actionDate)
 	const {userId, userName} = getCookieValue()
   const [clicked, setClicked] = useState('')
 	
   const submitAction = (event: React.MouseEvent<HTMLButtonElement>) =>{
     setClicked(event.currentTarget.value)
 		
-    const habitUpdateData = {userId, habitId: props.habitId, action: event.currentTarget.value}
+    const habitUpdateData = {userId, habitId: props.habitId, action: event.currentTarget.value, actionDate:props.actionDate}
     axios
       .post("http://localhost:3004/updatehabit", habitUpdateData)
       .then(res=> console.log(res))
@@ -63,23 +63,23 @@ function HabitActionButtons(props:{habitId: any, actionHistory:any, value:any}){
 
 
 function StaticDatePickerLandscape (props:{startDate: Date, habitId: any, actionHistory:any}) {
-	const [value, setValue] = React.useState<Date | null>(new Date());
+	const [actionDate, setActionDate] = React.useState<Date | null>(new Date());
 	const [showAction, setShowAction] = React.useState<boolean>(false);
 	
 	return (
 		<Box>
-			{showAction!== null ? <HabitActionButtons habitId={props.habitId} actionHistory={props.actionHistory} value={value}></HabitActionButtons> : null}
+			{showAction!== null ? <HabitActionButtons habitId={props.habitId} actionHistory={props.actionHistory} actionDate={actionDate}></HabitActionButtons> : null}
 			<LocalizationProvider dateAdapter={AdapterDateFns}>
 				<StaticDatePicker<Date>
 					orientation='landscape'
 					openTo='day'
 					minDate={props.startDate}
 					maxDate={new Date()}
-					value={value}
+					value={actionDate}
 					ToolbarComponent={() => <Box display='flex'></Box>}
 					onChange={(e) => {
-						console.log(value);
-						setValue(e);
+						console.log(actionDate);
+						setActionDate(e);
 						setShowAction(true);
 					}}
 					renderInput={(params) => <TextField {...params} />}
