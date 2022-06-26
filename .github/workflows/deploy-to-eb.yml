@@ -2,7 +2,7 @@ name: deploy-to-eb
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
     branches: [main]
 
@@ -12,6 +12,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - run: npm install
+      - run : npm run build
+      - run : npm run test
 
       - name: Create ZIP deployment package
         run: zip -r deploy_package.zip ./
