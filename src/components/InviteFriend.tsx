@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import TextareaAutosize from "@mui/base/TextareaAutosize";
+
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 
@@ -49,50 +49,34 @@ export default function InviteFriend() {
   }
 
   return (
-    <div>
-      <div className="container">
-        <form onSubmit={sendEmail}>
-          <div className="row pt-5 mx-auto">
-            <div className="col-8 form-group mx-auto">
-              <TextField
-                className="inputRounded"
-                placeholder="Name"
-                name="to_name"
-                onChange={(event) => {
-                  setToName(event.target.value);
-                }}
-              ></TextField>
-            </div>
-            <div className="col-8 form-group pt-2 mx-auto">
-              <TextField
-                className="inputRounded"
-                placeholder="Email Address"
-                name="email"
-                onChange={(event) => {
-                  setEmail(event.target.value);
-                }}
-              ></TextField>
-            </div>
-            <div className="col-8 form-group pt-2 mx-auto">
-              <TextareaAutosize
-                className="inputRounded"
-                placeholder="Your message"
-                name="message"
-                onChange={(event) => {
-                  setMessage(event.target.value);
-                }}
-              ></TextareaAutosize>
-            </div>
-            <div className="col-8 pt-3 mx-auto">
-              <input
-                type="submit"
-                className="btn btn-info"
-                value="Invite Friend"
-              />
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+    <Box>
+      <Stack spacing={3}>
+        <TextField
+          className="inputRounded"
+          placeholder="Name"
+          name="to_name"
+          onChange={(event) => {
+            setToName(event.target.value);
+          }}
+        ></TextField>
+        <TextField
+          className="inputRounded"
+          placeholder="Email Address"
+          name="email"
+          onChange={(event) => {
+            setEmail(event.target.value);
+          }}
+        ></TextField>
+        <TextField
+          className="inputRounded"
+          placeholder="Your message"
+          name="message"
+          onChange={(event) => {
+            setMessage(event.target.value);
+          }}
+        ></TextField>
+        <Chip onClick={sendEmail} label="Send Invite" color="secondary" />
+      </Stack>
+    </Box>
   );
 }
