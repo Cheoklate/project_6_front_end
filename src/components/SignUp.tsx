@@ -23,7 +23,7 @@ import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import SimpleBottomNavigation from './global_components/BottomNavigation';
+
 
 
 function Copyright(
@@ -228,7 +228,7 @@ export default function SignUp() {
 				let path = '/signin';
 				console.log('succesful signup');
 				console.log('data', res.data);
-				const { id, email } = res.data;
+				// const { id, email } = res.data;
 				navigate(path);
 			})
 			.catch((error) => {
