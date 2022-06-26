@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Dispatch,SetStateAction } from "react";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { deepOrange, deepPurple } from "@mui/material/colors";
@@ -15,7 +15,7 @@ import axios from "axios";
 import getCookieValue from "./global_components/Cookies";
 
 
-export default function FriendRequest() {
+export default function FriendRequest(props:{setRefresh: Dispatch<SetStateAction<boolean>>}) {
   const {userId, userName} = getCookieValue()
   const [friendRequest, setFriendRequest] = React.useState([])
   const [actionDone, setActionDone] = React.useState<boolean>(false)
@@ -38,21 +38,10 @@ function requestAction(friendUserName:any, friendUserId:any, action: string) :an
   .then(res=>{
     console.log(res.data)
     setActionDone(!actionDone)
+    props.setRefresh(!actionDone)
   })
 }
   
-function rejectRequest(friendUserName: any, friendUserId: any): any {
-  console.log(friendUserName, friendUserId);
-  axios
-    .post("http://localhost:3004/friendrequest", {
-      friendUserName,
-      friendUserId,
-    })
-    .then((res) => {
-      console.log(res.data);
-    });
-}
-
   return (
     <Box>
      
