@@ -6,19 +6,20 @@ import axios from 'axios';
 import { purple } from "@mui/material/colors";
 import Typography from "@mui/material/Typography";
 
+import getCookieValue from './global_components/Cookies'
 axios.defaults.withCredentials = true;
 
 export default function AllFriends() {
   const [allFriends, setAllFriends] = React.useState([])
+  const {userId, userName} = getCookieValue()
 React.useEffect(()=>{
   axios
-    .get("http://localhost:3004/friends", {
-      params: { userId: "62aae7c2fd55155e96803269" },
-    })
-    .then((res) => {
-      setAllFriends(res.data);
-      console.log(res.data, allFriends, "response");
-    });
+  .get('http://localhost:3004/friends', {params: {userId}})
+  .then(res =>{
+    setAllFriends(res.data)
+    console.log(res.data, allFriends, 'response')
+
+  })
 // eslint-disable-next-line react-hooks/exhaustive-deps
 },[])
 

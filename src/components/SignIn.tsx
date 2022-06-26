@@ -24,7 +24,7 @@ import { useNavigate } from 'react-router-dom';
 import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
-
+import cookieParser from 'cookie-parser';
 axios.defaults.withCredentials = true;
 
 function Copyright(
@@ -218,7 +218,9 @@ export default function SignIn() {
 				let path = '/allhabits';
 				console.log('succesful login');
 				console.log('data', res.data);
-				const { id, email } = res.data;
+				const { _id, email, userName } = res.data;
+				document.cookie = `userId=${_id}; SameSite=None; Secure`
+				document.cookie = `userName=${userName}; SameSite=None; Secure`
 				navigate(path);
 			})
 			.catch((error) => {
@@ -312,7 +314,6 @@ export default function SignIn() {
         <Typography variant="body2" color="text.secondary" align="center">
           <Copyright sx={{ mt: 8, mb: 4 }} component={"symbol"} />
         </Typography>
-        <SimpleBottomNavigation />
       </Container>
     </ThemeProvider>
   );
