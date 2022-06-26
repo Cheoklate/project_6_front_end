@@ -223,7 +223,7 @@ export default function SignUp() {
 			userFriends: userFriends,
 		};
 		axios
-			.post('http://localhost:3004/signup', signupDetails)
+			.post('https://track-abit.herokuapp.com/signup', signupDetails)
 			.then((res) => {
 				let path = '/signin';
 				console.log('succesful signup');
