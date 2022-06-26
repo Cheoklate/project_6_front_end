@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -35,59 +35,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import getCookieValue from  './global_components/Cookies'
 import { setDate } from 'date-fns';
 
+
 axios.defaults.withCredentials = true;
 
 const theme = createTheme();
-
-function HabitActionButtons(props:{habitId: any, actionHistory:any, value:any}){
-	console.log(props.habitId, props.actionHistory ,props.value)
-	const {userId, userName} = getCookieValue()
-  const [clicked, setClicked] = useState('')
-	
-  const submitAction = (event: React.MouseEvent<HTMLButtonElement>) =>{
-    setClicked(event.currentTarget.value)
-		
-    const habitUpdateData = {userId, habitId: props.habitId, action: event.currentTarget.value}
-    axios
-      .post("http://localhost:3004/updatehabit", habitUpdateData)
-      .then(res=> console.log(res))
-  }
-	return (
-		<Box component="div" sx={{ display: 'flex' }}>
-              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'done'? 'green':'none', m:1}}value="done" onClick={submitAction} startIcon={<CheckIcon/>} ></Button>
-              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'undone'? 'red':'none',m:1}} value="undone" onClick={submitAction} startIcon={<CloseIcon/>}></Button>
-              {/* <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'skip'? 'gray':'none', m:1}} value="skip" onClick={submitAction} startIcon={<RedoIcon/>}></Button>            */}
-    </Box>
-	)
-}
-
-
-function StaticDatePickerLandscape (props:{startDate: Date, habitId: any, actionHistory:any}) {
-	const [value, setValue] = React.useState<Date | null>(new Date());
-	const [showAction, setShowAction] = React.useState<boolean>(false);
-	
-	return (
-		<Box>
-			{showAction!== null ? <HabitActionButtons habitId={props.habitId} actionHistory={props.actionHistory} value={value}></HabitActionButtons> : null}
-			<LocalizationProvider dateAdapter={AdapterDateFns}>
-				<StaticDatePicker<Date>
-					orientation='landscape'
-					openTo='day'
-					minDate={props.startDate}
-					maxDate={new Date()}
-					value={value}
-					ToolbarComponent={() => <Box display='flex'></Box>}
-					onChange={(e) => {
-						console.log(value);
-						setValue(e);
-						setShowAction(true);
-					}}
-					renderInput={(params) => <TextField {...params} />}
-				/>
-			</LocalizationProvider>
-		</Box>
-	);
-}
 
 export default function ViewHabit() {
 	const {userId, userName} = getCookieValue()
@@ -107,6 +58,25 @@ console.log(userId, habitId, 'location')
 const [habitDetails, setHabitDetails] = useState([])
 const [startDate, setStartDate]=useState(new Date())
 const [actionHistory, setActionHistory] = useState([])
+const [updatedAction, setUpdatedAction] = useState(false)
+ const [clicked, setClicked] = useState('')
+ const [actionDate, setActionDate] = React.useState<Date | null>(new Date());
+
+ function checkColor(selectedDate: Date | null){
+		if (!actionHistory.some(action => moment(action['date']).format("YYYY-MM-DD") === moment(selectedDate).format("YYYY-MM-DD"))){
+			console.log('no such date')
+			setClicked('')
+		} else {
+		actionHistory.forEach((action)=>{
+			if(moment(action['date']).format("YYYY-MM-DD") === moment(selectedDate).format("YYYY-MM-DD")){
+				setClicked(action['action'])
+			} 
+		})
+		console.log('date found')
+		}
+	}
+	
+
 // const minDate = new Date()
  
 
@@ -118,16 +88,84 @@ const [actionHistory, setActionHistory] = useState([])
 				console.log(res.data);				
 				setHabitDetails(res.data.userHabits)				
 				setStartDate(new Date(res.data.userHabits[0].habitStartDate))
-				setActionHistory(res.data.userHabits[0].habitAction)				
+				setActionHistory(res.data.userHabits[0].habitAction)		
 			})
 			.catch((error) => {
 				console.log('get habit failed');
 				console.log('error', error);
 			});
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])//[habitDetails])
-	console.log(startDate, habitDetails, actionHistory)
 
+			
+			
+			
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [updatedAction])//[habitDetails])
+	console.log(startDate, habitDetails, actionHistory)
+	
+	
+	
+function StaticDatePickerLandscape () {
+	
+	const [showAction, setShowAction] = React.useState<boolean>(false);
+
+	React.useEffect(()=>{
+	if(moment(actionDate).format("YYYY-MM-DD") === moment(new Date()).format("YYYY-MM-DD")){
+		 checkColor(actionDate)
+	 }
+	}, [])
+	
+	
+	
+function HabitActionButtons(){
+
+	
+ 	
+  const submitAction = (event: React.MouseEvent<HTMLButtonElement>) =>{
+    
+		
+		setClicked(event.currentTarget.value)
+		
+    const habitUpdateData = {userId, habitId, action: event.currentTarget.value, actionDate}
+		console.log(habitUpdateData, 'habit update')
+    axios
+      .post("http://localhost:3004/updatehabit", habitUpdateData)
+      .then(res=> {
+				console.log(res)
+				setUpdatedAction(!updatedAction)
+				console.log(updatedAction, 'action')
+			})
+
+  }
+	return (
+		<Box component="div" sx={{ display: 'flex' }}>
+              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'done'? 'green':'none', m:1}}value="done" onClick={submitAction} startIcon={<CheckIcon/>} ></Button>
+              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'undone'? 'red':'none',m:1}} value="undone" onClick={submitAction} startIcon={<CloseIcon/>}></Button>
+    </Box>
+	)
+}
+	
+	return (
+		<Box>
+			{showAction!== null ? <HabitActionButtons  ></HabitActionButtons> : null}
+			<LocalizationProvider dateAdapter={AdapterDateFns}>
+				<StaticDatePicker<Date>
+					orientation='landscape'
+					openTo='day'
+					minDate={startDate}
+					maxDate={new Date()}
+					value={actionDate}
+					ToolbarComponent={() => <Box display='flex'></Box>}
+					onChange={(e) => {
+						setActionDate(e);
+						checkColor(e)
+						setShowAction(true);
+					}}
+					renderInput={(params) => <TextField {...params} />}
+				/>
+			</LocalizationProvider>
+		</Box>
+	);
+}
 	return (
 		<ThemeProvider theme={theme}>
 			<Container component='main' maxWidth='xs'>
@@ -161,21 +199,8 @@ const [actionHistory, setActionHistory] = useState([])
 							</>
 							)
 						})}
-						{/* <Box component='div' sx={{ display: 'inline' }}>
-							{habitDetails[0].habitName}{' '}
-						</Box> */}
-						{/* <Box component='div' sx={{ display: 'inline' }}>
-							{habitDetails.frequencyNumber === '0'
-								? null
-								: habitDetails.frequencyNumber}{' '}
-						</Box>
-						<Box component='div' sx={{ display: 'inline' }}>
-							{habitDetails.frequencyUnit}
-						</Box>
-						<Box component='div' sx={{ display: 'block' }}>
-							{habitDetails.description}
-						</Box> */}
-						<StaticDatePickerLandscape startDate={startDate} habitId={habitId} actionHistory={actionHistory}></StaticDatePickerLandscape>
+						
+						<StaticDatePickerLandscape  ></StaticDatePickerLandscape>
 					</Box>
 				</Box>
 				<SimpleBottomNavigation />

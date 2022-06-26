@@ -6,6 +6,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import GroupIcon from '@mui/icons-material/Group';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import SettingsIcon from '@mui/icons-material/Settings';
+import CreateIcon from '@mui/icons-material/Create';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
 export default function SimpleBottomNavigation() {
@@ -22,8 +24,9 @@ export default function SimpleBottomNavigation() {
       >
         <BottomNavigationAction href= 'allhabits' label="Home" icon={<HomeIcon />} />
         <BottomNavigationAction href = 'friends' label="Friends" icon={<GroupIcon />} />
-        <BottomNavigationAction href = 'friends' label="Messages" icon={<ChatBubbleIcon />} />
-        <BottomNavigationAction href = 'friends' label="Settings" icon={<SettingsIcon />} />
+        <BottomNavigationAction href = 'createhabit' label="Create" icon={<CreateIcon />} />
+        <BottomNavigationAction href = 'signin' label="Logout" icon={<LogoutIcon />} />
+        {/* <BottomNavigationAction href = 'friends' label="Settings" icon={<SettingsIcon />} /> */}
       </BottomNavigation>
     </Box>
   );
