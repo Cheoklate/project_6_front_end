@@ -11,6 +11,7 @@ import getCookieValue from './global_components/Cookies'
 axios.defaults.withCredentials = true;
 
 export default function AddFriend() {
+  const {userId, userName} = getCookieValue()
   const [findFriend, setFindFriend] = React.useState('')
   const [found, setFound] = React.useState<boolean | null>(null)
   const [ message, setMessage] = React.useState('')
@@ -20,9 +21,6 @@ export default function AddFriend() {
   }, [])
 
   function addFriendClick(){
-    
-    const userId = "62aae7c2fd55155e96803269"
-    const userName = 'GracetheDragon'
     
     axios
     .post('http://localhost:3004/friends', {userId, userName, friendUserName: findFriend})

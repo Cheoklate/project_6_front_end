@@ -14,9 +14,10 @@ import getCookieValue from "./global_components/Cookies";
 
 
 export default function FriendRequest() {
+  const {userId, userName} = getCookieValue()
   const [friendRequest, setFriendRequest] = React.useState([])
+  const [actionDone, setActionDone] = React.useState<boolean>(false)
     React.useEffect(()=>{
-      const {userId, userName} = getCookieValue()
       
       axios
       .get('http://localhost:3004/friendrequest', {params: {userId}})
@@ -26,14 +27,15 @@ export default function FriendRequest() {
 
       })
 // eslint-disable-next-line react-hooks/exhaustive-deps
-},[])
+},[actionDone])
 
-function acceptRequest(friendUserName:any, friendUserId:any) :any {
-  console.log(friendUserName, friendUserId)
+function requestAction(friendUserName:any, friendUserId:any, action: string) :any {
+  const requestData = {userId, userName, friendUserId, friendUserName, action}
   axios
-  .post('http://localhost:3004/friendrequest', {friendUserName, friendUserId})
+  .post('http://localhost:3004/friendrequest', requestData)
   .then(res=>{
     console.log(res.data)
+    setActionDone(!actionDone)
   })
 }
   
@@ -44,12 +46,13 @@ function acceptRequest(friendUserName:any, friendUserId:any) :any {
         {friendRequest?.map((request)=>{
           return (
             <>
-            <Stack direction="row" spacing={2}>
+            
+            <Stack direction="row" spacing={2} >
             <Avatar sx={{ bgcolor: deepOrange[500] }}>{request['userName'][0]}</Avatar>
             <Typography>{request['userName']}</Typography>
 
-            <Chip label="Accept" color="success"  defaultValue={[request['userName'],request['userId']]} onClick={()=>acceptRequest(request['userName'],request['userId'])}/>
-            <Chip label="Reject" sx={{ bgcolor: red[500] }} />
+            <Chip label="Accept" color="success"  defaultValue={[request['userName'],request['_id']]} onClick={()=>requestAction(request['userName'],request['_id'], 'accept')}/>
+            <Chip label="Reject" sx={{ bgcolor: red[500] }} defaultValue={[request['userName'],request['_id']]} onClick={()=>requestAction(request['userName'],request['_id'], 'reject')}/>
             </Stack>
             <Divider />
             
