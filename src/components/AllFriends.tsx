@@ -6,7 +6,7 @@ import axios from 'axios';
 import getCookieValue from './global_components/Cookies'
 axios.defaults.withCredentials = true;
 
-export default function AllFriends() {
+export default function AllFriends(props:{refresh:boolean}) {
   const [allFriends, setAllFriends] = React.useState([])
   const {userId, userName} = getCookieValue()
 React.useEffect(()=>{
@@ -18,7 +18,7 @@ React.useEffect(()=>{
 
   })
 // eslint-disable-next-line react-hooks/exhaustive-deps
-},[])
+},[props.refresh])
 
   return (
     <Stack direction="row" spacing={1}>

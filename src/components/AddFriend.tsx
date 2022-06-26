@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Chip from "@mui/material/Chip";
@@ -16,6 +16,7 @@ export default function AddFriend() {
   const [found, setFound] = React.useState<boolean | null>(null)
   const [ message, setMessage] = React.useState('')
 
+
   React.useEffect(()=>{
     setFound(null)
   }, [])
@@ -26,6 +27,7 @@ export default function AddFriend() {
     .post('http://localhost:3004/friends', {userId, userName, friendUserName: findFriend})
     .then(res =>
       {console.log(res.data)
+        
         if(res.data.message === 'no such user'){
           setMessage('No user found, please try again')
         }
@@ -41,6 +43,7 @@ export default function AddFriend() {
       })
   }
   return (
+    
     <Box>
       <Stack spacing={3}>   
         {message !== '' && <h6>{message}</h6>}

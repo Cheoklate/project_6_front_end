@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import {useState, useEffect} from 'react'
 import Avatar from '@mui/material/Avatar';
 
 import CssBaseline from '@mui/material/CssBaseline';
@@ -208,6 +208,14 @@ function Copyright(
 const theme = createTheme();
 
 export default function FriendList() {
+	const [refresh, setRefresh] = useState<boolean>(false)
+
+
+	React.useEffect(()=>{
+		console.log('refreh')
+	}, [refresh])
+
+	
 	return (
 		<ThemeProvider theme={theme}>
 			<Container component='main' maxWidth='xs'>
@@ -238,7 +246,7 @@ export default function FriendList() {
 										<Typography>Friend Request</Typography>
 									</AccordionSummary>
 									<AccordionDetails>
-										<FriendRequest />
+										<FriendRequest setRefresh={setRefresh} />
 									</AccordionDetails>
 								</Accordion>
 							</Grid>
@@ -283,7 +291,7 @@ export default function FriendList() {
 										<Typography>All Friends</Typography>
 									</AccordionSummary>
 									<AccordionDetails>
-										<AllFriends />
+										<AllFriends refresh={refresh} />
 									</AccordionDetails>
 								</Accordion>
 							</Grid>
