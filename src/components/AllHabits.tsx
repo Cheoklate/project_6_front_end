@@ -80,7 +80,7 @@ export default function AllHabits() {
 
 	React.useEffect(()=>{ 
 		axios
-			.get('http://localhost:3004/allhabits',{params: {userId}} )
+			.get('https://track-abit-front.herokuapp.com/allhabits',{params: {userId}} )
 			.then(res => {
         setAllHabitDetails(res.data)
         console.log(allHabitDetails, allHabitDetails.length)

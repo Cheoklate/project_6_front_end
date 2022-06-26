@@ -213,7 +213,7 @@ export default function SignIn() {
 		const data = new FormData(event.currentTarget);
 		let loginDetails = { email: email, password: password };
 		axios
-			.post('http://localhost:3004/login', loginDetails)
+			.post('https://track-abit-front.herokuapp.com/login', loginDetails)
 			.then((res) => {
 				let path = '/allhabits';
 				console.log('succesful login');
