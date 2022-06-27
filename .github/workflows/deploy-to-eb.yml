@@ -17,7 +17,7 @@ jobs:
       - run: npm run test
 
       - name: Create ZIP deployment package
-        run: zip -r deploy_package.zip * -x ./node_modules
+        run: zip -r deploy_package.zip 
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1

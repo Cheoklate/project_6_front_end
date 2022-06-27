@@ -213,7 +213,7 @@ export default function SignIn() {
 		const data = new FormData(event.currentTarget);
 		let loginDetails = { email: email, password: password };
 		axios
-			.post('http://localhost:3004/login', loginDetails)
+			.post('http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/login', loginDetails)
 			.then((res) => {
 				let path = '/allhabits';
 				console.log('succesful login');
