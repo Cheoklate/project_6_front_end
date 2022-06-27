@@ -171,49 +171,64 @@ function HabitActionButtons(){
 	);
 }
 	return (
-		<ThemeProvider theme={theme}>
-			<Container component='main' maxWidth='xs'>
-				<CssBaseline />
-				<Box
-					sx={{
-						marginTop: 8,
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-					}}
-				>
-					<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-						<LockOutlinedIcon />
-					</Avatar>
-					<Typography component='h1' variant='h5'>
-						View Habit
-					</Typography>
-					<Box sx={{ mt: 1 }}>
-						{habitDetails.map((details)=>{
-							
-							return(
-								<><Box key={`${details['userHabits_id']}name`} component='div' sx={{ display: 'inline' }}>
-									{details['habitName']} {details['frequencyUnit'] === "daily"? details['frequencyUnit']: `${details['frequencyNumber']}x ${details['frequencyUnit']}`}
-									<Tooltip title={'Stats are displayed over the frequency unit of your habit. e.g. daily, weekly or monthly'}>
-										<IconButton>
-											<InfoIcon />
-										</IconButton>
-									</Tooltip>  <br/>
-                # completed: {details['habitStreak']['completedCount']}<br/>
-								% completed: {details['habitStreak']['achievementRate']['$numberDecimal']*100}% <br/>
-								streak: {details['habitStreak']['streakCount']} <br/>
-									started on:{' '}
-										{moment(details['habitStartDate']).format("LL")}
-								</Box>
-							</>
-							)
-						})}
-						
-						<StaticDatePickerLandscape  ></StaticDatePickerLandscape>
-					</Box>
-				</Box>
-				<SimpleBottomNavigation />
-			</Container>
-		</ThemeProvider>
-	);
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <AssignmentTurnedInIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            View Habit
+          </Typography>
+          <Box sx={{ mt: 1 }}>
+            {habitDetails.map((details) => {
+              return (
+                <>
+                  <Box
+                    key={`${details["userHabits_id"]}name`}
+                    component="div"
+                    sx={{ display: "inline" }}
+                  >
+                    {details["habitName"]}{" "}
+                    {details["frequencyUnit"] === "daily"
+                      ? details["frequencyUnit"]
+                      : `${details["frequencyNumber"]}x ${details["frequencyUnit"]}`}
+                    <Tooltip
+                      title={
+                        "Stats are displayed over the frequency unit of your habit. e.g. daily, weekly or monthly"
+                      }
+                    >
+                      <IconButton>
+                        <InfoIcon />
+                      </IconButton>
+                    </Tooltip>{" "}
+                    <br /># completed:{" "}
+                    {details["habitStreak"]["completedCount"]}
+                    <br />% completed:{" "}
+                    {details["habitStreak"]["achievementRate"][
+                      "$numberDecimal"
+                    ] * 100}
+                    % <br />
+                    streak: {details["habitStreak"]["streakCount"]} <br />
+                    started on: {moment(details["habitStartDate"]).format("LL")}
+                  </Box>
+                </>
+              );
+            })}
+
+            <StaticDatePickerLandscape></StaticDatePickerLandscape>
+          </Box>
+        </Box>
+        <SimpleBottomNavigation />
+      </Container>
+    </ThemeProvider>
+  );
 }
