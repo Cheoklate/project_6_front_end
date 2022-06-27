@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useState, Dispatch,SetStateAction } from "react";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
-import { deepOrange, deepPurple } from "@mui/material/colors";
+import { green, pink } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
@@ -53,18 +53,32 @@ function requestAction(friendUserName:any, friendUserId:any, action: string) :an
         {friendRequest?.map((request)=>{
           return (
             <>
-            
-            <Stack direction="row" spacing={2} >
-            <Avatar sx={{ bgcolor: deepOrange[500] }}>{request['userName'][0]}</Avatar>
-            <Typography>{request['userName']}</Typography>
+              <Stack direction="row" spacing={2}>
+                <Avatar sx={{ bgcolor: "secondary.main" }}>
+                  {request["userName"][0]}
+                </Avatar>
+                <Typography>{request["userName"]}</Typography>
 
-            <Chip label="Accept" color="success"  defaultValue={[request['userName'],request['_id']]} onClick={()=>requestAction(request['userName'],request['_id'], 'accept')}/>
-            <Chip label="Reject" sx={{ bgcolor: red[500] }} defaultValue={[request['userName'],request['_id']]} onClick={()=>requestAction(request['userName'],request['_id'], 'reject')}/>
-            </Stack>
-            <Divider />
-            
+                <Chip
+                  label="Accept"
+                  sx={{ bgcolor: green[500] }}
+                  defaultValue={[request["userName"], request["_id"]]}
+                  onClick={() =>
+                    requestAction(request["userName"], request["_id"], "accept")
+                  }
+                />
+                <Chip
+                  label="Reject"
+                  sx={{ bgcolor: pink[500] }}
+                  defaultValue={[request["userName"], request["_id"]]}
+                  onClick={() =>
+                    requestAction(request["userName"], request["_id"], "reject")
+                  }
+                />
+              </Stack>
+              <Divider />
             </>
-          )
+          );
         })}
         
         

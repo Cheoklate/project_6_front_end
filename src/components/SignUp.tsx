@@ -224,7 +224,7 @@ export default function SignUp() {
 		};
 		axios
       .post(
-        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/signup",
+        "http://ec2-13-250-95-186.ap-southeast-1.compute.amazonaws.com:3004/signup",
         signupDetails
       )
       .then((res) => {

@@ -68,7 +68,7 @@ export default function AllHabits() {
 		
 		axios
       .get(
-        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/friendhabits",
+        "http://ec2-13-250-95-186.ap-southeast-1.compute.amazonaws.com:3004/friendhabits",
         { params: { userName: friendUserName } }
       )
       .then((res) => {
