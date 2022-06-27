@@ -38,6 +38,7 @@ import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import InfoIcon from '@mui/icons-material/Info';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import Header from "./global_components/Header";
 
 
 axios.defaults.withCredentials = true;
@@ -180,6 +181,7 @@ function HabitActionButtons(){
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        <Header />
         <Box
           sx={{
             marginTop: 8,
@@ -219,9 +221,11 @@ function HabitActionButtons(){
                     <br /># completed:{" "}
                     {details["habitStreak"]["completedCount"]}
                     <br />% completed:{" "}
-                    {Math.round(details["habitStreak"]["achievementRate"][
-                      "$numberDecimal"
-                    ] * 100)}
+                    {Math.round(
+                      details["habitStreak"]["achievementRate"][
+                        "$numberDecimal"
+                      ] * 100
+                    )}
                     % <br />
                     streak: {details["habitStreak"]["streakCount"]} <br />
                     started on: {moment(details["habitStartDate"]).format("LL")}

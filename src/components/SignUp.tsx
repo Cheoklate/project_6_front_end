@@ -23,7 +23,7 @@ import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import Header from "./global_components/Header";
 
 
 function Copyright(
@@ -251,6 +251,7 @@ export default function SignUp() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+				<Header />
         <Box
           sx={{
             marginTop: 8,

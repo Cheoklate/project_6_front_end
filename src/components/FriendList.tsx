@@ -33,6 +33,7 @@ import AddFriend from './AddFriend';
 import FriendRequest from './FriendRequest';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
 import getCookieValue from './global_components/Cookies';
+import Header from "./global_components/Header";
 
 function Copyright(
 	props: JSX.IntrinsicAttributes & {
@@ -221,6 +222,7 @@ export default function FriendList() {
 		<ThemeProvider theme={theme}>
 			<Container component='main' maxWidth='xs'>
 				<CssBaseline />
+				<Header />
 				<Box
 					sx={{
 						marginTop: 8,

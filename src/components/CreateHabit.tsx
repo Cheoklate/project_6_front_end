@@ -30,6 +30,7 @@ import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
 import CreateIcon from "@mui/icons-material/Create";
+import Header from "./global_components/Header";
 
 axios.defaults.withCredentials = true;
 
@@ -80,9 +81,10 @@ export default function CreateHabit() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        <Header />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 3,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
