@@ -34,6 +34,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import getCookieValue from  './global_components/Cookies'
 import { setDate } from 'date-fns';
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 
 axios.defaults.withCredentials = true;
@@ -138,8 +139,8 @@ function HabitActionButtons(){
   }
 	return (
 		<Box component="div" sx={{ display: 'flex' }}>
-              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'done'? 'green':'none', m:1}}value="done" onClick={submitAction} startIcon={<CheckIcon/>} ></Button>
-              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'undone'? 'red':'none',m:1}} value="undone" onClick={submitAction} startIcon={<CloseIcon/>}></Button>
+              <Button variant="outlined" sx={{ borderRadius: 70, color: 'black', backgroundColor: clicked === 'done'? 'green':'grey', m:1}}value="done" onClick={submitAction} startIcon={<CheckIcon/>} ></Button>
+              <Button variant="outlined" sx={{ borderRadius: 50,color: 'black', backgroundColor: clicked === 'undone'? 'red':'none',m:1}} value="undone" onClick={submitAction} startIcon={<CloseIcon/>}></Button>
     </Box>
 	)
 }
@@ -167,44 +168,57 @@ function HabitActionButtons(){
 	);
 }
 	return (
-		<ThemeProvider theme={theme}>
-			<Container component='main' maxWidth='xs'>
-				<CssBaseline />
-				<Box
-					sx={{
-						marginTop: 8,
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-					}}
-				>
-					<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-						<LockOutlinedIcon />
-					</Avatar>
-					<Typography component='h1' variant='h5'>
-						View Habit
-					</Typography>
-					<Box sx={{ mt: 1 }}>
-						{habitDetails.map((details)=>{
-							
-							return(
-								<><Box key={`${details['userHabits_id']}name`} component='div' sx={{ display: 'inline' }}>
-									{details['habitName']} {details['frequencyUnit'] === "daily"? details['frequencyUnit']: `${details['frequencyNumber']}x ${details['frequencyUnit']}`} <br/>
-                completed in this period: {details['habitStreak']['completedCount']}<br/>
-								rate: {details['habitStreak']['achievementRate']['$numberDecimal']*100}% <br/>
-								streak: {details['habitStreak']['streakCount']} <br/>
-									Started on:{' '}
-										{moment(details['habitStartDate']).format("LL")}
-								</Box>
-							</>
-							)
-						})}
-						
-						<StaticDatePickerLandscape  ></StaticDatePickerLandscape>
-					</Box>
-				</Box>
-				<SimpleBottomNavigation />
-			</Container>
-		</ThemeProvider>
-	);
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <AssignmentTurnedInIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            View Habit
+          </Typography>
+          <Box sx={{ mt: 1 }}>
+            {habitDetails.map((details) => {
+              return (
+                <>
+                  <Box
+                    key={`${details["userHabits_id"]}name`}
+                    component="div"
+                    sx={{ display: "inline" }}
+                  >
+                    {details["habitName"]}{" "}
+                    {details["frequencyUnit"] === "daily"
+                      ? details["frequencyUnit"]
+                      : `${details["frequencyNumber"]}x ${details["frequencyUnit"]}`}{" "}
+                    <br />
+                    completed in this period:{" "}
+                    {details["habitStreak"]["completedCount"]}
+                    <br />
+                    rate:{" "}
+                    {details["habitStreak"]["achievementRate"][
+                      "$numberDecimal"
+                    ] * 100}
+                    % <br />
+                    streak: {details["habitStreak"]["streakCount"]} <br />
+                    Started on: {moment(details["habitStartDate"]).format("LL")}
+                  </Box>
+                </>
+              );
+            })}
+
+            <StaticDatePickerLandscape></StaticDatePickerLandscape>
+          </Box>
+        </Box>
+        <SimpleBottomNavigation />
+      </Container>
+    </ThemeProvider>
+  );
 }

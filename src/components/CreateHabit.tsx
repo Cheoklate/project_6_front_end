@@ -29,6 +29,7 @@ import { useNavigate } from 'react-router-dom';
 import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
+import CreateIcon from "@mui/icons-material/Create";
 
 axios.defaults.withCredentials = true;
 
@@ -85,7 +86,7 @@ export default function CreateHabit() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+            <CreateIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Create Habit
