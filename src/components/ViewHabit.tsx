@@ -34,6 +34,9 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import getCookieValue from  './global_components/Cookies'
 import { setDate } from 'date-fns';
+import InfoIcon from '@mui/icons-material/Info';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 
 
 axios.defaults.withCredentials = true;
@@ -189,11 +192,16 @@ function HabitActionButtons(){
 							
 							return(
 								<><Box key={`${details['userHabits_id']}name`} component='div' sx={{ display: 'inline' }}>
-									{details['habitName']} {details['frequencyUnit'] === "daily"? details['frequencyUnit']: `${details['frequencyNumber']}x ${details['frequencyUnit']}`} <br/>
-                completed in this period: {details['habitStreak']['completedCount']}<br/>
-								rate: {details['habitStreak']['achievementRate']['$numberDecimal']*100}% <br/>
+									{details['habitName']} {details['frequencyUnit'] === "daily"? details['frequencyUnit']: `${details['frequencyNumber']}x ${details['frequencyUnit']}`}
+									<Tooltip title={'Stats are displayed over the frequency unit of your habit. e.g. daily, weekly or monthly'}>
+										<IconButton>
+											<InfoIcon />
+										</IconButton>
+									</Tooltip>  <br/>
+                # completed: {details['habitStreak']['completedCount']}<br/>
+								% completed: {details['habitStreak']['achievementRate']['$numberDecimal']*100}% <br/>
 								streak: {details['habitStreak']['streakCount']} <br/>
-									Started on:{' '}
+									started on:{' '}
 										{moment(details['habitStartDate']).format("LL")}
 								</Box>
 							</>
