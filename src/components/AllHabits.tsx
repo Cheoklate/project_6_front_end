@@ -32,6 +32,7 @@ import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
 import getCookieValue from './global_components/Cookies'
+import Header from './global_components/Header'
 
 
 
@@ -101,6 +102,7 @@ export default function AllHabits() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+				<Header/>
         <Box
           sx={{
             marginTop: 8,
