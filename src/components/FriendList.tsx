@@ -199,7 +199,7 @@ function Copyright(
 		>
 			{'Copyright © '}
 			<Link color='inherit' href='/'>
-				track-abit
+				TrackIt
 			</Link>{' '}
 			{new Date().getFullYear()}
 			{'.'}
@@ -225,7 +225,7 @@ export default function FriendList() {
 				<Header />
 				<Box
 					sx={{
-						marginTop: 8,
+						marginTop: 2,
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'center',
