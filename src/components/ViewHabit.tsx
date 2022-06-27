@@ -219,9 +219,9 @@ function HabitActionButtons(){
                     <br /># completed:{" "}
                     {details["habitStreak"]["completedCount"]}
                     <br />% completed:{" "}
-                    {details["habitStreak"]["achievementRate"][
+                    {Math.round(details["habitStreak"]["achievementRate"][
                       "$numberDecimal"
-                    ] * 100}
+                    ] * 100)}
                     % <br />
                     streak: {details["habitStreak"]["streakCount"]} <br />
                     started on: {moment(details["habitStartDate"]).format("LL")}
