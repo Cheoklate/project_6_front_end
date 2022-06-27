@@ -59,12 +59,13 @@ export default function AllHabits() {
 	}
 
 	const location = useLocation()
+	const state = location.state as CustomizedState
+		const {friendUserName} = state
+		console.log(friendUserName)
 
 	React.useEffect(()=>{ 
 		
-		const state = location.state as CustomizedState
-		const {friendUserName} = state
-		console.log(friendUserName)
+		
 		axios
 			.get('http://localhost:3004/friendhabits',{params: {userName: friendUserName}} )
 			.then(res => {
@@ -94,20 +95,24 @@ export default function AllHabits() {
 						<LockOutlinedIcon />
 					</Avatar>
 					<Typography component='h1' variant='h5'>
-						Friend Habits
+						{friendUserName}'s' habits
 					</Typography>
 					<Box
 						sx={{ mt: 1 }}
 					> 
+						{allHabitDetails.length === 0 &&
+							  <Box component="div" sx={{ display: 'inline' }}>No habits yet!</Box> 
+						}
+
             {allHabitDetails.length >= 1 &&  allHabitDetails.map((details, index)=>{
               return (
                 <React.Fragment key={index}>
             
-              {/* <Box component="div" sx={{ display: 'inline' }}>{details.frequencyNumber === 0 ? null : details.frequencyNumber} times {details.frequencyUnit}</Box> */}
+            
               <Box onClick={()=>{navigate("/viewhabit", {state:{userId:userId,habitId:details['userHabits_id']}})}}
 							component="div" sx={{ display: 'block' }}>
                 {details['habitName']} {details['frequencyUnit'] === "daily"? details['frequencyUnit']: `${details['frequencyNumber']}x ${details['frequencyUnit']}`} <br/>
-                completed in this period: {details['habitStreak']['completedCount']}, rate: {details['habitStreak']['achievementRate']['$numberDecimal']*100}%, streak: {details['habitStreak']['streakCount']}</Box>
+                completed in this period: {details['habitStreak']['completedCount']}, rate: {(parseFloat(details['habitStreak']['achievementRate']['$numberDecimal'])).toFixed(2)}%, streak: {details['habitStreak']['streakCount']}</Box>
               
               <hr></hr>
               </React.Fragment>
