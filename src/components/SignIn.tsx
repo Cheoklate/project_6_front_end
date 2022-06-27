@@ -25,6 +25,7 @@ import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
 import cookieParser from 'cookie-parser';
+import Header from './global_components/Header';
 axios.defaults.withCredentials = true;
 
 function Copyright(
@@ -213,20 +214,23 @@ export default function SignIn() {
 		const data = new FormData(event.currentTarget);
 		let loginDetails = { email: email, password: password };
 		axios
-			.post('http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/login', loginDetails)
-			.then((res) => {
-				let path = '/allhabits';
-				console.log('succesful login');
-				console.log('data', res.data);
-				const { _id, email, userName } = res.data;
-				document.cookie = `userId=${_id}; SameSite=None; Secure`
-				document.cookie = `userName=${userName}; SameSite=None; Secure`
-				navigate(path);
-			})
-			.catch((error) => {
-				console.log('login failed');
-				console.log('error', error);
-			});
+      .post(
+        "http://ec2-13-250-95-186.ap-southeast-1.compute.amazonaws.com:3004/login",
+        loginDetails
+      )
+      .then((res) => {
+        let path = "/allhabits";
+        console.log("succesful login");
+        console.log("data", res.data);
+        const { _id, email, userName } = res.data;
+        document.cookie = `userId=${_id}; SameSite=None; Secure`;
+        document.cookie = `userName=${userName}; SameSite=None; Secure`;
+        navigate(path);
+      })
+      .catch((error) => {
+        console.log("login failed");
+        console.log("error", error);
+      });
 		console.log({
 			email: data.get('email'),
 			password: data.get('password'),

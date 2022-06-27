@@ -23,7 +23,7 @@ import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import SimpleBottomNavigation from './global_components/BottomNavigation';
+
 
 
 function Copyright(
@@ -223,18 +223,21 @@ export default function SignUp() {
 			userFriends: userFriends,
 		};
 		axios
-			.post('http://localhost:3004/signup', signupDetails)
-			.then((res) => {
-				let path = '/signin';
-				console.log('succesful signup');
-				console.log('data', res.data);
-				const { id, email } = res.data;
-				navigate(path);
-			})
-			.catch((error) => {
-				console.log('signup failed');
-				console.log('error', error);
-			});
+      .post(
+        "http://ec2-13-250-95-186.ap-southeast-1.compute.amazonaws.com:3004/signup",
+        signupDetails
+      )
+      .then((res) => {
+        let path = "/signin";
+        console.log("succesful signup");
+        console.log("data", res.data);
+        const { id, email } = res.data;
+        navigate(path);
+      })
+      .catch((error) => {
+        console.log("signup failed");
+        console.log("error", error);
+      });
 		console.log({
 			firstName: data.get('firstName'),
 			lastName: data.get('lastName'),
