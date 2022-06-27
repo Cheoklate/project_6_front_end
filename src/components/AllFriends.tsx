@@ -16,12 +16,14 @@ export default function AllFriends(props:{refresh:boolean}) {
   let navigate = useNavigate();
 React.useEffect(()=>{
   axios
-  .get('http://localhost:3004/friends', {params: {userId}})
-  .then(res =>{
-    setAllFriends(res.data)
-    console.log(res.data, allFriends, 'response')
-
-  })
+    .get(
+      "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/friends",
+      { params: { userId } }
+    )
+    .then((res) => {
+      setAllFriends(res.data);
+      console.log(res.data, allFriends, "response");
+    });
 // eslint-disable-next-line react-hooks/exhaustive-deps
 },[props.refresh])
 

@@ -33,6 +33,7 @@ import AddFriend from './AddFriend';
 import FriendRequest from './FriendRequest';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
 import getCookieValue from './global_components/Cookies';
+
 function Copyright(
 	props: JSX.IntrinsicAttributes & {
 		component: React.ElementType<any>;

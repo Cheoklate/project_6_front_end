@@ -24,23 +24,26 @@ export default function AddFriend() {
   function addFriendClick(){
     
     axios
-    .post('http://localhost:3004/friends', {userId, userName, friendUserName: findFriend})
-    .then(res =>
-      {console.log(res.data)
-        
-        if(res.data.message === 'no such user'){
-          setMessage('No user found, please try again')
+      .post(
+        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/friends",
+        { userId, userName, friendUserName: findFriend }
+      )
+      .then((res) => {
+        console.log(res.data);
+
+        if (res.data.message === "no such user") {
+          setMessage("No user found, please try again");
         }
-        if (res.data.message === 'alr friends') {
-          setMessage('You are already friends!')
+        if (res.data.message === "alr friends") {
+          setMessage("You are already friends!");
         }
-        if(res.data.message === 'request alr sent') {
-          setMessage('Your request was previously sent')
+        if (res.data.message === "request alr sent") {
+          setMessage("Your request was previously sent");
         }
-        if(res.data.userName){
-          setMessage(`Your request has been sent to ${res.data.userName}`)
+        if (res.data.userName) {
+          setMessage(`Your request has been sent to ${res.data.userName}`);
         }
-      })
+      });
   }
   return (
     

@@ -22,24 +22,29 @@ export default function FriendRequest(props:{setRefresh: Dispatch<SetStateAction
     React.useEffect(()=>{
       
       axios
-      .get('http://localhost:3004/friendrequest', {params: {userId}})
-      .then(res =>{
-        setFriendRequest(res.data)
-        console.log(res.data, friendRequest, 'response')
-
-      })
+        .get(
+          "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/friendrequest",
+          { params: { userId } }
+        )
+        .then((res) => {
+          setFriendRequest(res.data);
+          console.log(res.data, friendRequest, "response");
+        });
 // eslint-disable-next-line react-hooks/exhaustive-deps
 },[actionDone])
 
 function requestAction(friendUserName:any, friendUserId:any, action: string) :any {
   const requestData = {userId, userName, friendUserId, friendUserName, action}
   axios
-  .post('http://localhost:3004/friendrequest', requestData)
-  .then(res=>{
-    console.log(res.data)
-    setActionDone(!actionDone)
-    props.setRefresh(!actionDone)
-  })
+    .post(
+      "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/friendrequest",
+      requestData
+    )
+    .then((res) => {
+      console.log(res.data);
+      setActionDone(!actionDone);
+      props.setRefresh(!actionDone);
+    });
 }
   
   return (

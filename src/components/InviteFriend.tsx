@@ -3,12 +3,11 @@ import { useState } from 'react';
 
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-
-import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 
 import "./styles.css";
 import getCookieValue from './global_components/Cookies';
+import Button from "@mui/material/Button";
 
 export default function InviteFriend() {
   
@@ -50,32 +49,50 @@ export default function InviteFriend() {
 
   return (
     <Box>
-      <Stack spacing={3}>
-        <TextField
-          className="inputRounded"
-          placeholder="Name"
-          name="to_name"
-          onChange={(event) => {
-            setToName(event.target.value);
-          }}
-        ></TextField>
-        <TextField
-          className="inputRounded"
-          placeholder="Email Address"
-          name="email"
-          onChange={(event) => {
-            setEmail(event.target.value);
-          }}
-        ></TextField>
-        <TextField
-          className="inputRounded"
-          placeholder="Your message"
-          name="message"
-          onChange={(event) => {
-            setMessage(event.target.value);
-          }}
-        ></TextField>
-        <Chip onClick={sendEmail} label="Send Invite" color="secondary" />
+      <Stack spacing={12}>
+        <form onSubmit={sendEmail}>
+          <Box>
+            <TextField
+              className="inputRounded"
+              placeholder="Name"
+              name="to_name"
+              onChange={(event) => {
+                setToName(event.target.value);
+              }}
+            ></TextField>
+          </Box>
+
+          <Box sx={{ mt: 3 }}>
+            <TextField
+              className="inputRounded"
+              placeholder="Email Address"
+              name="email"
+              onChange={(event) => {
+                setEmail(event.target.value);
+              }}
+            ></TextField>
+          </Box>
+
+          <Box sx={{ mt: 3 }}>
+            <TextField
+              className="inputRounded"
+              placeholder="Your message"
+              name="message"
+              onChange={(event) => {
+                setMessage(event.target.value);
+              }}
+            ></TextField>
+          </Box>
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2, bgcolor: "secondary.main", borderRadius: 25 }}
+          >
+            Send Invite
+          </Button>
+        </form>
       </Stack>
     </Box>
   );

@@ -223,18 +223,21 @@ export default function SignUp() {
 			userFriends: userFriends,
 		};
 		axios
-			.post('http://localhost:3004/signup', signupDetails)
-			.then((res) => {
-				let path = '/signin';
-				console.log('succesful signup');
-				console.log('data', res.data);
-				const { id, email } = res.data;
-				navigate(path);
-			})
-			.catch((error) => {
-				console.log('signup failed');
-				console.log('error', error);
-			});
+      .post(
+        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/signup",
+        signupDetails
+      )
+      .then((res) => {
+        let path = "/signin";
+        console.log("succesful signup");
+        console.log("data", res.data);
+        const { id, email } = res.data;
+        navigate(path);
+      })
+      .catch((error) => {
+        console.log("signup failed");
+        console.log("error", error);
+      });
 		console.log({
 			firstName: data.get('firstName'),
 			lastName: data.get('lastName'),
