@@ -14,6 +14,7 @@ import Typography, { TypographyClasses } from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import isWeekend from 'date-fns/isWeekend';
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import IconButton from "@mui/material/IconButton";
 
 
 import RedoIcon from '@mui/icons-material/Redo';
@@ -75,25 +76,55 @@ export default function AllHabits() {
       .then((res) => console.log(res));
   }
 	return (
-		<Box component="div" sx={{ display: 'flex' }}>
-              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'done'? 'green':'none', m:1}}value="done" onClick={submitAction} startIcon={<CheckIcon/>} ></Button>
-              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'undone'? 'red':'none',m:1}} value="undone" onClick={submitAction} startIcon={<CloseIcon/>}></Button>
-              {/* <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'skip'? 'gray':'none', m:1}} value="skip" onClick={submitAction} startIcon={<RedoIcon/>}></Button>            */}
+    <Box component="div" sx={{ display: "flex" }}>
+      <Button
+        variant="outlined"
+        sx={{
+          color: "black",
+          backgroundColor: clicked === "done" ? "green" : "none",
+          m: 1,
+        }}
+        value="done"
+        onClick={submitAction}
+        startIcon={<CheckIcon />}
+      ></Button>
+      <Button
+        variant="outlined"
+        sx={{
+          color: "black",
+          backgroundColor: clicked === "undone" ? "red" : "none",
+          m: 1,
+        }}
+        value="undone"
+        onClick={submitAction}
+        startIcon={<CloseIcon />}
+      ></Button>
+      {/* <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'skip'? 'gray':'none', m:1}} value="skip" onClick={submitAction} startIcon={<RedoIcon/>}></Button>            */}
+      <IconButton>
+        <CheckIcon />
+      </IconButton>
+
+      <IconButton>
+        <CloseIcon />
+      </IconButton>
     </Box>
-	)
+  );
 }
 
 	React.useEffect(()=>{ 
 		axios
-			.get('http://localhost:3004/allhabits',{params: {userId}} )
-			.then(res => {
-        setAllHabitDetails(res.data)
-        console.log(allHabitDetails, allHabitDetails.length)
-			})
-			.catch((error) => {
-				console.log('get habit failed');
-				console.log('error', error);
-			});
+      .get(
+        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/allhabits",
+        { params: { userId } }
+      )
+      .then((res) => {
+        setAllHabitDetails(res.data);
+        console.log(allHabitDetails, allHabitDetails.length);
+      })
+      .catch((error) => {
+        console.log("get habit failed");
+        console.log("error", error);
+      });
       
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[refresh])
