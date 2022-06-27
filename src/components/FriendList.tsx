@@ -197,7 +197,7 @@ function Copyright(
 		>
 			{'Copyright © '}
 			<Link color='inherit' href='/'>
-				Main Page
+				track-abit
 			</Link>{' '}
 			{new Date().getFullYear()}
 			{'.'}
