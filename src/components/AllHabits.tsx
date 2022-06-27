@@ -59,14 +59,17 @@ export default function AllHabits() {
 	
   const [allHabitDetails, setAllHabitDetails] = useState([])
 	const [refresh, setRefresh] = useState(false)
+  const [clicked, setClicked] = useState('')
 	
 	function HabitActionButtons(habitId: any){
 	
-  const [clicked, setClicked] = useState('')
+  
 	console.log('showing', habitId)
   const submitAction = (event: React.MouseEvent<HTMLButtonElement>) =>{
     setClicked(event.currentTarget.value)
-		setRefresh(!refresh)
+    event.currentTarget.style.backgroundColor= 'black'
+
+		
     
     const habitUpdateData = {userId, habitId: habitId.habitId, action: event.currentTarget.value, actionDate: new Date()}
     axios
@@ -74,33 +77,41 @@ export default function AllHabits() {
         "http://ec2-13-250-95-186.ap-southeast-1.compute.amazonaws.com:3004/updatehabit",
         habitUpdateData
       )
-      .then((res) => console.log(res));
+      .then((res) => {
+        setRefresh(!refresh)
+        console.log(res)
+      });
   }
 	return (
-    <Box component="div" sx={{ display: "flex" }}>
+    <Box component="div" sx={{ display: "flex", justifyContent:'center', textAlign:'center' }}>
       <Button
         variant="outlined"
         sx={{
           color: "black",
-          backgroundColor: clicked === "done" ? "green" : "none",
+					textAlign:'center',
+					paddingLeft:3,
+          // backgroundColor: clicked === 'done' ? 'green' : 'grey',
           m: 1,
         }}
         value="done"
-        onClick={submitAction}
+        onClick={
+          submitAction
+          
+        }
         startIcon={<CheckIcon />}
       ></Button>
       <Button
         variant="outlined"
         sx={{
-          color: "black",
-          backgroundColor: clicked === "undone" ? "red" : "none",
+          color: 'black',
+          // backgroundColor: clicked === 'undone' ? 'red' : 'grey',
           m: 1,
+					paddingLeft:3,
         }}
         value="undone"
         onClick={submitAction}
         startIcon={<CloseIcon />}
       ></Button>
-      {/* <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'skip'? 'gray':'none', m:1}} value="skip" onClick={submitAction} startIcon={<RedoIcon/>}></Button>            */}
       
     </Box>
   );
@@ -124,12 +135,12 @@ export default function AllHabits() {
 
       
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[refresh])
+    },[refresh, setRefresh])
 	return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-				<Header/>
+				
         <Box
           sx={{
             marginTop: 3,
@@ -138,6 +149,7 @@ export default function AllHabits() {
             alignItems: "center",
           }}
         >
+					<Header/>
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <AssignmentTurnedInIcon />
           </Avatar>
@@ -160,19 +172,21 @@ export default function AllHabits() {
                         });
                       }}
                       component="div"
-                      sx={{ display: "block" }}
+                      sx={{ display: "block", justifyContent:'center', textAlign:'center' }}
                     >
                       {details["habitName"]}{" "}
                       {details["frequencyUnit"] === "daily"
                         ? details["frequencyUnit"]
                         : `${details["frequencyNumber"]}x ${details["frequencyUnit"]}`}{" "}
                       <br />
-                      completed in this period:{" "}
-                      {details["habitStreak"]["completedCount"]}, rate:{" "}
+											<Typography variant="subtitle2">
+                      Completed {" "}
+                      {details["habitStreak"]["completedCount"]},{" "}
                       {Math.round(details["habitStreak"]["achievementRate"][
                         "$numberDecimal"
                       ] * 100)}
-                      %, streak: {details["habitStreak"]["streakCount"]}
+                      %, streak #{details["habitStreak"]["streakCount"]}
+											</Typography>
                     </Box>
                     <HabitActionButtons
                       habitId={details["userHabits_id"]}

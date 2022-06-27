@@ -251,13 +251,15 @@ export default function SignUp() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-				<Header />
+				
         <Box
           sx={{
             marginTop: 4,
+						
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+						justifyContent: 'center'
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -362,7 +364,7 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
+            <Grid container justifyContent="center">
               <Grid item>
                 <Link href="signin" variant="body2">
                   Already have an account? Sign in
