@@ -160,15 +160,7 @@ export default function CreateHabit() {
                 }}
               />
             ) : null}
-            <FormControlLabel
-              control={<Checkbox />}
-              label="Set Private"
-              value={isPublic}
-              onChange={() => {
-                setIsPublic(!isPublic);
-                console.log(isPublic);
-              }}
-            />
+            
             <TextField
               className="inputRounded"
               margin="normal"
@@ -201,14 +193,15 @@ export default function CreateHabit() {
               }}
               autoFocus
             />
-
+            
             <TextField
               className="inputRounded"
               margin="normal"
               required
               fullWidth
+              // style = {{width: 140}} 
               name="reminderFrequencyUnit"
-              label="Reminder Frequency"
+              label="Set Reminder"
               id="reminderFrequencyUnit"
               defaultValue=""
               onChange={(event) => {
@@ -219,15 +212,17 @@ export default function CreateHabit() {
               <MenuItem value="daily">Daily</MenuItem>
               <MenuItem value="weekly">Weekly</MenuItem>
               <MenuItem value="monthly">Monthly</MenuItem>
-            </TextField>
-            {reminderFrequencyUnit !== "daily" &&
+            </TextField> 
+             {reminderFrequencyUnit !== "daily" &&
             reminderFrequencyUnit !== "" ? (
               <TextField
                 className="inputRounded"
                 margin="normal"
                 required
+                fullWidth
+                // style = {{width: 110}} 
                 name="reminderFrequencyNumber"
-                label="Number"
+                label="Reminder Frequency"
                 id="reminderFrequencyNumber"
                 type="number"
                 InputProps={{ inputProps: { min: 1 } }}
@@ -236,33 +231,58 @@ export default function CreateHabit() {
                 }}
               />
             ) : null}
-            <TextField
-              className="inputRounded"
-              id="reminderTime"
-              name="reminderTime"
-              label="Reminder Time"
-              type="time"
-              defaultValue="09:00"
-              InputLabelProps={{
-                shrink: true,
+            
+              <TextField
+                className="inputRounded"
+                id="reminderTime"
+                name="reminderTime"
+                label="Reminder Time"
+                type="time"
+                fullWidth
+                margin="normal"
+                defaultValue="09:00"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  step: 900, // 5 min
+                }}
+                sx={{ width: 140 }}
+                onChange={(event) => {
+                  setReminderTime(event.target.value);
+                }}
+              />
+            
+            
+            
+            <Box
+            margin="normal">
+            <FormControlLabel
+              
+              control={<Checkbox
+               />}
+              label="Set Private"
+              
+              value={isPublic}
+              onChange={() => {
+                setIsPublic(!isPublic);
+                console.log(isPublic);
               }}
-              inputProps={{
-                step: 900, // 5 min
-              }}
-              sx={{ width: 150 }}
-              onChange={(event) => {
-                setReminderTime(event.target.value);
-              }}
-            />
+            /> 
+            </Box>
+            
+            
 
             <Button
               type="submit"
               fullWidth
+               
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: "secondary.main", borderRadius: 25 }}
             >
               Create
             </Button>
+            <Box></Box>
           </Box>
         </Box>
         <SimpleBottomNavigation />
