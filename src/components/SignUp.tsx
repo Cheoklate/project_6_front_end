@@ -23,7 +23,7 @@ import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import Header from "./global_components/Header";
 
 
 function Copyright(
@@ -190,7 +190,7 @@ function Copyright(
 		>
 			{'Copyright © '}
 			<Link color='inherit' href='/'>
-				Main Page
+				TrackIt
 			</Link>{' '}
 			{new Date().getFullYear()}
 			{'.'}
@@ -251,9 +251,10 @@ export default function SignUp() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+				<Header />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 4,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",

@@ -33,6 +33,7 @@ import AddFriend from './AddFriend';
 import FriendRequest from './FriendRequest';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
 import getCookieValue from './global_components/Cookies';
+import Header from "./global_components/Header";
 
 function Copyright(
 	props: JSX.IntrinsicAttributes & {
@@ -198,7 +199,7 @@ function Copyright(
 		>
 			{'Copyright © '}
 			<Link color='inherit' href='/'>
-				track-abit
+				TrackIt
 			</Link>{' '}
 			{new Date().getFullYear()}
 			{'.'}
@@ -221,9 +222,10 @@ export default function FriendList() {
 		<ThemeProvider theme={theme}>
 			<Container component='main' maxWidth='xs'>
 				<CssBaseline />
+				<Header />
 				<Box
 					sx={{
-						marginTop: 8,
+						marginTop: 2,
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'center',
