@@ -128,6 +128,7 @@ export default function AllHabits() {
 
 	React.useEffect(()=>{ 
 		axios
+
       .get(
         "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/allhabits",
         { params: { userId } }
@@ -140,6 +141,7 @@ export default function AllHabits() {
         console.log("get habit failed");
         console.log("error", error);
       });
+
       
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[refresh])
