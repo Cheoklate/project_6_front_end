@@ -100,7 +100,14 @@ export default function AllHabits() {
         startIcon={<CloseIcon />}
       ></Button>
       {/* <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'skip'? 'gray':'none', m:1}} value="skip" onClick={submitAction} startIcon={<RedoIcon/>}></Button>            */}
-      <IconButton>
+      <IconButton
+        sx={{
+          color: "white",
+          backgroundColor: clicked === "done" ? "green" : "secondary.main",
+          m: 1,
+        }}
+        onClick={submitAction}
+      >
         <CheckIcon />
       </IconButton>
 
