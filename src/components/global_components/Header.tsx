@@ -7,15 +7,7 @@ export default function Header(){
   return (
     <div className="body">
       <div className="waviy">
-        <span style={{ ["--i" as any]: 1 }}>HABIT?</span>
-        <span style={{ ["--i" as any]: 2 }}></span>
-        <span style={{ ["--i" as any]: 3 }}></span>
-        <span style={{ ["--i" as any]: 4 }}></span>
-        <span style={{ ["--i" as any]: 5 }}></span>
-        <span style={{ ["--i" as any]: 6 }}></span>
-        <span style={{ ["--i" as any]: 7 }}></span>
-        <span style={{ ["--i" as any]: 8 }}></span>
-        <span style={{ ["--i" as any]: 9 }}></span>
+        
 
         <span style={{ ["--i" as any]: 10 }}>
           <Avatar sx={{ bgcolor: "secondary.main" }}>T</Avatar>

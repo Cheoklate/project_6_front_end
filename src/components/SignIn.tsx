@@ -26,6 +26,7 @@ import { SystemProps } from '@mui/system';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
 import cookieParser from 'cookie-parser';
 import Header from './global_components/Header';
+
 axios.defaults.withCredentials = true;
 
 function Copyright(
@@ -192,7 +193,7 @@ function Copyright(
 		>
 			{'Copyright © '}
 			<Link color='inherit' href='/'>
-				Shtory Time
+				TrackIt
 			</Link>{' '}
 			{new Date().getFullYear()}
 			{'.'}
@@ -241,9 +242,10 @@ export default function SignIn() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+				<Header />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 4,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
