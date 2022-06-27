@@ -7,11 +7,13 @@ import { purple } from "@mui/material/colors";
 import Typography from "@mui/material/Typography";
 
 import getCookieValue from './global_components/Cookies'
+import { useNavigate } from "react-router-dom";
 axios.defaults.withCredentials = true;
 
 export default function AllFriends(props:{refresh:boolean}) {
   const [allFriends, setAllFriends] = React.useState([])
   const {userId, userName} = getCookieValue()
+  let navigate = useNavigate();
 React.useEffect(()=>{
   axios
   .get('http://localhost:3004/friends', {params: {userId}})
@@ -38,6 +40,9 @@ React.useEffect(()=>{
               </Avatar>
             }
             label={friend["userName"]}
+            onClick={()=>{
+              navigate("/friendhabits", {state:{
+                friendUserName: friend["userName"]}})}}
           />
         );
       })}
