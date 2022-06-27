@@ -185,9 +185,9 @@ export default function AllHabits() {
                       <br />
                       completed in this period:{" "}
                       {details["habitStreak"]["completedCount"]}, rate:{" "}
-                      {details["habitStreak"]["achievementRate"][
+                      {Math.round(details["habitStreak"]["achievementRate"][
                         "$numberDecimal"
-                      ] * 100}
+                      ] * 100)}
                       %, streak: {details["habitStreak"]["streakCount"]}
                     </Box>
                     <HabitActionButtons
