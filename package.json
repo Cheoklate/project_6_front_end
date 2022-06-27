@@ -17,20 +17,18 @@
     "@types/react": "^18.0.12",
     "@types/react-dom": "^18.0.5",
     "axios": "^0.27.2",
-    "cookie-parser": "^1.4.6",
     "date-fns": "^2.28.0",
-    "moment": "^2.29.3",
     "mongoose": "^6.4.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-nice-dates": "^3.1.0",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "typescript": "^4.7.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
+    "ec2-dev": "CI=true;export CI; react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -55,6 +53,8 @@
   },
   "devDependencies": {
     "@date-io/date-fns": "^2.14.0",
-    "emailjs-com": "^3.2.0"
+    "cookie-parser": "^1.4.6",
+    "emailjs-com": "^3.2.0",
+    "moment": "^2.29.3"
   }
 }

@@ -29,6 +29,7 @@ import { useNavigate } from 'react-router-dom';
 import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
+import CreateIcon from "@mui/icons-material/Create";
 
 axios.defaults.withCredentials = true;
 
@@ -57,18 +58,21 @@ export default function CreateHabit() {
 		
 		let habitDetails = {userId, habitName, habitDesc, frequencyUnit, frequencyNumber, isPublic, reminderFrequencyUnit, reminderFrequencyNumber, reminderTime, reminderMethod, reminderMethodContact};
 		axios
-			.post('http://localhost:3004/createhabit', habitDetails)
-			.then((res) => {
-				let path = '/allhabits';
-				console.log('succesful habitcreation');
-				console.log('data', res);
-				// const { id, email } = res.data;
-				navigate(path);
-			})
-			.catch((error) => {
-				console.log('create habit failed');
-				console.log('error', error);
-			});
+      .post(
+        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/createhabit",
+        habitDetails
+      )
+      .then((res) => {
+        let path = "/allhabits";
+        console.log("succesful habitcreation");
+        console.log("data", res);
+        // const { id, email } = res.data;
+        navigate(path);
+      })
+      .catch((error) => {
+        console.log("create habit failed");
+        console.log("error", error);
+      });
 		console.log(habitDetails);
 	};
 
@@ -85,7 +89,7 @@ export default function CreateHabit() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+            <CreateIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Create Habit
