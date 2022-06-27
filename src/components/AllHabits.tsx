@@ -33,6 +33,7 @@ import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
 import getCookieValue from './global_components/Cookies'
+import Header from './global_components/Header'
 
 
 
@@ -127,6 +128,7 @@ export default function AllHabits() {
 
 	React.useEffect(()=>{ 
 		axios
+
       .get(
         "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/allhabits",
         { params: { userId } }
@@ -139,6 +141,7 @@ export default function AllHabits() {
         console.log("get habit failed");
         console.log("error", error);
       });
+
       
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[refresh])
@@ -146,6 +149,7 @@ export default function AllHabits() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+				<Header/>
         <Box
           sx={{
             marginTop: 8,

@@ -25,6 +25,7 @@ import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
 import cookieParser from 'cookie-parser';
+import Header from './global_components/Header';
 axios.defaults.withCredentials = true;
 
 function Copyright(

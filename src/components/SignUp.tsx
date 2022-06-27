@@ -23,7 +23,7 @@ import { CommonProps } from '@mui/material/OverridableComponent';
 import { SystemProps } from '@mui/system';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import SimpleBottomNavigation from './global_components/BottomNavigation';
+
 
 
 function Copyright(
