@@ -302,8 +302,9 @@ export default function FriendList() {
 				<Typography variant='body2' color='text.secondary' align='center'>
 					<Copyright sx={{ mt: 8, mb: 4 }} component={'symbol'} />
 				</Typography>
-				<SimpleBottomNavigation />
+				
 			</Container>
+			<SimpleBottomNavigation />
 		</ThemeProvider>
 	);
 }

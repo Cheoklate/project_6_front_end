@@ -203,8 +203,11 @@ export default function AllHabits() {
               })}
           </Box>
         </Box>
-        <SimpleBottomNavigation />
+				  
       </Container>
+			 
+        <SimpleBottomNavigation />
+				
     </ThemeProvider>
   );
 }
