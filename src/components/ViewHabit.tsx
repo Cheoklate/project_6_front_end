@@ -233,8 +233,9 @@ function HabitActionButtons(){
             <StaticDatePickerLandscape></StaticDatePickerLandscape>
           </Box>
         </Box>
-        <SimpleBottomNavigation />
+        
       </Container>
+			<SimpleBottomNavigation />
     </ThemeProvider>
   );
 }

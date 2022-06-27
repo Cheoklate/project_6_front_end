@@ -160,12 +160,12 @@ export default function CreateHabit() {
                 }}
               />
             ) : null}
-            
+            <Box>
             <TextField
               className="inputRounded"
               margin="normal"
               required
-              fullWidth
+              sx={{width: 1/2}}
               name="reminderMethod"
               label="Reminder Method"
               id="reminderMethod"
@@ -183,7 +183,7 @@ export default function CreateHabit() {
               className="inputRounded"
               margin="normal"
               required
-              fullWidth
+              sx={{width: 1/2}}
               id="reminderMethodContact"
               name="reminderMethodContact"
               label="email / tele handle"
@@ -193,13 +193,14 @@ export default function CreateHabit() {
               }}
               autoFocus
             />
-            
+            </Box>
+            <Box>
             <TextField
               className="inputRounded"
               margin="normal"
               required
               fullWidth
-              // style = {{width: 140}} 
+              sx={{ width: 1/3 }}
               name="reminderFrequencyUnit"
               label="Set Reminder"
               id="reminderFrequencyUnit"
@@ -219,10 +220,10 @@ export default function CreateHabit() {
                 className="inputRounded"
                 margin="normal"
                 required
-                fullWidth
+                sx={{ width: 1/4 }}
                 // style = {{width: 110}} 
                 name="reminderFrequencyNumber"
-                label="Reminder Frequency"
+                label="Frequency"
                 id="reminderFrequencyNumber"
                 type="number"
                 InputProps={{ inputProps: { min: 1 } }}
@@ -239,6 +240,7 @@ export default function CreateHabit() {
                 label="Reminder Time"
                 type="time"
                 fullWidth
+                
                 margin="normal"
                 defaultValue="09:00"
                 InputLabelProps={{
@@ -253,12 +255,12 @@ export default function CreateHabit() {
                 }}
               />
             
-            
+            </Box>
             
             <Box
+            sx={{ display: "flex",justifyContent:"center"}}
             margin="normal">
             <FormControlLabel
-              
               control={<Checkbox
                />}
               label="Set Private"
@@ -285,8 +287,11 @@ export default function CreateHabit() {
             <Box></Box>
           </Box>
         </Box>
-        <SimpleBottomNavigation />
+     
+        
+        
       </Container>
+      <SimpleBottomNavigation />
     </ThemeProvider>
   );
 }

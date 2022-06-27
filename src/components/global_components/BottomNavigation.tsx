@@ -14,8 +14,9 @@ export default function SimpleBottomNavigation() {
   const [value, setValue] = React.useState(0);
 
   return (
-    <Box sx={{ width: 400, position: 'fixed', bottom: 0}}>
-      <BottomNavigation
+    <Box sx={{backgroundColor:'white', marginTop:10}}>
+       <BottomNavigation
+       sx={{ width: 1, position: 'fixed',  bottom: 0}}
         showLabels
         value={value}
         onChange={(event, newValue) => {
@@ -42,8 +43,9 @@ export default function SimpleBottomNavigation() {
           label="Logout"
           icon={<LogoutIcon sx={{ color: "secondary.main" }} />}
         />
-        {/* <BottomNavigationAction href = 'friends' label="Settings" icon={<SettingsIcon />} /> */}
+        
       </BottomNavigation>
-    </Box>
+      </Box>
+    
   );
 }
