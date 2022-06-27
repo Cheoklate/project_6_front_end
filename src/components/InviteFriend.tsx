@@ -3,8 +3,6 @@ import { useState } from 'react';
 
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-
-import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 
 import "./styles.css";
