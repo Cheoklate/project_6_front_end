@@ -87,17 +87,20 @@ const [updatedAction, setUpdatedAction] = useState(false)
 	React.useEffect(()=>{
 
 		axios
-			.get('http://localhost:3004/viewhabit', {params: {userId, habitId}}) 
-			.then(res => {
-				console.log(res.data);				
-				setHabitDetails(res.data.userHabits)				
-				setStartDate(new Date(res.data.userHabits[0].habitStartDate))
-				setActionHistory(res.data.userHabits[0].habitAction)		
-			})
-			.catch((error) => {
-				console.log('get habit failed');
-				console.log('error', error);
-			});
+      .get(
+        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/viewhabit",
+        { params: { userId, habitId } }
+      )
+      .then((res) => {
+        console.log(res.data);
+        setHabitDetails(res.data.userHabits);
+        setStartDate(new Date(res.data.userHabits[0].habitStartDate));
+        setActionHistory(res.data.userHabits[0].habitAction);
+      })
+      .catch((error) => {
+        console.log("get habit failed");
+        console.log("error", error);
+      });
 
 			
 			
@@ -132,12 +135,15 @@ function HabitActionButtons(){
     const habitUpdateData = {userId, habitId, action: event.currentTarget.value, actionDate}
 		console.log(habitUpdateData, 'habit update')
     axios
-      .post("http://localhost:3004/updatehabit", habitUpdateData)
-      .then(res=> {
-				console.log(res)
-				setUpdatedAction(!updatedAction)
-				console.log(updatedAction, 'action')
-			})
+      .post(
+        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/updatehabit",
+        habitUpdateData
+      )
+      .then((res) => {
+        console.log(res);
+        setUpdatedAction(!updatedAction);
+        console.log(updatedAction, "action");
+      });
 
   }
 	return (

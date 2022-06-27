@@ -58,18 +58,21 @@ export default function CreateHabit() {
 		
 		let habitDetails = {userId, habitName, habitDesc, frequencyUnit, frequencyNumber, isPublic, reminderFrequencyUnit, reminderFrequencyNumber, reminderTime, reminderMethod, reminderMethodContact};
 		axios
-			.post('http://localhost:3004/createhabit', habitDetails)
-			.then((res) => {
-				let path = '/allhabits';
-				console.log('succesful habitcreation');
-				console.log('data', res);
-				// const { id, email } = res.data;
-				navigate(path);
-			})
-			.catch((error) => {
-				console.log('create habit failed');
-				console.log('error', error);
-			});
+      .post(
+        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/createhabit",
+        habitDetails
+      )
+      .then((res) => {
+        let path = "/allhabits";
+        console.log("succesful habitcreation");
+        console.log("data", res);
+        // const { id, email } = res.data;
+        navigate(path);
+      })
+      .catch((error) => {
+        console.log("create habit failed");
+        console.log("error", error);
+      });
 		console.log(habitDetails);
 	};
 

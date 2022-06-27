@@ -67,15 +67,18 @@ export default function AllHabits() {
 		
 		
 		axios
-			.get('http://localhost:3004/friendhabits',{params: {userName: friendUserName}} )
-			.then(res => {
-        setAllHabitDetails(res.data)
-        console.log(allHabitDetails, allHabitDetails.length)
-			})
-			.catch((error) => {
-				console.log('get habit failed');
-				console.log('error', error);
-			});
+      .get(
+        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/friendhabits",
+        { params: { userName: friendUserName } }
+      )
+      .then((res) => {
+        setAllHabitDetails(res.data);
+        console.log(allHabitDetails, allHabitDetails.length);
+      })
+      .catch((error) => {
+        console.log("get habit failed");
+        console.log("error", error);
+      });
       
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])

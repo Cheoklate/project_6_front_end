@@ -68,8 +68,11 @@ export default function AllHabits() {
     
     const habitUpdateData = {userId, habitId: habitId.habitId, action: event.currentTarget.value, actionDate: new Date()}
     axios
-      .post("http://localhost:3004/updatehabit", habitUpdateData)
-      .then(res=> console.log(res))
+      .post(
+        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/updatehabit",
+        habitUpdateData
+      )
+      .then((res) => console.log(res));
   }
 	return (
 		<Box component="div" sx={{ display: 'flex' }}>
