@@ -142,7 +142,7 @@ function HabitActionButtons(){
   }
 	return (
 		<Box component="div" sx={{ display: 'flex' }}>
-              <Button variant="outlined" sx={{ borderRadius: 70, color: 'black', backgroundColor: clicked === 'done'? 'green':'grey', m:1}}value="done" onClick={submitAction} startIcon={<CheckIcon/>} ></Button>
+              <Button variant="outlined" sx={{ borderRadius: 50, color: 'black', backgroundColor: clicked === 'done'? 'green':'grey', m:1}}value="done" onClick={submitAction} startIcon={<CheckIcon/>} ></Button>
               <Button variant="outlined" sx={{ borderRadius: 50,color: 'black', backgroundColor: clicked === 'undone'? 'red':'none',m:1}} value="undone" onClick={submitAction} startIcon={<CloseIcon/>}></Button>
     </Box>
 	)
