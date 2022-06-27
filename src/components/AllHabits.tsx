@@ -111,7 +111,14 @@ export default function AllHabits() {
         <CheckIcon />
       </IconButton>
 
-      <IconButton>
+      <IconButton
+        sx={{
+          color: "white",
+          backgroundColor: clicked === "done" ? "red" : "secondary.main",
+          m: 1,
+        }}
+        onClick={submitAction}
+      >
         <CloseIcon />
       </IconButton>
     </Box>
