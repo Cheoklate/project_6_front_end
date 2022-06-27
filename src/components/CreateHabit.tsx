@@ -81,7 +81,7 @@ export default function CreateHabit() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Header />
+        
         <Box
           sx={{
             marginTop: 2,
@@ -90,6 +90,7 @@ export default function CreateHabit() {
             alignItems: "center",
           }}
         >
+          <Header />
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <CreateIcon />
           </Avatar>
@@ -188,7 +189,7 @@ export default function CreateHabit() {
               sx={{width: 1/2}}
               id="reminderMethodContact"
               name="reminderMethodContact"
-              label="email / tele handle"
+              label="Email / Tele handle"
               autoComplete="name"
               onChange={(event) => {
                 setReminderMethodContact(event.target.value);
@@ -201,10 +202,10 @@ export default function CreateHabit() {
               className="inputRounded"
               margin="normal"
               required
-              fullWidth
+              
               sx={{ width: 1/3 }}
               name="reminderFrequencyUnit"
-              label="Set Reminder"
+              label="Reminder"
               id="reminderFrequencyUnit"
               defaultValue=""
               onChange={(event) => {
@@ -223,7 +224,7 @@ export default function CreateHabit() {
                 margin="normal"
                 required
                 sx={{ width: 1/4 }}
-                // style = {{width: 110}} 
+                
                 name="reminderFrequencyNumber"
                 label="Frequency"
                 id="reminderFrequencyNumber"
@@ -242,7 +243,6 @@ export default function CreateHabit() {
                 label="Reminder Time"
                 type="time"
                 fullWidth
-                
                 margin="normal"
                 defaultValue="09:00"
                 InputLabelProps={{

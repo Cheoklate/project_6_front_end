@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { useState, Dispatch, SetStateAction } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -27,7 +28,7 @@ import {
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { CommonProps } from '@mui/material/OverridableComponent';
-import { SystemProps } from '@mui/system';
+import { SystemProps, textAlign } from '@mui/system';
 import SimpleBottomNavigation from './global_components/BottomNavigation';
 import RedoIcon from '@mui/icons-material/Redo';
 import CheckIcon from '@mui/icons-material/Check';
@@ -39,6 +40,8 @@ import InfoIcon from '@mui/icons-material/Info';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Header from "./global_components/Header";
+import "./styles.css"; 
+import NumbersIcon from '@mui/icons-material/Numbers';
 
 
 axios.defaults.withCredentials = true;
@@ -148,7 +151,7 @@ function HabitActionButtons(){
 
   }
 	return (
-		<Box component="div" sx={{ display: 'flex' }}>
+		<Box component="div" sx={{ display: 'flex', justifyContent:'center' }}>
               <Button variant="outlined" sx={{ borderRadius: 50, color: 'black', backgroundColor: clicked === 'done'? 'green':'grey', m:1}}value="done" onClick={submitAction} startIcon={<CheckIcon/>} ></Button>
               <Button variant="outlined" sx={{ borderRadius: 50,color: 'black', backgroundColor: clicked === 'undone'? 'red':'none',m:1}} value="undone" onClick={submitAction} startIcon={<CloseIcon/>}></Button>
     </Box>
@@ -171,7 +174,8 @@ function HabitActionButtons(){
 						checkColor(e)
 						setShowAction(true);
 					}}
-					renderInput={(params) => <TextField {...params} />}
+					renderInput={(params) => <TextField {...params} />
+				}
 				/>
 			</LocalizationProvider>
 		</Box>
@@ -181,20 +185,23 @@ function HabitActionButtons(){
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Header />
+        
         <Box
           sx={{
             marginTop: 3,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+						justifyContent:"center",
+						textAlign:'center'
           }}
         >
+					<Header />
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <AssignmentTurnedInIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            View Habit
+            
           </Typography>
           <Box sx={{ mt: 1 }}>
             {habitDetails.map((details) => {
@@ -205,11 +212,22 @@ function HabitActionButtons(){
                     component="div"
                     sx={{ display: "inline" }}
                   >
+										 <Typography component="h1" variant="h5">
                     {details["habitName"]}{" "}
                     {details["frequencyUnit"] === "daily"
                       ? details["frequencyUnit"]
-                      : `${details["frequencyNumber"]}x ${details["frequencyUnit"]}`}
-                    <Tooltip
+                      : `${details["frequencyNumber"]}x ${details["frequencyUnit"]}`}</Typography>
+                    {" "}
+                    <br />Completed{" "}
+                    {details["habitStreak"]["completedCount"]} times,{" "}
+                    {Math.round(
+                      details["habitStreak"]["achievementRate"][
+                        "$numberDecimal"
+                      ] * 100
+                    )}
+                    %, streak #{details["habitStreak"]["streakCount"]} <br/>
+                    Started on {moment(details["habitStartDate"]).format("LL")}
+										 <Tooltip
                       title={
                         "Stats are displayed over the frequency unit of your habit. e.g. daily, weekly or monthly"
                       }
@@ -217,25 +235,14 @@ function HabitActionButtons(){
                       <IconButton>
                         <InfoIcon />
                       </IconButton>
-                    </Tooltip>{" "}
-                    <br /># completed:{" "}
-                    {details["habitStreak"]["completedCount"]}
-                    <br />% completed:{" "}
-                    {Math.round(
-                      details["habitStreak"]["achievementRate"][
-                        "$numberDecimal"
-                      ] * 100
-                    )}
-                    % <br />
-                    streak: {details["habitStreak"]["streakCount"]} <br />
-                    started on: {moment(details["habitStartDate"]).format("LL")}
+                    </Tooltip> <br/>
                   </Box>
                 </>
               );
             })}
-
+					</Box>
             <StaticDatePickerLandscape></StaticDatePickerLandscape>
-          </Box>
+          
         </Box>
         
       </Container>
