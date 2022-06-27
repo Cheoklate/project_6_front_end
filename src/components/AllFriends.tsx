@@ -3,6 +3,9 @@ import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import axios from 'axios';
+import { purple } from "@mui/material/colors";
+import Typography from "@mui/material/Typography";
+
 import getCookieValue from './global_components/Cookies'
 axios.defaults.withCredentials = true;
 
@@ -24,11 +27,19 @@ React.useEffect(()=>{
     <Stack direction="row" spacing={1}>
       {allFriends.map(friend=>{
         return (
-          <Chip 
-          key={friend['_id']}
-           variant="outlined"
-           avatar={<Avatar>{friend['userName'][0]}</Avatar>} label={friend['userName']} />
-        )
+          <Chip
+            key={friend["_id"]}
+            variant="outlined"
+            avatar={
+              <Avatar sx={{ bgcolor: "secondary.main" }}>
+                <Typography sx={{ color: purple[50] }}>
+                  {friend["userName"][0]}
+                </Typography>
+              </Avatar>
+            }
+            label={friend["userName"]}
+          />
+        );
       })}
       
     </Stack>
