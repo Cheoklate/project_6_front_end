@@ -14,6 +14,7 @@ import Typography, { TypographyClasses } from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import isWeekend from 'date-fns/isWeekend';
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import IconButton from "@mui/material/IconButton";
 
 
 import RedoIcon from '@mui/icons-material/Redo';
@@ -76,25 +77,71 @@ export default function AllHabits() {
       .then((res) => console.log(res));
   }
 	return (
-		<Box component="div" sx={{ display: 'flex' }}>
-              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'done'? 'green':'none', m:1}}value="done" onClick={submitAction} startIcon={<CheckIcon/>} ></Button>
-              <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'undone'? 'red':'none',m:1}} value="undone" onClick={submitAction} startIcon={<CloseIcon/>}></Button>
-              {/* <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'skip'? 'gray':'none', m:1}} value="skip" onClick={submitAction} startIcon={<RedoIcon/>}></Button>            */}
+    <Box component="div" sx={{ display: "flex" }}>
+      <Button
+        variant="outlined"
+        sx={{
+          color: "black",
+          backgroundColor: clicked === "done" ? "green" : "none",
+          m: 1,
+        }}
+        value="done"
+        onClick={submitAction}
+        startIcon={<CheckIcon />}
+      ></Button>
+      <Button
+        variant="outlined"
+        sx={{
+          color: "black",
+          backgroundColor: clicked === "undone" ? "red" : "none",
+          m: 1,
+        }}
+        value="undone"
+        onClick={submitAction}
+        startIcon={<CloseIcon />}
+      ></Button>
+      {/* <Button variant="outlined" sx={{color: 'black', backgroundColor: clicked === 'skip'? 'gray':'none', m:1}} value="skip" onClick={submitAction} startIcon={<RedoIcon/>}></Button>            */}
+      <IconButton
+        sx={{
+          color: "white",
+          backgroundColor: clicked === "done" ? "green" : "secondary.main",
+          m: 1,
+        }}
+        onClick={submitAction}
+      >
+        <CheckIcon />
+      </IconButton>
+
+      <IconButton
+        sx={{
+          color: "white",
+          backgroundColor: clicked === "done" ? "red" : "secondary.main",
+          m: 1,
+        }}
+        onClick={submitAction}
+      >
+        <CloseIcon />
+      </IconButton>
     </Box>
-	)
+  );
 }
 
 	React.useEffect(()=>{ 
 		axios
-			.get('https://track-abit-front.herokuapp.com/allhabits',{params: {userId}} )
-			.then(res => {
-        setAllHabitDetails(res.data)
-        console.log(allHabitDetails, allHabitDetails.length)
-			})
-			.catch((error) => {
-				console.log('get habit failed');
-				console.log('error', error);
-			});
+
+      .get(
+        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/allhabits",
+        { params: { userId } }
+      )
+      .then((res) => {
+        setAllHabitDetails(res.data);
+        console.log(allHabitDetails, allHabitDetails.length);
+      })
+      .catch((error) => {
+        console.log("get habit failed");
+        console.log("error", error);
+      });
+
       
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[refresh])
@@ -142,9 +189,9 @@ export default function AllHabits() {
                       <br />
                       completed in this period:{" "}
                       {details["habitStreak"]["completedCount"]}, rate:{" "}
-                      {details["habitStreak"]["achievementRate"][
+                      {Math.round(details["habitStreak"]["achievementRate"][
                         "$numberDecimal"
-                      ] * 100}
+                      ] * 100)}
                       %, streak: {details["habitStreak"]["streakCount"]}
                     </Box>
                     <HabitActionButtons
