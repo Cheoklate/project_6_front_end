@@ -88,7 +88,7 @@ const [updatedAction, setUpdatedAction] = useState(false)
 
 		axios
       .get(
-        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/viewhabit",
+        "http://ec2-13-250-95-186.ap-southeast-1.compute.amazonaws.com:3004/viewhabit",
         { params: { userId, habitId } }
       )
       .then((res) => {
@@ -136,7 +136,7 @@ function HabitActionButtons(){
 		console.log(habitUpdateData, 'habit update')
     axios
       .post(
-        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/updatehabit",
+        "http://ec2-13-250-95-186.ap-southeast-1.compute.amazonaws.com:3004/updatehabit",
         habitUpdateData
       )
       .then((res) => {

@@ -215,7 +215,7 @@ export default function SignIn() {
 		let loginDetails = { email: email, password: password };
 		axios
       .post(
-        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/login",
+        "http://ec2-13-250-95-186.ap-southeast-1.compute.amazonaws.com:3004/login",
         loginDetails
       )
       .then((res) => {

@@ -17,7 +17,7 @@ export default function AllFriends(props:{refresh:boolean}) {
 React.useEffect(()=>{
   axios
     .get(
-      "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/friends",
+      "http://ec2-13-250-95-186.ap-southeast-1.compute.amazonaws.com:3004/friends",
       { params: { userId } }
     )
     .then((res) => {

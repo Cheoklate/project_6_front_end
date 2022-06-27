@@ -59,7 +59,7 @@ export default function CreateHabit() {
 		let habitDetails = {userId, habitName, habitDesc, frequencyUnit, frequencyNumber, isPublic, reminderFrequencyUnit, reminderFrequencyNumber, reminderTime, reminderMethod, reminderMethodContact};
 		axios
       .post(
-        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/createhabit",
+        "http://ec2-13-250-95-186.ap-southeast-1.compute.amazonaws.com:3004/createhabit",
         habitDetails
       )
       .then((res) => {

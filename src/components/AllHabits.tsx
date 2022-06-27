@@ -71,7 +71,7 @@ export default function AllHabits() {
     const habitUpdateData = {userId, habitId: habitId.habitId, action: event.currentTarget.value, actionDate: new Date()}
     axios
       .post(
-        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/updatehabit",
+        "http://ec2-13-250-95-186.ap-southeast-1.compute.amazonaws.com:3004/updatehabit",
         habitUpdateData
       )
       .then((res) => console.log(res));
@@ -130,7 +130,7 @@ export default function AllHabits() {
 		axios
 
       .get(
-        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/allhabits",
+        "http://ec2-13-250-95-186.ap-southeast-1.compute.amazonaws.com:3004/allhabits",
         { params: { userId } }
       )
       .then((res) => {
