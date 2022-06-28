@@ -23,7 +23,7 @@ export default function FriendRequest(props:{setRefresh: Dispatch<SetStateAction
       
       axios
         .get(
-          "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/friendrequest",
+          "http://ec2-13-250-95-186.ap-southeast-1.compute.amazonaws.com:3004/friendrequest",
           { params: { userId } }
         )
         .then((res) => {
@@ -37,7 +37,7 @@ function requestAction(friendUserName:any, friendUserId:any, action: string) :an
   const requestData = {userId, userName, friendUserId, friendUserName, action}
   axios
     .post(
-      "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/friendrequest",
+      "http://ec2-13-250-95-186.ap-southeast-1.compute.amazonaws.com:3004/friendrequest",
       requestData
     )
     .then((res) => {
