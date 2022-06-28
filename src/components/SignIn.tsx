@@ -242,10 +242,11 @@ export default function SignIn() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-				<Header />
+				
         <Box
           sx={{
-            marginTop: 4,
+            marginTop: 5,
+						marginBottom: 10,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",

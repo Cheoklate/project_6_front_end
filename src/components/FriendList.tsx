@@ -222,7 +222,7 @@ export default function FriendList() {
 		<ThemeProvider theme={theme}>
 			<Container component='main' maxWidth='xs'>
 				<CssBaseline />
-				<Header />
+				
 				<Box
 					sx={{
 						marginTop: 2,
@@ -231,6 +231,7 @@ export default function FriendList() {
 						alignItems: 'center',
 					}}
 				>
+					<Header />
 					<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
 						<PeopleAltIcon />
 					</Avatar>

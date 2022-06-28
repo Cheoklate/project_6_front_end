@@ -25,7 +25,7 @@ export default function AddFriend() {
     
     axios
       .post(
-        "http://ec2-3-1-220-238.ap-southeast-1.compute.amazonaws.com:3004/friends",
+        "http://ec2-13-250-95-186.ap-southeast-1.compute.amazonaws.com:3004/friends",
         { userId, userName, friendUserName: findFriend }
       )
       .then((res) => {

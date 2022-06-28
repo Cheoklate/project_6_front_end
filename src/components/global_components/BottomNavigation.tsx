@@ -17,7 +17,7 @@ export default function SimpleBottomNavigation() {
     <Box sx={{backgroundColor:'white', marginTop:10}}>
        <BottomNavigation
        sx={{ width: 1, position: 'fixed',  bottom: 0}}
-        showLabels
+        // showLabels
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
@@ -25,7 +25,7 @@ export default function SimpleBottomNavigation() {
       >
         <BottomNavigationAction
           href="allhabits"
-          label="Home"
+          
           icon={<HomeIcon sx={{ color: "secondary.main" }} />}
         />
         <BottomNavigationAction

@@ -87,7 +87,7 @@ export default function AllHabits() {
 		<ThemeProvider theme={theme}>
 			<Container component='main' maxWidth='xs'>
 				<CssBaseline />
-				<Header />
+				
 				<Box
 					sx={{
 						marginTop: 3,
@@ -96,11 +96,12 @@ export default function AllHabits() {
 						alignItems: 'center',
 					}}
 				>
+					<Header />
 					<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
 						<LockOutlinedIcon />
 					</Avatar>
 					<Typography component='h1' variant='h5'>
-						{friendUserName}'s' habits
+						{friendUserName}'s habits
 					</Typography>
 					<Box
 						sx={{ mt: 1 }}
@@ -114,10 +115,13 @@ export default function AllHabits() {
                 <React.Fragment key={index}>
             
             
-              <Box onClick={()=>{navigate("/viewhabit", {state:{userId:userId,habitId:details['userHabits_id']}})}}
-							component="div" sx={{ display: 'block' }}>
+              <Box 
+							component="div" sx={{ display: 'block',justifyContent:'center', textAlign:'center' }}>
                 {details['habitName']} {details['frequencyUnit'] === "daily"? details['frequencyUnit']: `${details['frequencyNumber']}x ${details['frequencyUnit']}`} <br/>
-                completed in this period: {details['habitStreak']['completedCount']}, rate: {(parseFloat(details['habitStreak']['achievementRate']['$numberDecimal'])).toFixed(2)}%, streak: {details['habitStreak']['streakCount']}</Box>
+								<Typography variant="subtitle2"></Typography>
+               Completed {details['habitStreak']['completedCount']},{" "}{Math.round(details["habitStreak"]["achievementRate"][
+                        "$numberDecimal"
+                      ] * 100)}%, streak #{details['habitStreak']['streakCount']}</Box>
               
               <hr></hr>
               </React.Fragment>
