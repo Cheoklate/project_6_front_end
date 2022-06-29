@@ -229,7 +229,11 @@ export default function FriendList() {
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'center',
+					
+						justifyContent:"center",
+						textAlign:'center'
 					}}
+					
 				>
 					<Header />
 					<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -238,7 +242,17 @@ export default function FriendList() {
 					<Typography component='h1' variant='h5'>
 						Friends
 					</Typography>
-					<Box sx={{ mt: 3, mb: 4 }}>
+					<Box sx={{ mt: 3, mb: 4,
+					display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+					
+						justifyContent:"center",
+						textAlign:'center',
+						// marginLeft:2,
+						// marginRight:2,
+						maxWidth:350
+					}} margin="normal">
 						<Grid container spacing={2}>
 							<Grid item xs={12}>
 								<Accordion>
