@@ -252,7 +252,7 @@ export default function FriendList() {
 						// marginLeft:2,
 						// marginRight:2,
 						maxWidth:350
-					}} margin="normal">
+					}}>
 						<Grid container spacing={2}>
 							<Grid item xs={12}>
 								<Accordion>

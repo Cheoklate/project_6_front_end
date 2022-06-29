@@ -28,7 +28,7 @@ React.useEffect(()=>{
 },[props.refresh])
 
   return (
-    <Stack direction="row" spacing={1}>
+    <Stack direction="row" spacing={1} >
       {allFriends.map(friend=>{
         return (
           <Chip
@@ -45,7 +45,7 @@ React.useEffect(()=>{
             onClick={()=>{
               navigate("/friendhabits", {state:{
                 friendUserName: friend["userName"]}})}}
-          />
+          /> 
         );
       })}
       
