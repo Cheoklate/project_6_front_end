@@ -1,8 +1,27 @@
-# Getting Started with Create React App
+# Trackit - Habit Tracker App 
+Trackit is an app that helps users track and share their habits in order to stay accountable to their habits.
+There are 2 repos for the app:
+* Front End - https://github.com/Cheoklate/project_6_front_end
+* Back End - https://github.com/Cheoklate/project_6_back_end
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Features
+* Create a habit and set up reminders for the habit
+* View user's habit and friend's habit
+* Invite a friend to join the app
+* Friend Request
 
-## Available Scripts
+## Demo
+Here is a demo of the app: https://www.youtube.com/watch?v=5xJEv3OOhzA
+
+## Technologies
+* Typescript
+* MongoDB
+* Mongoose
+* React
+* MUI
+* EmailJS
+
+## Installation
 
 In the project directory, you can run:
 
@@ -39,8 +58,9 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Team Members
+* Cheoklate - https://github.com/Cheoklate
+* Dewi - https://github.com/smdewi
+* Grace - https://github.com/gracethedragon
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
